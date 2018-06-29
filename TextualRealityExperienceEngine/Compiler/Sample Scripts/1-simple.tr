@@ -1,0 +1,11 @@
+define start_prologue
+{
+	.description = Welcome to Hello World. In this game you can literally do nothing of interest.
+	.start_room = start
+}
+
+define room
+{
+	.name = start
+	.description = You are standing in an empty room. There is nothing in the room. No doors or windows. You are trapped.
+}
