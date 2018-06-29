@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Tests.Unit.GameEngine
+namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 {
     [TestClass]
     public class UnitTest1
