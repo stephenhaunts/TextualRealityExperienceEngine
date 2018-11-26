@@ -18,6 +18,11 @@ namespace TextualRealityExperienceEngine.GameEngine
                 throw new ArgumentNullException(nameof(prologue), "The prologue can not be empty.");
             }
 
+            if (room == null)
+            {
+                throw new ArgumentNullException(nameof(room), "The initial room state can not be null.");
+            }
+
             Prologue = prologue;
             StartRoom = room;
         }

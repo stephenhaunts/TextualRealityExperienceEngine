@@ -36,3 +36,9 @@ TextualRealityExperienceEngine/\.idea/\.idea\.TextualRealityExperienceEngine/\.i
 TextualRealityExperienceEngine/\.idea/\.idea\.TextualRealityExperienceEngine/
 
 \.DS_Store
+
+*.dll
+
+TextualRealityExperienceEngine/Tests\.Unit\.Compiler/bin/Debug/netcoreapp2\.1/
+
+TextualRealityExperienceEngine/Tests\.Unit\.GameEngine/bin/Debug/netcoreapp2\.1/
