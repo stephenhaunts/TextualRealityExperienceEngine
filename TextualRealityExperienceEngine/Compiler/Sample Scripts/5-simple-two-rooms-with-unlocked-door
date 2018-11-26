@@ -23,7 +23,7 @@ define room
 
 	define object
 	{
-		.name = keys
+		.name = frontdoor_keys
 		.synonym = key;bunch of keys;bunch
 		.visible = true
 		
