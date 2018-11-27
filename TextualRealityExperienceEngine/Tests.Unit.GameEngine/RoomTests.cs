@@ -24,6 +24,7 @@ SOFTWARE.
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityExperienceEngine.GameEngine;
+using TextualRealityExperienceEngine.Tests.Unit.GameEngine.Stubs;
 
 namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 {
@@ -94,6 +95,18 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var room = new Room("name", "description");
 
             Assert.AreEqual("description", room.Description);
+        }
+
+        [TestMethod]
+        public void AddExitCallsAddExitOnGameExits()
+        {
+            var roomExits = new RoomExitsStub();
+            var room = new Room(roomExits);
+            var room2 = new Room("name2", "description2");
+
+            room.AddExit(Direction.North, room2);
+
+            Assert.AreEqual(1, roomExits.AddExitCounter);
         }
     }
 }

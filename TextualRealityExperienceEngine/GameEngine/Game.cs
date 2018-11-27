@@ -28,6 +28,10 @@ namespace TextualRealityExperienceEngine.GameEngine
 {
     public class Game : IGame
     {
+        public string Prologue { get; set; }
+        public IRoom StartRoom { get; set; }
+        public IRoom CurrentRoom { get; set; }
+
         public Game()
         {
             Prologue = string.Empty;
@@ -50,9 +54,5 @@ namespace TextualRealityExperienceEngine.GameEngine
             StartRoom = room;
             CurrentRoom = room;
         }
-
-        public string Prologue { get; set; }
-        public IRoom StartRoom { get; set; }
-        public IRoom CurrentRoom { get; set; }
     }
 }

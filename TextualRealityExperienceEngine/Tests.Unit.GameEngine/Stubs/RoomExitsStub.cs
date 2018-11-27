@@ -22,50 +22,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
-
+using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
-namespace TextualRealityExperienceEngine.GameEngine 
+namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine.Stubs
 {
-    public class Room : IRoom
+    public class RoomExitsStub : IRoomExits
     {
-        readonly IRoomExits _roomExits = new RoomExits();
-
-        public string Name { get; set; }
-        public string Description { get; set; }
-
-        public Room()
-        {
-            Name = string.Empty;
-            Description = string.Empty;
-        }
-
-        public Room(IRoomExits roomExits)
-        {
-            Name = string.Empty;
-            Description = string.Empty;
-            _roomExits = roomExits;
-        }
-
-        public Room(string name, string description)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new ArgumentNullException(nameof(Name), "The room name can not be empty.");
-            }
-
-            if (string.IsNullOrEmpty(description))
-            {
-                throw new ArgumentNullException(nameof(Description), "The room description can not be empty.");
-            }
-
-            Name = name;
-            Description = description;
-        }
+        public int AddExitCounter { get; set; }
+        public int GetRoomCounter { get; set; }
 
         public void AddExit(Direction direction, IRoom room)
         {
-            _roomExits.AddExit(direction, room);
+            AddExitCounter++;
+        }
+
+        public IRoom GetRoomForExit(Direction direction)
+        {
+            GetRoomCounter++;
+            return new Room();
         }
     }
 }

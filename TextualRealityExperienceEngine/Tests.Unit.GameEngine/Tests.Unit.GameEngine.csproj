@@ -22,4 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GameEngine\GameEngine.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Stubs\" />
+  </ItemGroup>
 </Project>

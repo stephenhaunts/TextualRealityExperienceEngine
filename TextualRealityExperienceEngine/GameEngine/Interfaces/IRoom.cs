@@ -29,5 +29,6 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
     {
         string Name { get; set; }
         string Description { get; set; }
+        void AddExit(Direction direction, IRoom room);
     }
 }
