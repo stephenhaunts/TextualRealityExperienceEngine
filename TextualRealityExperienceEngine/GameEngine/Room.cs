@@ -31,6 +31,28 @@ namespace TextualRealityExperienceEngine.GameEngine
     {
         public Room()
         {
+            Name = string.Empty;
+            Description = string.Empty;
         }
+
+        public Room(string name, string description)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException(nameof(Name), "The room name can not be empty.");
+            }
+
+            if (string.IsNullOrEmpty(description))
+            {
+                throw new ArgumentNullException(nameof(Description), "The room description can not be empty.");
+            }
+
+
+            Name = name;
+            Description = description;
+        }
+
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

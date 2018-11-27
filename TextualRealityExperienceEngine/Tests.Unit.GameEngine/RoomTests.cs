@@ -21,7 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TextualRealityExperienceEngine.GameEngine;
 
 namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 {
@@ -29,8 +31,69 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
     public class RoomTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void DescriptionIsNullWhenCreatedWithDefaultConstructor()
         {
+            var room = new Room();
+            Assert.AreEqual(string.Empty, room.Description);
+        }
+
+        [TestMethod]
+        public void NameIsEmptyWhenCreatedWithDefaultConstructor()
+        {
+            var room = new Room();
+            Assert.AreEqual(string.Empty, room.Name);
+        }
+
+        [TestMethod]
+        public void DescriptionmIsSetByProperty()
+        {
+            var room = new Room
+            {
+                Description = "description"
+            };
+
+            Assert.AreEqual("description", room.Description);
+        }
+
+        [TestMethod]
+        public void NameIsSetByProperty()
+        {
+            var room = new Room
+            {
+                Name = "name"
+            };
+
+            Assert.AreEqual("name", room.Name);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException), "The room name can not be empty.")]
+        public void OveriddenConstructorThrowsArgumentNullExcpetionIfNameIsNull()
+        {
+            var room = new Room("", null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException), "The room description can not be null.")]
+        public void OveriddenConstructorThrowsArgumentNullExcpetionIfDescriptionIsNull()
+        {
+            var room = new Room("name", null);
+        }
+
+        [TestMethod]
+        public void OveriddenConstructorSetsName()
+        {
+            var room = new Room("name", "description");
+
+            Assert.AreEqual("name", room.Name);
+        }
+
+        [TestMethod]
+        public void OveriddenConstructorSetsDescriptionm()
+        {
+            var room = new Room("name", "description");
+
+            Assert.AreEqual("description", room.Description);
         }
     }
 }

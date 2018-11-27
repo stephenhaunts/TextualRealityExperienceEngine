@@ -27,5 +27,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
     public interface IRoom
     {
+        string Name { get; set; }
+        string Description { get; set; }
     }
 }
