@@ -55,6 +55,16 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
 
         [TestMethod]
+        public void CurrentRoomIsSetByProperty()
+        {
+            var game = new Game();
+            var room = new Room();
+            game.CurrentRoom = room;
+
+            Assert.AreEqual(room, game.CurrentRoom);
+        }
+
+        [TestMethod]
         public void PrologueIsSetByProperty()
         {
             var game = new Game();
@@ -97,6 +107,16 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var game = new Game(prologue, startRoom);
 
             Assert.AreEqual(startRoom, game.StartRoom);
+        }
+
+        [TestMethod]
+        public void OveriddenConstructorSetsCurrentRoom()
+        {
+            var startRoom = new Room();
+            var prologue = "This is a progue";
+            var game = new Game(prologue, startRoom);
+
+            Assert.AreEqual(startRoom, game.CurrentRoom);
         }
     }
 }

@@ -48,9 +48,11 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             Prologue = prologue;
             StartRoom = room;
+            CurrentRoom = room;
         }
 
         public string Prologue { get; set; }
         public IRoom StartRoom { get; set; }
+        public IRoom CurrentRoom { get; set; }
     }
 }
