@@ -23,16 +23,31 @@ SOFTWARE.
 */
 using System;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.Synonyms;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
     public class Parser : IParser
     {
-        public ICommand ProcessCommand(string command)
+        readonly IVerbSynonyms _verbSynonyms = new VerbSynonyms();
+        readonly INounSynonyms _nounSynonyms = new NounSynonyms();
+
+
+        //
+        // https://www.talkenglish.com/vocabulary/top-50-prepositions.aspx
+        //
+
+
+        public ICommand ParseCommand(string command)
         {
             if (string.IsNullOrEmpty(command))
             {
-                return new Command();
+                ICommand toReturn = new Command
+                {
+                    FullTextCommand = string.Empty
+                };
+
+                return toReturn;
             }
 
             // to lower
@@ -41,34 +56,67 @@ namespace TextualRealityExperienceEngine.GameEngine
             // split into list of words
             var wordList = lowerCase.Split(' ');
 
+            ICommand commandList = new Command();
+
             switch (wordList.Length)
             {
                 case 0:
                     return new Command();
                 case 1:
-                    return SingleWordCommand(wordList[0]);
+                    commandList = SingleWordCommand(wordList[0]);
+                    commandList.FullTextCommand = lowerCase;
+                    return commandList;
                 default:
-                    return MultiWordCommand(wordList);
+                    commandList = MultiWordCommand(wordList);
+                    commandList.FullTextCommand = lowerCase;
+                    return commandList;
+            }                      
+        }
+
+        ICommand SingleWordCommand(string command)
+        {
+            ICommand toReturn = new Command
+            {
+                FullTextCommand = string.Empty
+            };
+
+            return toReturn;
+        }
+
+        ICommand MultiWordCommand(string[] commandList)
+        {
+            ICommand command = new Command();
+
+            bool verbSet = false;
+            bool nounSet = false;
+
+            foreach (string word in commandList)
+            {
+                if (verbSet == false)
+                {
+                    var verb = _verbSynonyms.GetVerbforSynonum(word);
+
+                    if (verb != VerbCodes.NoCommand)
+                    {
+                        command.Verb = verb;
+                        verbSet = true;
+                        continue;
+                    }                                     
+                }
+
+                if (nounSet == false)
+                {
+                    var noun = _nounSynonyms.GetNounforSynonum(word);
+                    if (!string.IsNullOrEmpty(noun))
+                    {
+                        command.Noun = noun;
+                        nounSet = true;
+                        continue;
+                    }
+                }
             }
 
-            // check for noun
-            // check synonyms
-
-            // check for verb
-            // check synonyms
-
-            // execute
-            // report error if doesn't understand
-        }
-
-        private ICommand SingleWordCommand(string command)
-        {
-            return new Command();
-        }
-
-        private ICommand MultiWordCommand(string[] commandList)
-        {
-            return new Command();
+            return command; 
         }
     }
 }

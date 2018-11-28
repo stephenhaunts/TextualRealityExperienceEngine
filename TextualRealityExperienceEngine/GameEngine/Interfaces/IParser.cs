@@ -27,6 +27,6 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
     public interface IParser
     {
-        ICommand ProcessCommand(string command);
+        ICommand ParseCommand(string command);
     }
 }

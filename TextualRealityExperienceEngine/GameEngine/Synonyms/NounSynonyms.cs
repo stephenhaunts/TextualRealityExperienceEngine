@@ -29,7 +29,38 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
 {
     public class NounSynonyms : INounSynonyms
     {
-        readonly Dictionary<string, string> _synonymMappings = new Dictionary<string, string>();
+        readonly Dictionary<string, string> _synonymsMappings = new Dictionary<string, string>();
+
+        public NounSynonyms()
+        {
+            _synonymsMappings.Add("n", "north");
+            _synonymsMappings.Add("s", "south");
+            _synonymsMappings.Add("e", "east");
+            _synonymsMappings.Add("w", "west");
+
+            _synonymsMappings.Add("ne", "northeast");
+            _synonymsMappings.Add("se", "southeast");
+            _synonymsMappings.Add("sw", "southwest");
+            _synonymsMappings.Add("nw", "northwest");
+
+            _synonymsMappings.Add("northeast", "northeast");
+            _synonymsMappings.Add("southeast", "southeast");
+            _synonymsMappings.Add("southwest", "southwest");
+            _synonymsMappings.Add("northwest", "northwest");
+
+            _synonymsMappings.Add("north", "north");
+            _synonymsMappings.Add("south", "south");
+            _synonymsMappings.Add("east", "east");
+            _synonymsMappings.Add("west", "west");
+
+            _synonymsMappings.Add("forward", "north");
+            _synonymsMappings.Add("backward", "south");
+            _synonymsMappings.Add("forwards", "north");
+            _synonymsMappings.Add("backwards", "south");
+
+            _synonymsMappings.Add("right", "east");
+            _synonymsMappings.Add("left", "west");
+        }
 
         public void Add(string synonym, string noun)
         {
@@ -43,7 +74,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
                 throw new ArgumentNullException(nameof(noun));
             }
 
-            _synonymMappings.Add(synonym, noun);
+            _synonymsMappings.Add(synonym, noun);
         }
 
         public string GetNounforSynonum(string synonym)
@@ -53,12 +84,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
                 throw new ArgumentNullException(nameof(synonym));
             }
 
-            if (_synonymMappings.ContainsKey(synonym))
-            {
-                return _synonymMappings[synonym];
-            }
-
-            return string.Empty;
+            return _synonymsMappings.ContainsKey(synonym) ? _synonymsMappings[synonym] : string.Empty;
         }
     }
 }

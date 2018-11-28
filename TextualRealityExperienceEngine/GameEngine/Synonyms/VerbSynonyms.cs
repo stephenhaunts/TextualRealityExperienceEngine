@@ -23,7 +23,6 @@ SOFTWARE.
 */
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine.Synonyms
@@ -31,6 +30,17 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
     public class VerbSynonyms : IVerbSynonyms
     {
         readonly Dictionary<string, VerbCodes> _synonymMappings = new Dictionary<string, VerbCodes>();
+
+        public VerbSynonyms()
+        {
+            _synonymMappings.Add("walk", VerbCodes.Go);
+            _synonymMappings.Add("go", VerbCodes.Go);
+            _synonymMappings.Add("run", VerbCodes.Go);
+            _synonymMappings.Add("shuffle", VerbCodes.Go);
+            _synonymMappings.Add("crawl", VerbCodes.Go);
+            _synonymMappings.Add("hop", VerbCodes.Go);
+            _synonymMappings.Add("slide", VerbCodes.Go);
+        }
 
         public void Add(string synonym, VerbCodes verb)
         {
@@ -55,7 +65,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             }
             catch (KeyNotFoundException)
             {
-                throw new InvalidOperationException("The sysnonym <" + synonym + "> does not exist.");
+                return VerbCodes.NoCommand;
             }
 
             return _synonymMappings[synonym];

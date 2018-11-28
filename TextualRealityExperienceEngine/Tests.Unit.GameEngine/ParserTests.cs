@@ -24,12 +24,55 @@ SOFTWARE.
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityExperienceEngine.GameEngine;
+using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.Synonyms;
 
 namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 {
     [TestClass]
     public class ParserTests
     {
-    
+        [TestMethod]
+        public void ParseCommandNoCommandForEmptyString()
+        {
+            IParser parser = new Parser();
+            var command = parser.ParseCommand("");
+
+            Assert.AreEqual(VerbCodes.NoCommand, command.Verb);
+            Assert.AreEqual("", command.FullTextCommand);
+        }
+
+        [TestMethod]
+        public void ParseCommandReturnsValidCommandFor_Go_North()
+        {
+            IParser parser = new Parser();
+            var command = parser.ParseCommand("Go North");
+
+            Assert.AreEqual(VerbCodes.Go, command.Verb);
+            Assert.AreEqual("north", command.Noun);
+            Assert.AreEqual("go north", command.FullTextCommand);
+        }
+
+        [TestMethod]
+        public void ParseCommandReturnsValidCommandFor_Run_NorthEast()
+        {
+            IParser parser = new Parser();
+            var command = parser.ParseCommand("Run NorthEast");
+
+            Assert.AreEqual(VerbCodes.Go, command.Verb);
+            Assert.AreEqual("northeast", command.Noun);
+            Assert.AreEqual("run northeast", command.FullTextCommand);
+        }
+
+        [TestMethod]
+        public void ParseCommandReturnsValidCommandFor_Slide_SW()
+        {
+            IParser parser = new Parser();
+            var command = parser.ParseCommand("Slide SW");
+
+            Assert.AreEqual(VerbCodes.Go, command.Verb);
+            Assert.AreEqual("southwest", command.Noun);
+            Assert.AreEqual("slide sw", command.FullTextCommand);
+        }
     }
 }

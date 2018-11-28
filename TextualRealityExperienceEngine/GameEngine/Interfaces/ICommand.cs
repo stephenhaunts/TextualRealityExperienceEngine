@@ -27,9 +27,10 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
     public interface ICommand
     {
-        VerbCodes Verb { get; }
-        string Noun { get; }
-        string Preposition { get; }
-        string Noun2 { get; }
+        string FullTextCommand { get; set; }
+        VerbCodes Verb { get; set; }
+        string Noun { get; set; }
+        string Preposition { get; set; }
+        string Noun2 { get; set; }
     }
 }

@@ -29,10 +29,11 @@ namespace TextualRealityExperienceEngine.GameEngine
 {
     public class Command : ICommand
     {
-        public VerbCodes Verb { get; }
-        public string Noun { get; }
-        public string Preposition { get; }
-        public string Noun2 { get; }
+        public string FullTextCommand { get; set; }
+        public VerbCodes Verb { get; set; }
+        public string Noun { get; set; }
+        public string Preposition { get; set; }
+        public string Noun2 { get; set; }
 
         public Command()
         {

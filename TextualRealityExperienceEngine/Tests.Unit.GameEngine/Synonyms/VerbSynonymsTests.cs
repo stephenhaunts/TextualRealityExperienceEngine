@@ -42,29 +42,29 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         public void AddCreatesSynonymMappingForANoun()
         {
             var verbSynonyms = new VerbSynonyms();
-            verbSynonyms.Add("walk", VerbCodes.Go);
+            verbSynonyms.Add("get", VerbCodes.Take);
 
-            Assert.AreEqual(VerbCodes.Go, verbSynonyms.GetVerbforSynonum("walk"));
+            Assert.AreEqual(VerbCodes.Take, verbSynonyms.GetVerbforSynonum("get"));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void GetReturnsThrowsInvalidExceptionForNonExistingSysnonym()
+
+        public void GetReturnsReturnsNoCommandForNonExistingSysnonym()
         {
             var verbSynonyms = new VerbSynonyms();
 
-            Assert.AreEqual(string.Empty, verbSynonyms.GetVerbforSynonum("walk"));
+            Assert.AreEqual(VerbCodes.NoCommand, verbSynonyms.GetVerbforSynonum("flop"));
         }
 
         [TestMethod]
         public void MultipleSynonymsCanMapToTheSameVerb()
         {
             var verbSynonyms = new VerbSynonyms();
-            verbSynonyms.Add("walk", VerbCodes.Go);
-            verbSynonyms.Add("run", VerbCodes.Go);
+            verbSynonyms.Add("take", VerbCodes.Take);
+            verbSynonyms.Add("get", VerbCodes.Take);
 
-            Assert.AreEqual(VerbCodes.Go, verbSynonyms.GetVerbforSynonum("walk"));
-            Assert.AreEqual(VerbCodes.Go, verbSynonyms.GetVerbforSynonum("run"));
+            Assert.AreEqual(VerbCodes.Take, verbSynonyms.GetVerbforSynonum("take"));
+            Assert.AreEqual(VerbCodes.Take, verbSynonyms.GetVerbforSynonum("get"));
         }
     }
 }
