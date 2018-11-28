@@ -33,6 +33,16 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
     public class ParserTests
     {
         [TestMethod]
+        public void ParseCommandNoCommandForGiberishString()
+        {
+            IParser parser = new Parser();
+            var command = parser.ParseCommand("siudfhw8e7r wrymw98ym78yr 98w4myr98wn");
+
+            Assert.AreEqual(VerbCodes.NoCommand, command.Verb);
+            Assert.AreEqual("siudfhw8e7r wrymw98ym78yr 98w4myr98wn", command.FullTextCommand);
+        }
+
+        [TestMethod]
         public void ParseCommandNoCommandForEmptyString()
         {
             IParser parser = new Parser();
@@ -97,5 +107,17 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             Assert.AreEqual("l", command.FullTextCommand);
         }
 
+        [TestMethod]
+        public void ParseCommandReturnsValidCommandFor_Go_North_At()
+        {
+            IParser parser = new Parser();
+            var command = parser.ParseCommand("Go North At Bum");
+
+            Assert.AreEqual(VerbCodes.Go, command.Verb);
+            Assert.AreEqual("north", command.Noun);
+            Assert.AreEqual(PropositionEnum.At, command.Preposition);
+            Assert.AreEqual("bum", command.Noun2);
+            Assert.AreEqual("go north at bum", command.FullTextCommand);
+        }
     }
 }

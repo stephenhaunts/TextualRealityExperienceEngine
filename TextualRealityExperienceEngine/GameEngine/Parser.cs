@@ -31,12 +31,7 @@ namespace TextualRealityExperienceEngine.GameEngine
     {
         readonly IVerbSynonyms _verbSynonyms = new VerbSynonyms();
         readonly INounSynonyms _nounSynonyms = new NounSynonyms();
-
-
-        //
-        // https://www.talkenglish.com/vocabulary/top-50-prepositions.aspx
-        //
-
+        readonly IPrepositionMapping _prepositionMappings = new PrepositionMapping();
 
         public ICommand ParseCommand(string command)
         {
@@ -84,6 +79,8 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             bool verbSet = false;
             bool nounSet = false;
+            bool prepositionSet = false;
+            bool noun2Set = false;
 
             foreach (string word in commandList)
             {
@@ -106,6 +103,28 @@ namespace TextualRealityExperienceEngine.GameEngine
                     {
                         command.Noun = noun;
                         nounSet = true;
+                        continue;
+                    }
+                }
+
+                if (prepositionSet == false)
+                {
+                    var preposition = _prepositionMappings.GetPreposition(word);
+                    if (preposition != PropositionEnum.NotRecognised)
+                    {
+                        command.Preposition = preposition;
+                        prepositionSet = true;
+                        continue;
+                    }
+                }
+
+                if (noun2Set == false)
+                {
+                    var noun = _nounSynonyms.GetNounforSynonum(word);
+                    if (!string.IsNullOrEmpty(noun))
+                    {
+                        command.Noun2 = noun;
+                        noun2Set = true;
                         continue;
                     }
                 }

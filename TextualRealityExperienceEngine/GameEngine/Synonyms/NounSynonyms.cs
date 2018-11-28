@@ -60,6 +60,9 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
 
             _synonymsMappings.Add("right", "east");
             _synonymsMappings.Add("left", "west");
+
+            _synonymsMappings.Add("bum", "bum");
+
         }
 
         public void Add(string synonym, string noun)

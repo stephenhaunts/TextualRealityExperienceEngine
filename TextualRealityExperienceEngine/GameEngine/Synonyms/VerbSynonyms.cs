@@ -40,6 +40,8 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _synonymMappings.Add("crawl", VerbCodes.Go);
             _synonymMappings.Add("hop", VerbCodes.Go);
             _synonymMappings.Add("slide", VerbCodes.Go);
+
+            _synonymMappings.Add("pick", VerbCodes.Take);
         }
 
         public void Add(string synonym, VerbCodes verb)
