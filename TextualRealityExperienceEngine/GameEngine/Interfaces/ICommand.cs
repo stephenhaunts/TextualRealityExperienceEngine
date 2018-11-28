@@ -21,12 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
+using TextualRealityExperienceEngine.GameEngine.Synonyms;
 
 namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
-    public interface IParser
+    public interface ICommand
     {
-        ICommand ProcessCommand(string command);
+        VerbCodes Verb { get; }
+        string Noun { get; }
+        string Preposition { get; }
+        string Noun2 { get; }
     }
 }

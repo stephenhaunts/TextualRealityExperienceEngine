@@ -1,7 +1,7 @@
 ﻿/*
 MIT License
 
-Copyright(c) 2018 
+Copyright (c) 2018 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,18 +21,38 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Collections.Generic;
+
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.Synonyms;
 
-namespace TextualRealityExperienceEngine.GameEngine.Synonyms
+namespace TextualRealityExperienceEngine.GameEngine
 {
-    public class Nounynonyms : INounSynonyms
+    public class Command : ICommand
     {
-        readonly Dictionary<string, string> _synonymMappings = new Dictionary<string, string>();
+        public VerbCodes Verb { get; }
+        public string Noun { get; }
+        public string Preposition { get; }
+        public string Noun2 { get; }
 
-        public void Add(string synonym, string noun)
+        public Command()
         {
-            _synonymMappings.Add(synonym, noun);
+            Verb = VerbCodes.NoCommand;
+        }
+
+        public Command(VerbCodes verb, string noun)
+        {
+            Verb = verb;
+            Noun = noun;
+            Preposition = string.Empty;
+            Noun2 = string.Empty;
+        }
+
+        public Command(VerbCodes verb, string noun, string preposition, string noun2)
+        {
+            Verb = verb;
+            Noun = noun;
+            Preposition = preposition;
+            Noun2 = noun2;
         }
     }
 }

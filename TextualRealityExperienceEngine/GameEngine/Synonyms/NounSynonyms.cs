@@ -1,7 +1,7 @@
 ﻿/*
 MIT License
 
-Copyright (c) 2018 
+Copyright(c) 2018 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,53 +22,43 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using System.Collections.Generic;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
-namespace TextualRealityExperienceEngine.GameEngine
+namespace TextualRealityExperienceEngine.GameEngine.Synonyms
 {
-    public class Parser : IParser
+    public class NounSynonyms : INounSynonyms
     {
-        public ICommand ProcessCommand(string command)
+        readonly Dictionary<string, string> _synonymMappings = new Dictionary<string, string>();
+
+        public void Add(string synonym, string noun)
         {
-            if (string.IsNullOrEmpty(command))
+            if (string.IsNullOrEmpty(synonym))
             {
-                return new Command();
+                throw new ArgumentNullException(nameof(synonym));
             }
 
-            // to lower
-            var lowerCase = command.ToLower();
-
-            // split into list of words
-            var wordList = lowerCase.Split(' ');
-
-            switch (wordList.Length)
+            if (string.IsNullOrEmpty(noun))
             {
-                case 0:
-                    return new Command();
-                case 1:
-                    return SingleWordCommand(wordList[0]);
-                default:
-                    return MultiWordCommand(wordList);
+                throw new ArgumentNullException(nameof(noun));
             }
 
-            // check for noun
-            // check synonyms
-
-            // check for verb
-            // check synonyms
-
-            // execute
-            // report error if doesn't understand
+            _synonymMappings.Add(synonym, noun);
         }
 
-        private ICommand SingleWordCommand(string command)
+        public string GetNounforSynonum(string synonym)
         {
-            return new Command();
-        }
+            if (string.IsNullOrEmpty(synonym))
+            {
+                throw new ArgumentNullException(nameof(synonym));
+            }
 
-        private ICommand MultiWordCommand(string[] commandList)
-        {
-            return new Command();
+            if (_synonymMappings.ContainsKey(synonym))
+            {
+                return _synonymMappings[synonym];
+            }
+
+            return string.Empty;
         }
     }
 }

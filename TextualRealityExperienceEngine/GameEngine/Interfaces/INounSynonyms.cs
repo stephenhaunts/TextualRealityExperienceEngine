@@ -28,5 +28,6 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
     public interface INounSynonyms
     {
         void Add(string synonym, string noun);
+        string GetNounforSynonum(string synonym);
     }
 }

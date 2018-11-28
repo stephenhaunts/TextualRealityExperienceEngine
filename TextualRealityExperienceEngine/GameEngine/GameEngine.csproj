@@ -13,6 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Class1.cs" />
+    <Compile Remove="Synonyms\NounCodes.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />

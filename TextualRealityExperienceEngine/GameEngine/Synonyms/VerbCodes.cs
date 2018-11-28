@@ -27,6 +27,11 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
 {
     public enum VerbCodes
     {
-        Go = 0
+        NoCommand = 0,
+        Go = 1,
+        Take = 2,
+        Use = 3,
+        Look = 4,
+        Drop = 5,
     }
 }
