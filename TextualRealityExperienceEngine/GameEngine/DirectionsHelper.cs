@@ -26,9 +26,9 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
-    public class DirectionsHelper
+    public static class DirectionsHelper
     {
-        public ICommand GetDirectionCommand(string command)
+        public static ICommand GetDirectionCommand(string command)
         {
             ICommand toReturn = new Command();
             string lowerCaseCommand = command.ToLower();

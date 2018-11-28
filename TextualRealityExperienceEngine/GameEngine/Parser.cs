@@ -75,12 +75,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         ICommand SingleWordCommand(string command)
         {
-            ICommand toReturn = new Command
-            {
-                FullTextCommand = string.Empty
-            };
-
-            return toReturn;
+            return DirectionsHelper.GetDirectionCommand(command);                     
         }
 
         ICommand MultiWordCommand(string[] commandList)

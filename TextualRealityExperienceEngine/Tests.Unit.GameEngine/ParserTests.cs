@@ -74,5 +74,28 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             Assert.AreEqual("southwest", command.Noun);
             Assert.AreEqual("slide sw", command.FullTextCommand);
         }
+
+        [TestMethod]
+        public void ParseSingleWordCommandReturnsValidCommandFor_NE()
+        {
+            IParser parser = new Parser();
+            var command = parser.ParseCommand("NE");
+
+            Assert.AreEqual(VerbCodes.Go, command.Verb);
+            Assert.AreEqual("northeast", command.Noun);
+            Assert.AreEqual("ne", command.FullTextCommand);
+        }
+
+        [TestMethod]
+        public void ParseSingleWordCommandReturnsValidCommandFor_L()
+        {
+            IParser parser = new Parser();
+            var command = parser.ParseCommand("L");
+
+            Assert.AreEqual(VerbCodes.Go, command.Verb);
+            Assert.AreEqual("west", command.Noun);
+            Assert.AreEqual("l", command.FullTextCommand);
+        }
+
     }
 }
