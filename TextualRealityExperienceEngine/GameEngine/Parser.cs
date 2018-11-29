@@ -33,6 +33,20 @@ namespace TextualRealityExperienceEngine.GameEngine
         readonly INounSynonyms _nounSynonyms = new NounSynonyms();
         readonly IPrepositionMapping _prepositionMappings = new PrepositionMapping();
 
+        public Parser()
+        {
+            _verbSynonyms = new VerbSynonyms();
+            _nounSynonyms = new NounSynonyms();
+            _prepositionMappings = new PrepositionMapping();
+        }
+
+        public Parser(IVerbSynonyms verbSynonyms, INounSynonyms nounSynonyms, IPrepositionMapping prepositionMapping)
+        {
+            _verbSynonyms = verbSynonyms;
+            _nounSynonyms = nounSynonyms;
+            _prepositionMappings = prepositionMapping;
+        }
+
         public ICommand ParseCommand(string command)
         {
             if (string.IsNullOrEmpty(command))
@@ -45,10 +59,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 return toReturn;
             }
 
-            // to lower
             var lowerCase = command.ToLower();
-
-            // split into list of words
             var wordList = lowerCase.Split(' ');
 
             ICommand commandList = new Command();

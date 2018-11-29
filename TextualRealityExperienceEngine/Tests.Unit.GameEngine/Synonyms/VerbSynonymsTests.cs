@@ -42,7 +42,6 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         public void AddCreatesSynonymMappingForANoun()
         {
             var verbSynonyms = new VerbSynonyms();
-            verbSynonyms.Add("get", VerbCodes.Take);
 
             Assert.AreEqual(VerbCodes.Take, verbSynonyms.GetVerbforSynonum("get"));
         }
@@ -60,8 +59,6 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         public void MultipleSynonymsCanMapToTheSameVerb()
         {
             var verbSynonyms = new VerbSynonyms();
-            verbSynonyms.Add("take", VerbCodes.Take);
-            verbSynonyms.Add("get", VerbCodes.Take);
 
             Assert.AreEqual(VerbCodes.Take, verbSynonyms.GetVerbforSynonum("take"));
             Assert.AreEqual(VerbCodes.Take, verbSynonyms.GetVerbforSynonum("get"));

@@ -42,6 +42,72 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _synonymMappings.Add("slide", VerbCodes.Go);
 
             _synonymMappings.Add("pick", VerbCodes.Take);
+            _synonymMappings.Add("grab", VerbCodes.Take);
+            _synonymMappings.Add("collect", VerbCodes.Take);
+            _synonymMappings.Add("steal", VerbCodes.Take);
+            _synonymMappings.Add("get", VerbCodes.Take);
+            _synonymMappings.Add("accept", VerbCodes.Take);
+            _synonymMappings.Add("capture", VerbCodes.Take);
+            _synonymMappings.Add("earn", VerbCodes.Take);
+            _synonymMappings.Add("hold", VerbCodes.Take);
+            _synonymMappings.Add("reach", VerbCodes.Take);
+            _synonymMappings.Add("aquire", VerbCodes.Take);
+            _synonymMappings.Add("attain", VerbCodes.Take);
+            _synonymMappings.Add("catch", VerbCodes.Take);
+            _synonymMappings.Add("clasp", VerbCodes.Take);
+            _synonymMappings.Add("clutch", VerbCodes.Take);
+            _synonymMappings.Add("ensnare", VerbCodes.Take);
+            _synonymMappings.Add("grasp", VerbCodes.Take);
+            _synonymMappings.Add("obtain", VerbCodes.Take);
+            _synonymMappings.Add("reap", VerbCodes.Take);
+            _synonymMappings.Add("snag", VerbCodes.Take);
+            _synonymMappings.Add("secure", VerbCodes.Take);
+            _synonymMappings.Add("snatch", VerbCodes.Take);
+            _synonymMappings.Add("gain", VerbCodes.Take);
+            _synonymMappings.Add("gather", VerbCodes.Take);
+            _synonymMappings.Add("take", VerbCodes.Take);
+            _synonymMappings.Add("haul", VerbCodes.Take);
+
+            _synonymMappings.Add("drop", VerbCodes.Drop);
+            _synonymMappings.Add("abandon", VerbCodes.Drop);
+            _synonymMappings.Add("release", VerbCodes.Drop);
+            _synonymMappings.Add("discard", VerbCodes.Drop);
+            _synonymMappings.Add("leave", VerbCodes.Drop);
+            _synonymMappings.Add("desert", VerbCodes.Drop);
+            _synonymMappings.Add("dismiss", VerbCodes.Drop);
+            _synonymMappings.Add("reject", VerbCodes.Drop);
+            _synonymMappings.Add("disown", VerbCodes.Drop);
+            _synonymMappings.Add("forfeit", VerbCodes.Drop);
+            _synonymMappings.Add("relinqush", VerbCodes.Drop);
+            _synonymMappings.Add("renounce", VerbCodes.Drop);
+            _synonymMappings.Add("resign", VerbCodes.Drop);
+            _synonymMappings.Add("sacrifice", VerbCodes.Drop);
+            _synonymMappings.Add("terminate", VerbCodes.Drop);
+
+            _synonymMappings.Add("use", VerbCodes.Use);
+            _synonymMappings.Add("employ", VerbCodes.Use);
+            _synonymMappings.Add("apply", VerbCodes.Use);
+            _synonymMappings.Add("work", VerbCodes.Use);
+            _synonymMappings.Add("ply", VerbCodes.Use);
+            _synonymMappings.Add("exert", VerbCodes.Use);
+            _synonymMappings.Add("wield", VerbCodes.Use);
+            _synonymMappings.Add("pull", VerbCodes.Use);
+            _synonymMappings.Add("push", VerbCodes.Use);
+            _synonymMappings.Add("flick", VerbCodes.Use);
+
+            _synonymMappings.Add("look", VerbCodes.Look);
+            _synonymMappings.Add("examine", VerbCodes.Look);
+            _synonymMappings.Add("peek", VerbCodes.Look);
+            _synonymMappings.Add("review", VerbCodes.Look);
+            _synonymMappings.Add("stare", VerbCodes.Look);
+            _synonymMappings.Add("view", VerbCodes.Look);
+            _synonymMappings.Add("cast", VerbCodes.Look);
+            _synonymMappings.Add("gander", VerbCodes.Look);
+            _synonymMappings.Add("gaze", VerbCodes.Look);
+            _synonymMappings.Add("inspect", VerbCodes.Look);
+            _synonymMappings.Add("observe", VerbCodes.Look);
+            _synonymMappings.Add("watch", VerbCodes.Look);
+            _synonymMappings.Add("see", VerbCodes.Look);
         }
 
         public void Add(string synonym, VerbCodes verb)
