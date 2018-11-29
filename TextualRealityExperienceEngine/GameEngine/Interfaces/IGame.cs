@@ -30,5 +30,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         string Prologue { get; set; }
         IRoom StartRoom { get; set; }
         IRoom CurrentRoom { get; set; }
+        IParser Parser { get; }
+        void ProcessCommand(string command);
     }
 }

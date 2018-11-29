@@ -132,6 +132,9 @@ namespace TextualRealityExperienceEngine.GameEngine
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
 
+
+
+
                 case "f":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "north";

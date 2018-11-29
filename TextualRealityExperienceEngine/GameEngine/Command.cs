@@ -38,6 +38,9 @@ namespace TextualRealityExperienceEngine.GameEngine
         public Command()
         {
             Verb = VerbCodes.NoCommand;
+            Noun = string.Empty;
+            Preposition = PropositionEnum.NotRecognised;
+            Noun2 = string.Empty;
         }
     }
 }

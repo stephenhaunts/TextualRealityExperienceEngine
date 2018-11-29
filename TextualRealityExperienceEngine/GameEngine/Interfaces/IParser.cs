@@ -28,5 +28,8 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
     public interface IParser
     {
         ICommand ParseCommand(string command);
+        IVerbSynonyms Verbs { get; }
+        INounSynonyms Nouns { get; }
+        IPrepositionMapping Prepositions { get; }
     }
 }

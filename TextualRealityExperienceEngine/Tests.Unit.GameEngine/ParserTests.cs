@@ -97,6 +97,28 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
 
         [TestMethod]
+        public void ParseSingleWordCommandReturnsValidCommandFor_North()
+        {
+            IParser parser = new Parser();
+            var command = parser.ParseCommand("North");
+
+            Assert.AreEqual(VerbCodes.Go, command.Verb);
+            Assert.AreEqual("north", command.Noun);
+            Assert.AreEqual("north", command.FullTextCommand);
+        }
+
+        [TestMethod]
+        public void ParseSingleWordCommandReturnsValidCommandFor_Twatty_North()
+        {
+            IParser parser = new Parser();
+            var command = parser.ParseCommand("Twatty North");
+
+            Assert.AreEqual(VerbCodes.NoCommand, command.Verb);
+            Assert.AreEqual("north", command.Noun);
+            Assert.AreEqual("twatty north", command.FullTextCommand);
+        }
+
+        [TestMethod]
         public void ParseSingleWordCommandReturnsValidCommandFor_L()
         {
             IParser parser = new Parser();
@@ -108,16 +130,70 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
 
         [TestMethod]
-        public void ParseCommandReturnsValidCommandFor_Go_North_At()
+        public void ParseCommandReturnsValidCommandFor_Grab_Key_From_Floor()
         {
             IParser parser = new Parser();
-            var command = parser.ParseCommand("Go North At Bum");
+            parser.Nouns.Add("key", "key");
+            parser.Nouns.Add("floor", "floor");
 
-            Assert.AreEqual(VerbCodes.Go, command.Verb);
-            Assert.AreEqual("north", command.Noun);
-            Assert.AreEqual(PropositionEnum.At, command.Preposition);
-            Assert.AreEqual("bum", command.Noun2);
-            Assert.AreEqual("go north at bum", command.FullTextCommand);
+            var command = parser.ParseCommand("Grab Key from floor");
+
+            Assert.AreEqual(VerbCodes.Take, command.Verb);
+            Assert.AreEqual("key", command.Noun);
+            Assert.AreEqual(PropositionEnum.From, command.Preposition);
+            Assert.AreEqual("floor", command.Noun2);
+            Assert.AreEqual("grab key from floor", command.FullTextCommand);
+        }
+
+        [TestMethod]
+        public void ParseCommandReturnsValidCommandFor_Grab_Key_From_Ground()
+        {
+            IParser parser = new Parser();
+            parser.Nouns.Add("key", "key");
+            parser.Nouns.Add("floor", "floor");
+            parser.Nouns.Add("ground", "floor");
+
+            var command = parser.ParseCommand("Grab Key from ground");
+
+            Assert.AreEqual(VerbCodes.Take, command.Verb);
+            Assert.AreEqual("key", command.Noun);
+            Assert.AreEqual(PropositionEnum.From, command.Preposition);
+            Assert.AreEqual("floor", command.Noun2);
+            Assert.AreEqual("grab key from ground", command.FullTextCommand);
+        }
+
+        [TestMethod]
+        public void ParseCommandReturnsValidCommandFor_Obtain_Key_From_Ground()
+        {
+            IParser parser = new Parser();
+            parser.Nouns.Add("key", "key");
+            parser.Nouns.Add("floor", "floor");
+            parser.Nouns.Add("ground", "floor");
+
+            var command = parser.ParseCommand("Obtain Key from ground");
+
+            Assert.AreEqual(VerbCodes.Take, command.Verb);
+            Assert.AreEqual("key", command.Noun);
+            Assert.AreEqual(PropositionEnum.From, command.Preposition);
+            Assert.AreEqual("floor", command.Noun2);
+            Assert.AreEqual("obtain key from ground", command.FullTextCommand);
+        }
+
+        [TestMethod]
+        public void ParseCommandReturnsValidCommandFor_Obtain_Key_From_Ground2()
+        {
+            IParser parser = new Parser();
+            parser.Nouns.Add("key", "key");
+            parser.Nouns.Add("floor", "floor");
+            parser.Nouns.Add("ground", "floor");
+
+            var command = parser.ParseCommand("Obtain uiouoiuiou Key iuouoiuio from wibblebum ground");
+
+            Assert.AreEqual(VerbCodes.Take, command.Verb);
+            Assert.AreEqual("key", command.Noun);
+            Assert.AreEqual(PropositionEnum.From, command.Preposition);
+            Assert.AreEqual("floor", command.Noun2);
+            Assert.AreEqual("obtain uiouoiuiou key iuouoiuio from wibblebum ground", command.FullTextCommand);
         }
     }
 }

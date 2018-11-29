@@ -41,7 +41,8 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
         Across = 9,
         Behind = 10,
         At = 11,
-        Up = 12
+        Up = 12,
+        From = 13
     }
 
     public class PrepositionMapping : IPrepositionMapping
@@ -63,6 +64,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _prepositionMappings.Add("behind", PropositionEnum.Behind);
             _prepositionMappings.Add("at", PropositionEnum.At);
             _prepositionMappings.Add("up", PropositionEnum.Up);
+            _prepositionMappings.Add("from", PropositionEnum.From);
         }
 
         public void Add(string inputProposotion, PropositionEnum preposition)

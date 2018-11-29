@@ -29,22 +29,22 @@ namespace TextualRealityExperienceEngine.GameEngine
 {
     public class Parser : IParser
     {
-        readonly IVerbSynonyms _verbSynonyms = new VerbSynonyms();
-        readonly INounSynonyms _nounSynonyms = new NounSynonyms();
-        readonly IPrepositionMapping _prepositionMappings = new PrepositionMapping();
+        public IVerbSynonyms Verbs { get; }
+        public INounSynonyms Nouns { get; }
+        public IPrepositionMapping Prepositions { get; }
 
         public Parser()
         {
-            _verbSynonyms = new VerbSynonyms();
-            _nounSynonyms = new NounSynonyms();
-            _prepositionMappings = new PrepositionMapping();
+            Verbs = new VerbSynonyms();
+            Nouns = new NounSynonyms();
+            Prepositions = new PrepositionMapping();
         }
 
         public Parser(IVerbSynonyms verbSynonyms, INounSynonyms nounSynonyms, IPrepositionMapping prepositionMapping)
         {
-            _verbSynonyms = verbSynonyms;
-            _nounSynonyms = nounSynonyms;
-            _prepositionMappings = prepositionMapping;
+            Verbs = verbSynonyms;
+            Nouns = nounSynonyms;
+            Prepositions = prepositionMapping;
         }
 
         public ICommand ParseCommand(string command)
@@ -97,7 +97,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             {
                 if (verbSet == false)
                 {
-                    var verb = _verbSynonyms.GetVerbforSynonum(word);
+                    var verb = Verbs.GetVerbforSynonum(word);
 
                     if (verb != VerbCodes.NoCommand)
                     {
@@ -109,7 +109,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
                 if (nounSet == false)
                 {
-                    var noun = _nounSynonyms.GetNounforSynonum(word);
+                    var noun = Nouns.GetNounforSynonum(word);
                     if (!string.IsNullOrEmpty(noun))
                     {
                         command.Noun = noun;
@@ -120,7 +120,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
                 if (prepositionSet == false)
                 {
-                    var preposition = _prepositionMappings.GetPreposition(word);
+                    var preposition = Prepositions.GetPreposition(word);
                     if (preposition != PropositionEnum.NotRecognised)
                     {
                         command.Preposition = preposition;
@@ -131,7 +131,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
                 if (noun2Set == false)
                 {
-                    var noun = _nounSynonyms.GetNounforSynonum(word);
+                    var noun = Nouns.GetNounforSynonum(word);
                     if (!string.IsNullOrEmpty(noun))
                     {
                         command.Noun2 = noun;

@@ -31,11 +31,13 @@ namespace TextualRealityExperienceEngine.GameEngine
         public string Prologue { get; set; }
         public IRoom StartRoom { get; set; }
         public IRoom CurrentRoom { get; set; }
+        public IParser Parser { get; }
 
         public Game()
         {
             Prologue = string.Empty;
             StartRoom = null;
+            Parser = new Parser();
         }
 
         public Game(string prologue, IRoom room)
@@ -53,6 +55,14 @@ namespace TextualRealityExperienceEngine.GameEngine
             Prologue = prologue;
             StartRoom = room;
             CurrentRoom = room;
+        }
+
+        public void ProcessCommand(string command)
+        {
+            if (!string.IsNullOrEmpty(command))
+            {
+                var parsedCommand = Parser.ParseCommand(command);
+            }
         }
     }
 }
