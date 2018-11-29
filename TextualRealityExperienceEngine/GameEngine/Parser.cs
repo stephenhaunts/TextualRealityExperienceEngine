@@ -27,6 +27,14 @@ using TextualRealityExperienceEngine.GameEngine.Synonyms;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
+    public enum ParserStatesEnum
+    {
+        Verb = 0,
+        Noun = 2,
+        Preposition = 3,
+        Noun2 = 4
+    }
+
     public class Parser : IParser
     {
         public IVerbSynonyms Verbs { get; }
@@ -88,54 +96,50 @@ namespace TextualRealityExperienceEngine.GameEngine
         {
             ICommand command = new Command();
 
-            bool verbSet = false;
-            bool nounSet = false;
-            bool prepositionSet = false;
-            bool noun2Set = false;
+            ParserStatesEnum parserStates = ParserStatesEnum.Verb;
 
             foreach (string word in commandList)
             {
-                if (verbSet == false)
+                if (parserStates == ParserStatesEnum.Verb)
                 {
                     var verb = Verbs.GetVerbforSynonum(word);
+                    parserStates = ParserStatesEnum.Noun;
 
                     if (verb != VerbCodes.NoCommand)
                     {
                         command.Verb = verb;
-                        verbSet = true;
                         continue;
-                    }                                     
+                    }                                                        
                 }
 
-                if (nounSet == false)
+                if (parserStates == ParserStatesEnum.Noun)
                 {
                     var noun = Nouns.GetNounforSynonum(word);
                     if (!string.IsNullOrEmpty(noun))
                     {
                         command.Noun = noun;
-                        nounSet = true;
+                        parserStates = ParserStatesEnum.Preposition;
                         continue;
                     }
                 }
 
-                if (prepositionSet == false)
+                if (parserStates == ParserStatesEnum.Preposition)
                 {
                     var preposition = Prepositions.GetPreposition(word);
                     if (preposition != PropositionEnum.NotRecognised)
                     {
                         command.Preposition = preposition;
-                        prepositionSet = true;
+                        parserStates = ParserStatesEnum.Noun2;
                         continue;
                     }
                 }
 
-                if (noun2Set == false)
+                if (parserStates == ParserStatesEnum.Noun2)
                 {
                     var noun = Nouns.GetNounforSynonum(word);
                     if (!string.IsNullOrEmpty(noun))
                     {
                         command.Noun2 = noun;
-                        noun2Set = true;
                         continue;
                     }
                 }
