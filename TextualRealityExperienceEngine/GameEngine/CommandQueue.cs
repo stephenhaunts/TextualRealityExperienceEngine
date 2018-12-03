@@ -21,15 +21,37 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
 
-namespace TextualRealityExperienceEngine.GameEngine.Interfaces
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Collections.ObjectModel;
+using TextualRealityExperienceEngine.GameEngine.Interfaces;
+
+namespace TextualRealityExperienceEngine.GameEngine
 {
-    public interface IRoom
+    public class CommandQueue : ICommandQueue
     {
-        string Name { get; set; }
-        string Description { get; set; }
-        void AddExit(Direction direction, IRoom room);
-        void ProcessCommand(ICommand command);
+        readonly List<ICommand> _commandQueue = new List<ICommand>();
+
+        public void AddCommand(ICommand command)
+        {
+            _commandQueue.Add(command);
+        }
+
+        public int Count
+        {
+            get
+            {
+                return _commandQueue.Count;
+            }
+        }
+
+        public ReadOnlyCollection<ICommand> Commands
+        {
+            get
+            {
+                return new ReadOnlyCollection<ICommand>(_commandQueue);
+            }
+        }
     }
 }

@@ -32,6 +32,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         public IRoom StartRoom { get; set; }
         public IRoom CurrentRoom { get; set; }
         public IParser Parser { get; }
+        ICommandQueue _commandqueue = new CommandQueue();
 
         public Game()
         {
@@ -62,6 +63,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             if (!string.IsNullOrEmpty(command))
             {
                 var parsedCommand = Parser.ParseCommand(command);
+                _commandqueue.AddCommand(parsedCommand);
             }
         }
     }

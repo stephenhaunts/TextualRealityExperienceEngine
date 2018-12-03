@@ -67,5 +67,10 @@ namespace TextualRealityExperienceEngine.GameEngine
         {
             _roomExits.AddExit(direction, room);
         }
+
+        public virtual void ProcessCommand(ICommand command)
+        {
+
+        }
     }
 }

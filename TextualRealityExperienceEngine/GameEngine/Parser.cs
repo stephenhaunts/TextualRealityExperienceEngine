@@ -40,6 +40,8 @@ namespace TextualRealityExperienceEngine.GameEngine
         public IVerbSynonyms Verbs { get; }
         public INounSynonyms Nouns { get; }
         public IPrepositionMapping Prepositions { get; }
+        ParserStatesEnum parserStates = ParserStatesEnum.Verb;
+        ICommand _command;
 
         public Parser()
         {
@@ -94,58 +96,89 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         ICommand MultiWordCommand(string[] commandList)
         {
-            ICommand command = new Command();
-
-            ParserStatesEnum parserStates = ParserStatesEnum.Verb;
+            _command = new Command();
 
             foreach (string word in commandList)
             {
                 if (parserStates == ParserStatesEnum.Verb)
                 {
-                    var verb = Verbs.GetVerbforSynonum(word);
-                    parserStates = ParserStatesEnum.Noun;
-
-                    if (verb != VerbCodes.NoCommand)
-                    {
-                        command.Verb = verb;
-                        continue;
-                    }                                                        
+                    if (ProcessVerbs(word)) continue;                                                  
                 }
 
                 if (parserStates == ParserStatesEnum.Noun)
                 {
-                    var noun = Nouns.GetNounforSynonum(word);
-                    if (!string.IsNullOrEmpty(noun))
-                    {
-                        command.Noun = noun;
-                        parserStates = ParserStatesEnum.Preposition;
-                        continue;
-                    }
+                    if (ProcessNoun1(word)) continue;
                 }
 
                 if (parserStates == ParserStatesEnum.Preposition)
                 {
-                    var preposition = Prepositions.GetPreposition(word);
-                    if (preposition != PropositionEnum.NotRecognised)
-                    {
-                        command.Preposition = preposition;
-                        parserStates = ParserStatesEnum.Noun2;
-                        continue;
-                    }
+                    if (ProcessPreposition(word)) continue;
                 }
 
                 if (parserStates == ParserStatesEnum.Noun2)
                 {
-                    var noun = Nouns.GetNounforSynonum(word);
-                    if (!string.IsNullOrEmpty(noun))
-                    {
-                        command.Noun2 = noun;
-                        continue;
-                    }
+                    if (ProcessNoun2(word)) continue;
                 }
             }
 
-            return command; 
+            parserStates = ParserStatesEnum.Verb;
+
+            return _command; 
+        }
+
+        bool ProcessVerbs(string word)
+        {
+            var verb = Verbs.GetVerbforSynonum(word);
+            parserStates = ParserStatesEnum.Noun;
+
+            if (verb != VerbCodes.NoCommand)
+            {
+                _command.Verb = verb;
+                return true;
+            }
+
+            return false;
+        }
+
+        bool ProcessNoun1(string word)
+        {
+            var noun = Nouns.GetNounforSynonum(word);
+            if (!string.IsNullOrEmpty(noun))
+            {
+                _command.Noun = noun;
+                parserStates = ParserStatesEnum.Preposition;
+
+                return true;
+            }
+
+            return false;
+        }
+
+        bool ProcessPreposition(string word)
+        {
+            var preposition = Prepositions.GetPreposition(word);
+            if (preposition != PropositionEnum.NotRecognised)
+            {
+                _command.Preposition = preposition;
+                parserStates = ParserStatesEnum.Noun2;
+
+                return true;
+            }
+
+            return false;
+        }
+
+        bool ProcessNoun2(string word)
+        {
+            var noun = Nouns.GetNounforSynonum(word);
+            if (!string.IsNullOrEmpty(noun))
+            {
+
+                _command.Noun2 = noun;
+                return true;
+            }
+
+            return false;
         }
     }
 }
