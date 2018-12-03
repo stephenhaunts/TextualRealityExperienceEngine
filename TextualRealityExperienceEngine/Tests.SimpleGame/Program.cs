@@ -66,8 +66,13 @@ namespace Tests.SimpleGame
             while (true)
             {
                 Console.Write("> ");
-                _game.ProcessCommand(Console.ReadLine());
-                Console.WriteLine();
+                string reply = _game.ProcessCommand(Console.ReadLine());
+
+                if (!string.IsNullOrEmpty(reply))
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(reply);
+                }
             }
         }
     }

@@ -90,27 +90,31 @@ namespace TextualRealityExperienceEngine.GameEngine
             _roomExits.AddExit(direction, room);
         }
 
-        public virtual void ProcessCommand(ICommand command)
+        public virtual string ProcessCommand(ICommand command)
         {
             switch (command.Verb)
             {
                 case Synonyms.VerbCodes.Go:
+                {
                     try
                     {
                         var room = _roomExits.GetRoomForExit((Direction)Enum.Parse(typeof(Direction), command.Noun, true));
 
-                        _game.CurrentRoom = room;
-                        Console.WriteLine();
-                        Console.WriteLine(room.Description);
+                            if (room == null)
+                                return "There is no exit to the " + command.Noun.ToLower();
+
+                            _game.CurrentRoom = room;
+                        return room.Description;
                     }
                     catch (ArgumentException)
                     {
                         Console.WriteLine();
-                        Console.WriteLine("oops");
+                        return "Oops";
                     }
-
-                    break;
+                }
             }
+
+            return string.Empty;
 
         }
     }

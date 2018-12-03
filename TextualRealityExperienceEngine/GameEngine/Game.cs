@@ -58,14 +58,16 @@ namespace TextualRealityExperienceEngine.GameEngine
             CurrentRoom = room;
         }
 
-        public void ProcessCommand(string command)
+        public string ProcessCommand(string command)
         {
             if (!string.IsNullOrEmpty(command))
             {
                 var parsedCommand = Parser.ParseCommand(command);
                 _commandqueue.AddCommand(parsedCommand);
-                CurrentRoom.ProcessCommand(parsedCommand);
+                return CurrentRoom.ProcessCommand(parsedCommand);
             }
+
+            return string.Empty;
         }
     }
 }
