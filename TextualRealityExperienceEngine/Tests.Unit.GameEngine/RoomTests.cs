@@ -24,6 +24,7 @@ SOFTWARE.
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityExperienceEngine.GameEngine;
+using TextualRealityExperienceEngine.GameEngine.Interfaces;
 using TextualRealityExperienceEngine.Tests.Unit.GameEngine.Stubs;
 
 namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
@@ -34,21 +35,24 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         [TestMethod]
         public void DescriptionIsNullWhenCreatedWithDefaultConstructor()
         {
-            var room = new Room();
+            IGame game = new Game();
+            var room = new Room(game);
             Assert.AreEqual(string.Empty, room.Description);
         }
 
         [TestMethod]
         public void NameIsEmptyWhenCreatedWithDefaultConstructor()
         {
-            var room = new Room();
+            IGame game = new Game();
+            var room = new Room(game);
             Assert.AreEqual(string.Empty, room.Name);
         }
 
         [TestMethod]
         public void DescriptionmIsSetByProperty()
         {
-            var room = new Room
+            IGame game = new Game();
+            var room = new Room(game)
             {
                 Description = "description"
             };
@@ -59,7 +63,8 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         [TestMethod]
         public void NameIsSetByProperty()
         {
-            var room = new Room
+            IGame game = new Game();
+            var room = new Room(game)
             {
                 Name = "name"
             };
@@ -71,20 +76,20 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         [ExpectedException(typeof(ArgumentNullException), "The room name can not be empty.")]
         public void OveriddenConstructorThrowsArgumentNullExcpetionIfNameIsNull()
         {
-            var room = new Room("", null);
+            var room = new Room("", null, null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException), "The room description can not be null.")]
         public void OveriddenConstructorThrowsArgumentNullExcpetionIfDescriptionIsNull()
         {
-            var room = new Room("name", null);
+            var room = new Room("name", null, null);
         }
 
         [TestMethod]
         public void OveriddenConstructorSetsName()
         {
-            var room = new Room("name", "description");
+            var room = new Room("name", "description", null);
 
             Assert.AreEqual("name", room.Name);
         }
@@ -92,7 +97,7 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         [TestMethod]
         public void OveriddenConstructorSetsDescriptionm()
         {
-            var room = new Room("name", "description");
+            var room = new Room("name", "description", null);
 
             Assert.AreEqual("description", room.Description);
         }
@@ -100,9 +105,10 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         [TestMethod]
         public void AddExitCallsAddExitOnGameExits()
         {
+            IGame game = new Game();
             var roomExits = new RoomExitsStub();
-            var room = new Room(roomExits);
-            var room2 = new Room("name2", "description2");
+            var room = new Room(roomExits, game);
+            var room2 = new Room("name2", "description2", null);
 
             room.AddExit(Direction.North, room2);
 

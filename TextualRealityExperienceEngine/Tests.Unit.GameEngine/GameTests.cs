@@ -48,7 +48,7 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         public void StartRoomIsSetByProperty()
         {
             var game = new Game();
-            var room = new Room();
+            var room = new Room(game);
             game.StartRoom = room;
 
             Assert.AreEqual(room, game.StartRoom);
@@ -58,7 +58,7 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         public void CurrentRoomIsSetByProperty()
         {
             var game = new Game();
-            var room = new Room();
+            var room = new Room(game);
             game.CurrentRoom = room;
 
             Assert.AreEqual(room, game.CurrentRoom);
@@ -102,6 +102,7 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         [TestMethod]
         public void OveriddenConstructorSetsStartRoom()
         {
+    
             var startRoom = new Room();
             var prologue = "This is a progue";
             var game = new Game(prologue, startRoom);

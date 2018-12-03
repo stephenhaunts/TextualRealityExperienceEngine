@@ -33,6 +33,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         public string Name { get; set; }
         public string Description { get; set; }
+        IGame _game;
 
         public Room()
         {
@@ -40,14 +41,34 @@ namespace TextualRealityExperienceEngine.GameEngine
             Description = string.Empty;
         }
 
-        public Room(IRoomExits roomExits)
+        public Room(IGame game)
+        {
+            Name = string.Empty;
+            Description = string.Empty;
+            _game = game;
+        }
+
+        public Room(IRoomExits roomExits, IGame game)
         {
             Name = string.Empty;
             Description = string.Empty;
             _roomExits = roomExits;
+            _game = game;
         }
 
-        public Room(string name, string description)
+        public IGame Game
+        {
+            get
+            {
+                return _game;
+            }
+            set
+            {
+                _game = value;
+            }
+        }
+
+        public Room(string name, string description, IGame game)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -61,6 +82,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             Name = name;
             Description = description;
+            _game = game;
         }
 
         public void AddExit(Direction direction, IRoom room)
@@ -70,6 +92,25 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         public virtual void ProcessCommand(ICommand command)
         {
+            switch (command.Verb)
+            {
+                case Synonyms.VerbCodes.Go:
+                    try
+                    {
+                        var room = _roomExits.GetRoomForExit((Direction)Enum.Parse(typeof(Direction), command.Noun, true));
+
+                        _game.CurrentRoom = room;
+                        Console.WriteLine();
+                        Console.WriteLine(room.Description);
+                    }
+                    catch (ArgumentException)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("oops");
+                    }
+
+                    break;
+            }
 
         }
     }

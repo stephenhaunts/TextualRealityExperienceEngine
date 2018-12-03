@@ -36,14 +36,19 @@ namespace Tests.SimpleGame
             _game.Prologue = "Welcome to test adventure. You will be bedazzled with awesomeness.";
 
             var outside = new Room("Outside", "You are standing on a driveway outside of a house. It is nightime and very cold. " +
-                                              "There is frost on the ground. There is a door to the north.");
+                                              "There is frost on the ground. There is a door to the north.", _game);
                 
 
             var hallway = new Room("Hallway", "You are standing in a hallway that is modern, yet worn. There is a door to the west." +
-            "To the south the front door leads back to the driveway.");
+            "To the south the front door leads back to the driveway.", _game);
+
+            var lounge = new Room("Lounge", "You are stand in the lounge. There is a sofa and a TV inside. There is a door back to the hallway to the east.", _game);
 
             outside.AddExit(Direction.North, hallway);
             hallway.AddExit(Direction.South, outside);
+
+            hallway.AddExit(Direction.West, lounge);
+            lounge.AddExit(Direction.East, hallway);
 
             _game.StartRoom = outside;
             _game.CurrentRoom = outside;
@@ -52,6 +57,7 @@ namespace Tests.SimpleGame
         static void Main(string[] args)
         {
             InitializeGame();
+
             Console.WriteLine(_game.Prologue);
             Console.WriteLine();
             Console.WriteLine(_game.StartRoom.Description);
@@ -60,7 +66,8 @@ namespace Tests.SimpleGame
             while (true)
             {
                 Console.Write("> ");
-                Console.ReadLine();
+                _game.ProcessCommand(Console.ReadLine());
+                Console.WriteLine();
             }
         }
     }

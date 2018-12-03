@@ -24,6 +24,7 @@ SOFTWARE.
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityExperienceEngine.GameEngine;
+using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 {
@@ -41,7 +42,8 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         [TestMethod]
         public void AddExitForNorthAddsTheExit()
         {
-            var room = new Room("testRoom", "this is a test room.");
+            var game = new Game();
+            var room = new Room("testRoom", "this is a test room.", game);
 
             var roomExits = new RoomExits();
             roomExits.AddExit(Direction.North, room);
@@ -57,8 +59,9 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         [ExpectedException(typeof(InvalidOperationException))]
         public void AddExitThrowsInvalidOperationExceptionIfSameDirectionUsedMoreThanOnce()
         {
-            var room = new Room("testRoom", "this is a test room.");
-            var room2 = new Room("testRoom2", "this is a test room.");
+            var game = new Game();
+            var room = new Room("testRoom", "this is a test room.", game);
+            var room2 = new Room("testRoom2", "this is a test room.", game);
 
             var roomExits = new RoomExits();
             roomExits.AddExit(Direction.North, room);
@@ -71,8 +74,9 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         [TestMethod]
         public void GetRoomForExitReturnsValidRoom()
         {
-            var room = new Room("testRoom", "this is a test room.");
-            var room2 = new Room("testRoom2", "this is a test room.");
+            var game = new Game();
+            var room = new Room("testRoom", "this is a test room.", game);
+            var room2 = new Room("testRoom2", "this is a test room.", game);
 
             var roomExits = new RoomExits();
             roomExits.AddExit(Direction.North, room);
@@ -85,8 +89,9 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         [TestMethod]
         public void GetRoomForExitReturnsNullForNonExistentRoom()
         {
-            var room = new Room("testRoom", "this is a test room.");
-            var room2 = new Room("testRoom2", "this is a test room.");
+            var game = new Game();
+            var room = new Room("testRoom", "this is a test room.", game);
+            var room2 = new Room("testRoom2", "this is a test room.", game);
 
             var roomExits = new RoomExits();
             roomExits.AddExit(Direction.North, room);

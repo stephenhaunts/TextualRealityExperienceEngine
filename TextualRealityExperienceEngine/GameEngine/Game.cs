@@ -64,6 +64,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             {
                 var parsedCommand = Parser.ParseCommand(command);
                 _commandqueue.AddCommand(parsedCommand);
+                CurrentRoom.ProcessCommand(parsedCommand);
             }
         }
     }
