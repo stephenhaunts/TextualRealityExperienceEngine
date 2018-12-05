@@ -22,6 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
@@ -51,13 +55,94 @@ namespace Tests.SimpleGame
             _game.CurrentRoom = outside;
         }
 
+        // Based on code from https://www.codeproject.com/Articles/51488/Implementing-Word-Wrap-in-C
+        public static void WordWrap(string paragraph)
+        {
+            const string _newline = "\r\n";
+            int pos, next;
+            StringBuilder sb = new StringBuilder();
+
+            // Parse each line of text
+            for (pos = 0; pos < paragraph.Length; pos = next)
+            {
+                // Find end of line
+                int eol = paragraph.IndexOf(_newline, pos, StringComparison.CurrentCulture);
+
+                if (eol == -1)
+                {
+                    next = eol = paragraph.Length;
+                }
+                else
+                {
+                    next = eol + _newline.Length;
+                }
+
+                // Copy this line of text, breaking into smaller lines as needed
+                if (eol > pos)
+                {
+                    do
+                    {
+                        int len = eol - pos;
+
+                        if (len > Console.WindowWidth)
+                        {
+                            len = BreakLine(paragraph, pos, Console.WindowWidth);
+                        }
+
+                        sb.Append(paragraph, pos, len);
+                        sb.Append(_newline);
+
+                        // Trim whitespace following break
+                        pos += len;
+
+                        while (pos < eol && Char.IsWhiteSpace(paragraph[pos]))
+                        {
+                            pos++;
+                        }
+
+                    } while (eol > pos);
+                }
+                else
+                {
+                    sb.Append(_newline); // Empty line
+                }
+            }
+
+            Console.WriteLine(sb);
+        }
+
+
+        public static int BreakLine(string text, int pos, int max)
+        {
+            // Find last whitespace in line
+            int i = max - 1;
+
+            while (i >= 0 && !Char.IsWhiteSpace(text[pos + i]))
+            {
+                i--;
+            }
+
+            if (i < 0)
+            {
+                return max; 
+            }
+            
+            while (i >= 0 && Char.IsWhiteSpace(text[pos + i]))
+            {
+                i--;
+            }
+
+            return i + 1;
+        }
+
         static void Main(string[] args)
         {
             InitializeGame();
 
             Console.WriteLine(_game.Prologue);
             Console.WriteLine();
-            Console.WriteLine(_game.StartRoom.Description);
+
+            WordWrap(_game.StartRoom.Description);
             Console.WriteLine();
 
             while (true)
@@ -68,7 +153,7 @@ namespace Tests.SimpleGame
                 if (!string.IsNullOrEmpty(reply))
                 {
                     Console.WriteLine();
-                    Console.WriteLine(reply);
+                    WordWrap(reply);
                 }
             }
         }
