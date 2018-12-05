@@ -195,5 +195,27 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             Assert.AreEqual("floor", command.Noun2);
             Assert.AreEqual("obtain uiouoiuiou key iuouoiuio from wibblebum ground", command.FullTextCommand);
         }
+
+        [TestMethod]
+        public void ParseCommandReturnsValidCommandFor_Examine()
+        {
+            IParser parser = new Parser();
+            var command = parser.ParseCommand("Examine");
+
+            Assert.AreEqual(VerbCodes.Look, command.Verb);
+            Assert.AreEqual(string.Empty, command.Noun);
+            Assert.AreEqual("examine", command.FullTextCommand);
+        }
+
+        [TestMethod]
+        public void ParseCommandReturnsValidCommandFor_Gaze()
+        {
+            IParser parser = new Parser();
+            var command = parser.ParseCommand("gaze");
+
+            Assert.AreEqual(VerbCodes.Look, command.Verb);
+            Assert.AreEqual(string.Empty, command.Noun);
+            Assert.AreEqual("gaze", command.FullTextCommand);
+        }
     }
 }

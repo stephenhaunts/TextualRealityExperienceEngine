@@ -91,7 +91,14 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         ICommand SingleWordCommand(string command)
         {
-            return DirectionsHelper.GetDirectionCommand(command);                     
+            var reply = DirectionsHelper.GetDirectionCommand(command);
+
+            if (reply.Verb == VerbCodes.NoCommand)
+            {
+               reply.Verb = Verbs.GetVerbforSynonum(command);             
+            }
+
+            return reply;
         }
 
         ICommand MultiWordCommand(string[] commandList)

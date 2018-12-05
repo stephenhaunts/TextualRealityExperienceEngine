@@ -85,9 +85,33 @@ namespace TextualRealityExperienceEngine.GameEngine
             _game = game;
         }
 
-        public void AddExit(Direction direction, IRoom room)
+        public void AddExit(Direction direction, IRoom room, bool withExit = true)
         {
             _roomExits.AddExit(direction, room);
+
+            if (!withExit)
+            {
+                return;
+            }
+
+            switch (direction)
+            {
+                case Direction.North:
+                    room.AddExit(Direction.South, this, false);
+                    break;
+
+                case Direction.South:
+                    room.AddExit(Direction.North, this, false);
+                    break;
+
+                case Direction.East:
+                    room.AddExit(Direction.West, this, false);
+                    break;
+
+                case Direction.West:
+                    room.AddExit(Direction.East, this, false);
+                    break;
+            }
         }
 
         public virtual string ProcessCommand(ICommand command)
@@ -104,6 +128,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                                 return "There is no exit to the " + command.Noun.ToLower();
 
                             _game.CurrentRoom = room;
+
                         return room.Description;
                     }
                     catch (ArgumentException)
@@ -112,6 +137,16 @@ namespace TextualRealityExperienceEngine.GameEngine
                         return "Oops";
                     }
                 }
+                case Synonyms.VerbCodes.Look:
+                {
+                    if (string.IsNullOrEmpty(command.Noun))
+                    {
+                        return Description;
+                    }
+                        break;
+                }
+
+
             }
 
             return string.Empty;

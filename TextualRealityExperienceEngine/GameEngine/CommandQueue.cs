@@ -23,7 +23,6 @@ SOFTWARE.
 */
 
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 

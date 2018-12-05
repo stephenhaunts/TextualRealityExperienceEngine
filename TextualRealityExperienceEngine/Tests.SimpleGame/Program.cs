@@ -45,10 +45,7 @@ namespace Tests.SimpleGame
             var lounge = new Room("Lounge", "You are stand in the lounge. There is a sofa and a TV inside. There is a door back to the hallway to the east.", _game);
 
             outside.AddExit(Direction.North, hallway);
-            hallway.AddExit(Direction.South, outside);
-
             hallway.AddExit(Direction.West, lounge);
-            lounge.AddExit(Direction.East, hallway);
 
             _game.StartRoom = outside;
             _game.CurrentRoom = outside;

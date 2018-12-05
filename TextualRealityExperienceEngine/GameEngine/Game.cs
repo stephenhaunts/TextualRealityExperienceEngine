@@ -58,6 +58,8 @@ namespace TextualRealityExperienceEngine.GameEngine
             CurrentRoom = room;
         }
 
+
+
         public string ProcessCommand(string command)
         {
             if (!string.IsNullOrEmpty(command))

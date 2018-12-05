@@ -35,11 +35,16 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
         {
             _synonymMappings.Add("walk", VerbCodes.Go);
             _synonymMappings.Add("go", VerbCodes.Go);
+            _synonymMappings.Add("hop", VerbCodes.Go);
             _synonymMappings.Add("run", VerbCodes.Go);
             _synonymMappings.Add("shuffle", VerbCodes.Go);
             _synonymMappings.Add("crawl", VerbCodes.Go);
-            _synonymMappings.Add("hop", VerbCodes.Go);
             _synonymMappings.Add("slide", VerbCodes.Go);
+            _synonymMappings.Add("scuffle", VerbCodes.Go);
+            _synonymMappings.Add("wiggle", VerbCodes.Go);
+            _synonymMappings.Add("skip", VerbCodes.Go);
+            _synonymMappings.Add("prance", VerbCodes.Go);
+            _synonymMappings.Add("mince", VerbCodes.Go);
 
             _synonymMappings.Add("pick", VerbCodes.Take);
             _synonymMappings.Add("grab", VerbCodes.Take);
