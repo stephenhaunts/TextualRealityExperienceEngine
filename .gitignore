@@ -48,3 +48,9 @@ TextualRealityExperienceEngine/Tests\.SimpleGame/bin/Debug/netcoreapp2\.1/
 *.pdb
 
 TextualRealityExperienceEngine/Tests\.SimpleGame/obj/
+
+TextualRealityExperienceEngine/Tests\.Integration\.GameEngine/bin/Debug/netcoreapp2\.1/
+
+TextualRealityExperienceEngine/Tests\.Integration\.GameEngine/obj/Debug/netcoreapp2\.1/
+
+TextualRealityExperienceEngine/Tests\.Integration\.GameEngine/obj/
