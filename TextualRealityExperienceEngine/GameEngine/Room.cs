@@ -111,6 +111,22 @@ namespace TextualRealityExperienceEngine.GameEngine
                 case Direction.West:
                     room.AddExit(Direction.East, this, false);
                     break;
+
+                case Direction.NorthEast:
+                    room.AddExit(Direction.SouthWest, this, false);
+                    break;
+
+                case Direction.SouthEast:
+                    room.AddExit(Direction.NorthWest, this, false);
+                    break;
+
+                case Direction.NorthWest:
+                    room.AddExit(Direction.SouthEast, this, false);
+                    break;
+
+                case Direction.SouthWest:
+                    room.AddExit(Direction.NorthEast, this, false);
+                    break;
             }
         }
 
