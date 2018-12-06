@@ -32,6 +32,9 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         IRoom CurrentRoom { get; set; }
         IParser Parser { get; }
 
+        int NumberOfMoves { get; set; }
+        int Score { get; set; }
+
         string ProcessCommand(string command);
     }
 }

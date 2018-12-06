@@ -25,6 +25,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.Synonyms;
 using TextualRealityExperienceEngine.Tests.Unit.GameEngine.Stubs;
 
 namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
@@ -145,7 +146,24 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 
             Assert.AreEqual(1, roomExits.AddExitCounter);
             Assert.AreEqual(1, roomExits2.AddExitCounter);
+        }
 
+        [TestMethod]
+        public void MovingBetweenRoomsIncrementsNumberOfMoves()
+        {
+            IGame game = new Game();
+            var room = new Room(game);
+            var room2 = new Room("name2", "description2", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            room.AddExit(Direction.North, room2, true);
+
+            game.ProcessCommand("go north");
+            game.ProcessCommand("go south");
+
+            Assert.AreEqual(2, game.NumberOfMoves);
         }
     }
 }

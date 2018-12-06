@@ -144,6 +144,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                                 return "There is no exit to the " + command.Noun.ToLower();
 
                             _game.CurrentRoom = room;
+                            _game.NumberOfMoves++;
 
                         return room.Description;
                     }

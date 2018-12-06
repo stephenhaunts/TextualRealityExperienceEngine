@@ -119,5 +119,21 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 
             Assert.AreEqual(startRoom, game.CurrentRoom);
         }
+
+        [TestMethod]
+        public void NumberOfMovesInitializedToZero()
+        {
+            var game = new Game();
+
+            Assert.AreEqual(0, game.NumberOfMoves);
+        }
+
+        [TestMethod]
+        public void ScoreInitializedToZero()
+        {
+            var game = new Game();
+
+            Assert.AreEqual(0, game.Score);
+        }
     }
 }

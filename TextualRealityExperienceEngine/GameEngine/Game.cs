@@ -32,6 +32,9 @@ namespace TextualRealityExperienceEngine.GameEngine
         public IRoom StartRoom { get; set; }
         public IRoom CurrentRoom { get; set; }
         public IParser Parser { get; }
+        public int NumberOfMoves { get; set; }
+        public int Score { get; set; }
+
         ICommandQueue _commandqueue = new CommandQueue();
 
         public Game()
