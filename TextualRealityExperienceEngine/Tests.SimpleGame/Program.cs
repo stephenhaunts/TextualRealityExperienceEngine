@@ -54,6 +54,7 @@ namespace Tests.SimpleGame
 
         static void Main(string[] args)
         {
+            Console.Clear();
             InitializeGame();
 
             Console.WriteLine(_game.Prologue);
