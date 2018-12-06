@@ -30,22 +30,26 @@ namespace TextualRealityExperienceEngine.GameEngine
     public class Room : IRoom
     {
         readonly IRoomExits _roomExits = new RoomExits();
-
         public string Name { get; set; }
-        public string Description { get; set; }
-        IGame _game;
+        public string LightsOffDescription { get; set; }
+        public IGame Game { get; set; }
+        private string _description;
+
+        public bool LightsOn { get; set;}
 
         public Room()
         {
             Name = string.Empty;
             Description = string.Empty;
+            LightsOn = true;
         }
 
         public Room(IGame game)
         {
             Name = string.Empty;
             Description = string.Empty;
-            _game = game;
+            Game = game;
+            LightsOn = true;
         }
 
         public Room(IRoomExits roomExits, IGame game)
@@ -53,18 +57,24 @@ namespace TextualRealityExperienceEngine.GameEngine
             Name = string.Empty;
             Description = string.Empty;
             _roomExits = roomExits;
-            _game = game;
+            Game = game;
+            LightsOn = true;
         }
 
-        public IGame Game
+        public string Description 
         {
-            get
+            get 
             {
-                return _game;
+                if (!LightsOn)
+                {
+                    return LightsOffDescription;
+                }
+
+                return _description;
             }
-            set
+            set 
             {
-                _game = value;
+                _description = value;
             }
         }
 
@@ -82,7 +92,8 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             Name = name;
             Description = description;
-            _game = game;
+            Game = game;
+            LightsOn = true;
         }
 
         public void AddExit(Direction direction, IRoom room, bool withExit = true)
@@ -143,8 +154,8 @@ namespace TextualRealityExperienceEngine.GameEngine
                             if (room == null)
                                 return "There is no exit to the " + command.Noun.ToLower();
 
-                            _game.CurrentRoom = room;
-                            _game.NumberOfMoves++;
+                            Game.CurrentRoom = room;
+                            Game.NumberOfMoves++;
 
                         return room.Description;
                     }
