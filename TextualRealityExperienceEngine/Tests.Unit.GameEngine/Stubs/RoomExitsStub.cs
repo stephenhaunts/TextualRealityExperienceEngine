@@ -32,7 +32,7 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine.Stubs
         public int AddExitCounter { get; set; }
         public int GetRoomCounter { get; set; }
 
-        public void AddExit(Direction direction, IRoom room)
+        public void AddExit(DoorWay door, IRoom room, bool locked = false, string objectToUnlock = "")
         {
             AddExitCounter++;
         }

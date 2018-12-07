@@ -27,7 +27,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
     public interface IRoomExits
     {
-        void AddExit(Direction direction, IRoom room);
-        IRoom GetRoomForExit(Direction direction);
+        void AddExit(DoorWay doorway, IRoom room, bool locked = false, string objectToUnlock = "");
+        IRoom GetRoomForExit(Direction doorway);
     }
 }

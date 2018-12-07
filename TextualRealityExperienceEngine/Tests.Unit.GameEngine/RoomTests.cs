@@ -111,7 +111,12 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var room = new Room(roomExits, game);
             var room2 = new Room("name2", "description2", null);
 
-            room.AddExit(Direction.North, room2, false);
+            DoorWay doorway = new DoorWay
+            {
+                Direction = Direction.North
+            };
+
+            room.AddExit(doorway, room2, false);
 
             Assert.AreEqual(1, roomExits.AddExitCounter);
         }
@@ -126,7 +131,12 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var room = new Room(roomExits, game);
             var room2 = new Room(roomExits2, game);
 
-            room.AddExit(Direction.North, room2, false);
+            DoorWay doorway = new DoorWay
+            {
+                Direction = Direction.North
+            };
+
+            room.AddExit(doorway, room2, false);
 
             Assert.AreEqual(1, roomExits.AddExitCounter);
             Assert.AreEqual(0, roomExits2.AddExitCounter);
@@ -141,8 +151,13 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 
             var room = new Room(roomExits, game);
             var room2 = new Room(roomExits2, game);
-           
-            room.AddExit(Direction.North, room2);
+
+            DoorWay doorway = new DoorWay
+            {
+                Direction = Direction.North
+            };
+
+            room.AddExit(doorway, room2);
 
             Assert.AreEqual(1, roomExits.AddExitCounter);
             Assert.AreEqual(1, roomExits2.AddExitCounter);
@@ -158,7 +173,12 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             game.CurrentRoom = room;
             game.StartRoom = room;
 
-            room.AddExit(Direction.North, room2, true);
+            DoorWay doorway = new DoorWay
+            {
+                Direction = Direction.North
+            };
+
+            room.AddExit(doorway, room2, true);
 
             game.ProcessCommand("go north");
             game.ProcessCommand("go south");

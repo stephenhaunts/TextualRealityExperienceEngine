@@ -96,47 +96,57 @@ namespace TextualRealityExperienceEngine.GameEngine
             LightsOn = true;
         }
 
-        public void AddExit(Direction direction, IRoom room, bool withExit = true)
+        public void AddExit(DoorWay doorway, IRoom room, bool withExit = true)
         {
-            _roomExits.AddExit(direction, room);
+            _roomExits.AddExit(doorway, room);
 
             if (!withExit)
             {
                 return;
             }
 
-            switch (direction)
+            DoorWay door = new DoorWay();
+            
+            switch (doorway.Direction)
             {
                 case Direction.North:
-                    room.AddExit(Direction.South, this, false);
+                    door.Direction = Direction.South;
+                    room.AddExit(door, this, false);
                     break;
 
                 case Direction.South:
-                    room.AddExit(Direction.North, this, false);
+                    door.Direction = Direction.South;
+                    room.AddExit(door, this, false);
                     break;
 
                 case Direction.East:
-                    room.AddExit(Direction.West, this, false);
+                    door.Direction = Direction.West;
+                    room.AddExit(door, this, false);
                     break;
 
                 case Direction.West:
-                    room.AddExit(Direction.East, this, false);
+                    door.Direction = Direction.East;
+                    room.AddExit(door, this, false);
                     break;
 
                 case Direction.NorthEast:
-                    room.AddExit(Direction.SouthWest, this, false);
+                    door.Direction = Direction.SouthWest;
+                    room.AddExit(door, this, false);
                     break;
 
                 case Direction.SouthEast:
-                    room.AddExit(Direction.NorthWest, this, false);
-                    break;
+                    door.Direction = Direction.NorthWest;
+                    room.AddExit(door, this, false);
+                break;
 
                 case Direction.NorthWest:
-                    room.AddExit(Direction.SouthEast, this, false);
-                    break;
+                    door.Direction = Direction.SouthEast;
+                    room.AddExit(door, this, false);
+                break;
 
                 case Direction.SouthWest:
-                    room.AddExit(Direction.NorthEast, this, false);
+                    door.Direction = Direction.NorthEast;
+                    room.AddExit(door, this, false);
                     break;
             }
         }
@@ -173,8 +183,6 @@ namespace TextualRealityExperienceEngine.GameEngine
                     }
                         break;
                 }
-
-
             }
 
             return string.Empty;

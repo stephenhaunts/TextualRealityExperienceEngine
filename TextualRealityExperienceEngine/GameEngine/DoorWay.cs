@@ -1,7 +1,6 @@
-﻿/*
-MIT License
+﻿/*MIT License
 
-Copyright (c) 2018 
+Copyright(c) 2018 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,18 +21,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using System.Collections.Generic;
+using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
-namespace TextualRealityExperienceEngine.GameEngine.Interfaces
+namespace TextualRealityExperienceEngine.GameEngine
 {
-    public interface IRoom
+    public sealed class DoorWay
     {
-        string Name { get; set; }
-        string Description { get; set; }
-        string LightsOffDescription { get; set; }
+        public DoorWay()
+        {
+            Locked = false;
+            ObjectToUnlock = string.Empty;
+        }
 
-        IGame Game { get; set; }
-        void AddExit(DoorWay doorway, IRoom room, bool withExit = true);
-        string ProcessCommand(ICommand command);
-        bool LightsOn { get; set; }
+        public Direction Direction;
+        public bool Locked;
+        public string ObjectToUnlock;
     }
 }

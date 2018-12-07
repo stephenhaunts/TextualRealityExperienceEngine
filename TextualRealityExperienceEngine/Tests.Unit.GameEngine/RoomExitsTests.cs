@@ -35,8 +35,13 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         [ExpectedException(typeof(ArgumentNullException))]
         public void AddExitThrowsArgumentNullExceptionIfRoomIsNull()
         {
-            var roomExits = new RoomExits();
-            roomExits.AddExit(Direction.North, null);
+            RoomExits roomExits = new RoomExits();
+            DoorWay doorway = new DoorWay
+            {
+                Direction = Direction.North
+            };
+
+            roomExits.AddExit(doorway, null);
         }
 
         [TestMethod]
@@ -46,7 +51,13 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var room = new Room("testRoom", "this is a test room.", game);
 
             var roomExits = new RoomExits();
-            roomExits.AddExit(Direction.North, room);
+
+            DoorWay doorway = new DoorWay
+            {
+                Direction = Direction.North
+            };
+
+            roomExits.AddExit(doorway, room);
 
             var savedRoom = roomExits.GetRoomForExit(Direction.North);
 
@@ -64,11 +75,22 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var room2 = new Room("testRoom2", "this is a test room.", game);
 
             var roomExits = new RoomExits();
-            roomExits.AddExit(Direction.North, room);
-            roomExits.AddExit(Direction.North, room2);
 
-            roomExits.AddExit(Direction.South, room);
-            roomExits.AddExit(Direction.South, room2);
+            DoorWay doorway = new DoorWay
+            {
+                Direction = Direction.North
+            };
+
+            DoorWay doorway2 = new DoorWay
+            {
+                Direction = Direction.South
+            };
+
+            roomExits.AddExit(doorway, room);
+            roomExits.AddExit(doorway, room2);
+
+            roomExits.AddExit(doorway2, room);
+            roomExits.AddExit(doorway2, room2);
         }
 
         [TestMethod]
@@ -79,8 +101,18 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var room2 = new Room("testRoom2", "this is a test room.", game);
 
             var roomExits = new RoomExits();
-            roomExits.AddExit(Direction.North, room);
-            roomExits.AddExit(Direction.South, room2);
+
+            DoorWay doorway = new DoorWay
+            {
+                Direction = Direction.North
+            };
+
+            DoorWay doorway2 = new DoorWay
+            {
+                Direction = Direction.South
+            };
+            roomExits.AddExit(doorway, room);
+            roomExits.AddExit(doorway2, room2);
 
             Assert.AreEqual(room, roomExits.GetRoomForExit(Direction.North));
             Assert.AreEqual(room2, roomExits.GetRoomForExit(Direction.South));
@@ -94,8 +126,19 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var room2 = new Room("testRoom2", "this is a test room.", game);
 
             var roomExits = new RoomExits();
-            roomExits.AddExit(Direction.North, room);
-            roomExits.AddExit(Direction.South, room2);
+
+            DoorWay doorway = new DoorWay
+            {
+                Direction = Direction.North
+            };
+
+            DoorWay doorway2 = new DoorWay
+            {
+                Direction = Direction.South
+            };
+
+            roomExits.AddExit(doorway, room);
+            roomExits.AddExit(doorway2, room2);
 
             Assert.AreEqual(null, roomExits.GetRoomForExit(Direction.East));
             Assert.AreEqual(null, roomExits.GetRoomForExit(Direction.West));

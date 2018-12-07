@@ -28,28 +28,36 @@ namespace TextualRealityExperienceEngine.GameEngine
 {
     public sealed class RoomExits : IRoomExits
     {
-        readonly Dictionary<Direction, IRoom> _roomMappings = new Dictionary<Direction, IRoom>();
+        readonly Dictionary<DoorWay, IRoom> _roomMappings = new Dictionary<DoorWay, IRoom>();
 
-        public void AddExit(Direction direction, IRoom room)
+        public void AddExit(DoorWay doorway, IRoom room, bool locked = false, string objectToUnlock = "")
         {
             if (room == null)
             {
                 throw new ArgumentNullException(nameof(room));
             }
 
-            if (!_roomMappings.ContainsKey(direction))
+            if (!_roomMappings.ContainsKey(doorway))
             {
-                _roomMappings.Add(direction, room);
+                _roomMappings.Add(doorway, room);
             }
             else
             {
-                throw new InvalidOperationException("A room mapping already exists for the direction <" + direction + ">.");
+                throw new InvalidOperationException("A room mapping already exists for the direction <" + doorway.Direction + ">.");
             }
         }
 
         public IRoom GetRoomForExit(Direction direction)
         {
-            return _roomMappings.ContainsKey(direction) ? _roomMappings[direction] : null;
+            foreach (KeyValuePair<DoorWay, IRoom> entry in _roomMappings)
+            {
+                if (entry.Key.Direction == direction)
+                {
+                    return entry.Value;
+                }
+            }
+
+            return null;
         }
     }
 }

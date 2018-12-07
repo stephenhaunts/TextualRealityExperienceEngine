@@ -56,8 +56,19 @@ namespace Tests.SimpleGame
             _hallway = new Room(_hallway_name, _hallway_description, _game);
             _lounge = new Room(_lounge_name, _lounge_description, _game);
 
-            _outside.AddExit(Direction.North, _hallway);
-            _hallway.AddExit(Direction.West, _lounge);
+
+            DoorWay doorway = new DoorWay
+            {
+                Direction = Direction.North
+            };
+
+            DoorWay doorway2 = new DoorWay
+            {
+                Direction = Direction.West
+            };
+
+            _outside.AddExit(doorway, _hallway);
+            _hallway.AddExit(doorway2, _lounge);
 
             _game.StartRoom = _outside;
             _game.CurrentRoom = _outside;
