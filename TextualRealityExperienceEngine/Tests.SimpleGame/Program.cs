@@ -30,26 +30,37 @@ namespace Tests.SimpleGame
 
     class Program
     {
-        private readonly static IGame _game = new Game();
+        private static readonly IGame _game = new Game();
+        private const string _prologue = "Welcome to test adventure.You will be bedazzled with awesomeness.";
+
+        private const string _outside_name = "Outside";
+        private const string _outside_description = "You are standing on a driveway outside of a house. It is nightime and very cold. " +
+                                                    "There is frost on the ground. There is a door to the north.";
+
+        private const string _hallway_name = "Hallway";
+        private const string _hallway_description = "You are standing in a hallway that is modern, yet worn. There is a door to the west." +
+                                                    "To the south the front door leads back to the driveway.";
+
+        private const string _lounge_name = "Lounge";
+        private const string _lounge_description = "You are stand in the lounge. There is a sofa and a TV inside. There is a door back to the hallway to the east.";
+
+        private static IRoom _outside;
+        private static IRoom _hallway;
+        private static IRoom _lounge;
 
         private static void InitializeGame()
         {
-            _game.Prologue = "Welcome to test adventure. You will be bedazzled with awesomeness.";
+            _game.Prologue = _prologue;
 
-            var outside = new Room("Outside", "You are standing on a driveway outside of a house. It is nightime and very cold. " +
-                                              "There is frost on the ground. There is a door to the north.", _game);
-                
+            _outside = new Room(_outside_name, _outside_description, _game);
+            _hallway = new Room(_hallway_name, _hallway_description, _game);
+            _lounge = new Room(_lounge_name, _lounge_description, _game);
 
-            var hallway = new Room("Hallway", "You are standing in a hallway that is modern, yet worn. There is a door to the west." +
-            "To the south the front door leads back to the driveway.", _game);
+            _outside.AddExit(Direction.North, _hallway);
+            _hallway.AddExit(Direction.West, _lounge);
 
-            var lounge = new Room("Lounge", "You are stand in the lounge. There is a sofa and a TV inside. There is a door back to the hallway to the east.", _game);
-
-            outside.AddExit(Direction.North, hallway);
-            hallway.AddExit(Direction.West, lounge);
-
-            _game.StartRoom = outside;
-            _game.CurrentRoom = outside;
+            _game.StartRoom = _outside;
+            _game.CurrentRoom = _outside;
         }
 
         static void Main(string[] args)
