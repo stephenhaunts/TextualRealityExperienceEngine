@@ -165,5 +165,20 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 
             Assert.AreEqual(2, game.NumberOfMoves);
         }
+
+        [TestMethod]
+        public void LightsOffReturnsDarkDescription()
+        {
+            IGame game = new Game();
+            var room = new Room("TestRoom", "The room is light.", game);
+            room.LightsOn = true;
+            room.LightsOffDescription = "It is dark.";
+
+            Assert.AreEqual("The room is light.", room.Description);
+
+            room.LightsOn = false;
+
+            Assert.AreEqual("It is dark.", room.Description);
+        }
     }
 }

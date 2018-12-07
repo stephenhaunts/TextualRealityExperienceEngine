@@ -99,6 +99,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _synonymMappings.Add("pull", VerbCodes.Use);
             _synonymMappings.Add("push", VerbCodes.Use);
             _synonymMappings.Add("flick", VerbCodes.Use);
+            _synonymMappings.Add("flip", VerbCodes.Use);
 
             _synonymMappings.Add("look", VerbCodes.Look);
             _synonymMappings.Add("examine", VerbCodes.Look);
