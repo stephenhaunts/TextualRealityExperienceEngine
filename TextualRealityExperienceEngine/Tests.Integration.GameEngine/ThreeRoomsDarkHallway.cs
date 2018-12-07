@@ -61,6 +61,10 @@ namespace Tests.Integration.GameEngine
                     if (command.Noun == "lightswitch")
                     {
                         LightsOn = !LightsOn;
+
+                        Game.NumberOfMoves++;
+                        Game.Score++;
+
                         return Description;
                     }
                 }
@@ -103,19 +107,19 @@ namespace Tests.Integration.GameEngine
         {
             InitializeGame();
 
-            //Assert.AreEqual(_prologue, _game.Prologue);
-            //Assert.AreEqual(_outside, _game.StartRoom);
-            //Assert.AreEqual(_outside, _game.CurrentRoom);
-            //Assert.IsNotNull(_game.Parser);
+            Assert.AreEqual(_prologue, _game.Prologue);
+            Assert.AreEqual(_outside, _game.StartRoom);
+            Assert.AreEqual(_outside, _game.CurrentRoom);
+            Assert.IsNotNull(_game.Parser);
 
-            //Assert.AreEqual(_outside_name, _outside.Name);
-            //Assert.AreEqual(_outside_description, _outside.Description);
+            Assert.AreEqual(_outside_name, _outside.Name);
+            Assert.AreEqual(_outside_description, _outside.Description);
 
-            //Assert.AreEqual(_hallway_name, _hallway.Name);
-            //Assert.AreEqual(_hallway_description, _hallway.Description);
+            Assert.AreEqual(_hallway_name, _hallway.Name);
+            Assert.AreEqual("lights off", _hallway.Description);
 
-            //Assert.AreEqual(_lounge_name, _lounge.Name);
-            //Assert.AreEqual(_lounge_description, _lounge.Description);
+            Assert.AreEqual(_lounge_name, _lounge.Name);
+            Assert.AreEqual(_lounge_description, _lounge.Description);
         }
 
         [TestMethod]
