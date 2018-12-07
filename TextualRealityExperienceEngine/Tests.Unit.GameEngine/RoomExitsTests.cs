@@ -143,5 +143,71 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             Assert.AreEqual(null, roomExits.GetRoomForExit(Direction.East));
             Assert.AreEqual(null, roomExits.GetRoomForExit(Direction.West));
         }
+
+        [TestMethod]
+        public void AddExitForNorthAddsTheExit_UnLockedDoor()
+        {
+            var game = new Game();
+            var room = new Room("testRoom", "this is a test room.", game);
+
+            var roomExits = new RoomExits();
+
+            roomExits.AddExit(Direction.North, room);
+
+            var savedRoom = roomExits.GetRoomForExit(Direction.North);
+
+            Assert.AreEqual(room, savedRoom);
+            Assert.AreSame("testRoom", savedRoom.Name);
+            Assert.AreSame("this is a test room.", savedRoom.Description);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void AddExitThrowsInvalidOperationExceptionIfSameDirectionUsedMoreThanOnce_UnLockedDoor()
+        {
+            var game = new Game();
+            var room = new Room("testRoom", "this is a test room.", game);
+            var room2 = new Room("testRoom2", "this is a test room.", game);
+
+            var roomExits = new RoomExits();
+
+            roomExits.AddExit(Direction.North, room);
+            roomExits.AddExit(Direction.North, room2);
+
+            roomExits.AddExit(Direction.South, room);
+            roomExits.AddExit(Direction.South, room2);
+        }
+
+        [TestMethod]
+        public void GetRoomForExitReturnsValidRoom_UnLockedDoor()
+        {
+            var game = new Game();
+            var room = new Room("testRoom", "this is a test room.", game);
+            var room2 = new Room("testRoom2", "this is a test room.", game);
+
+            var roomExits = new RoomExits();
+
+            roomExits.AddExit(Direction.North, room);
+            roomExits.AddExit(Direction.South, room2);
+
+            Assert.AreEqual(room, roomExits.GetRoomForExit(Direction.North));
+            Assert.AreEqual(room2, roomExits.GetRoomForExit(Direction.South));
+        }
+
+        [TestMethod]
+        public void GetRoomForExitReturnsNullForNonExistentRoom_UnLockedDoor()
+        {
+            var game = new Game();
+            var room = new Room("testRoom", "this is a test room.", game);
+            var room2 = new Room("testRoom2", "this is a test room.", game);
+
+            var roomExits = new RoomExits();
+
+            roomExits.AddExit(Direction.North, room);
+            roomExits.AddExit(Direction.South, room2);
+
+            Assert.AreEqual(null, roomExits.GetRoomForExit(Direction.East));
+            Assert.AreEqual(null, roomExits.GetRoomForExit(Direction.West));
+        }
     }
 }

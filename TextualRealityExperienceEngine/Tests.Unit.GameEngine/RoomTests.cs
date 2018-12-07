@@ -200,5 +200,68 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 
             Assert.AreEqual("It is dark.", room.Description);
         }
+
+        [TestMethod]
+        public void AddExitCallsAddExitOnGameExits_UnLockedDoor()
+        {
+            IGame game = new Game();
+            var roomExits = new RoomExitsStub();
+            var room = new Room(roomExits, game);
+            var room2 = new Room("name2", "description2", null);
+
+            room.AddExit(Direction.North, room2, false);
+
+            Assert.AreEqual(1, roomExits.AddExitCounter);
+        }
+
+        [TestMethod]
+        public void AddExitCallsAddExitOnGameExitWithNoReturnRoute_UnLockedDoor()
+        {
+            IGame game = new Game();
+            var roomExits = new RoomExitsStub();
+            var roomExits2 = new RoomExitsStub();
+
+            var room = new Room(roomExits, game);
+            var room2 = new Room(roomExits2, game);
+
+            room.AddExit(Direction.North, room2, false);
+
+            Assert.AreEqual(1, roomExits.AddExitCounter);
+            Assert.AreEqual(0, roomExits2.AddExitCounter);
+        }
+
+        [TestMethod]
+        public void AddExitCallsAddsExitWithReturn_UnLockedDoor()
+        {
+            IGame game = new Game();
+            var roomExits = new RoomExitsStub();
+            var roomExits2 = new RoomExitsStub();
+
+            var room = new Room(roomExits, game);
+            var room2 = new Room(roomExits2, game);
+
+            room.AddExit(Direction.North, room2);
+
+            Assert.AreEqual(1, roomExits.AddExitCounter);
+            Assert.AreEqual(1, roomExits2.AddExitCounter);
+        }
+
+        [TestMethod]
+        public void MovingBetweenRoomsIncrementsNumberOfMoves_UnLockedDoor()
+        {
+            IGame game = new Game();
+            var room = new Room(game);
+            var room2 = new Room("name2", "description2", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            room.AddExit(Direction.North, room2, true);
+
+            game.ProcessCommand("go north");
+            game.ProcessCommand("go south");
+
+            Assert.AreEqual(2, game.NumberOfMoves);
+        }
     }
 }

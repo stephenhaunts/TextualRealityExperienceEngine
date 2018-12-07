@@ -37,6 +37,11 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine.Stubs
             AddExitCounter++;
         }
 
+        public void AddExit(Direction direction, IRoom room)
+        {
+            AddExitCounter++;
+        }
+
         public IRoom GetRoomForExit(Direction direction)
         {
             GetRoomCounter++;

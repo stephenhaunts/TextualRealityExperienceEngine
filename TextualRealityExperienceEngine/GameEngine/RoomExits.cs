@@ -30,6 +30,30 @@ namespace TextualRealityExperienceEngine.GameEngine
     {
         readonly Dictionary<DoorWay, IRoom> _roomMappings = new Dictionary<DoorWay, IRoom>();
 
+        public void AddExit(Direction direction, IRoom room)
+        {
+            if (room == null)
+            {
+                throw new ArgumentNullException(nameof(room));
+            }
+
+            DoorWay doorway = new DoorWay
+            {
+                Direction = direction,
+                Locked = false,
+                ObjectToUnlock = string.Empty
+            };
+
+            foreach (KeyValuePair<DoorWay, IRoom> entry in _roomMappings)
+            {
+                if (entry.Key.Direction == direction)
+                {
+                    throw new InvalidOperationException("A room mapping already exists for the direction <" + doorway.Direction + ">.");
+                }
+            }
+            _roomMappings.Add(doorway, room);
+        }
+
         public void AddExit(DoorWay doorway, IRoom room, bool locked = false, string objectToUnlock = "")
         {
             if (room == null)

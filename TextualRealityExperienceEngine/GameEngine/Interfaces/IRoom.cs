@@ -33,6 +33,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 
         IGame Game { get; set; }
         void AddExit(DoorWay doorway, IRoom room, bool withExit = true);
+        void AddExit(Direction direction, IRoom room, bool withExit = true);
         string ProcessCommand(ICommand command);
         bool LightsOn { get; set; }
     }
