@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using System.Globalization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
@@ -30,7 +31,7 @@ using TextualRealityExperienceEngine.GameEngine.Synonyms;
 namespace Tests.Integration.GameEngine
 {
     [TestClass]
-    public class ThreeRoomsDarkHallway
+    public class ThreeRoomsDarkHallwayLockedFrontDoor
     {
 
         private readonly IGame _game = new Game();
@@ -44,11 +45,28 @@ namespace Tests.Integration.GameEngine
         private const string _hallway_description = "You are standing in a hallway that is modern, yet worn. There is a door to the west." +
                                                     "To the south the front door leads back to the driveway.";
 
-        private const string _hallway_lights_off = "You are standing in a very dimly lit hallway. Your eyes struggle to adjust to the low light. " +
-                                           "You notice there is a swith on the wall to your left.";
+        private const string _hallway_lights_off = "You are standing in a very dimly lit hallway. Your eyes struggle to adjust to the low light. " + 
+                                                   "You notice there is a swith on the wall to your left.";
 
         private const string _lounge_name = "Lounge";
         private const string _lounge_description = "You are stand in the lounge. There is a sofa and a TV inside. There is a door back to the hallway to the east.";
+
+
+        public class Outside : Room
+        {
+            public Outside(string name, string description, IGame game) : base(name, description, game)
+            {
+            }
+
+            public override string ProcessCommand(ICommand command)
+            {
+                string reply;
+
+                reply = base.ProcessCommand(command);
+
+                return reply;
+            }
+        }
 
         public class Hallway : Room
         {
@@ -62,20 +80,23 @@ namespace Tests.Integration.GameEngine
 
                 if (command.Verb == VerbCodes.Use)
                 {
-                    LightsOn = !LightsOn;
-
-                    Game.NumberOfMoves++;
-                    Game.Score++;
-
-
-                    if (LightsOn)
+                    if (command.Noun == "lightswitch")
                     {
-                        return "You flip the lightswitch and the lights flicker for a few seconds until they illuminate the hallway. You hear a faint buzzing sound coming from the lights."
-                           + Description;
-                    }
-                    else
-                    {
-                        return Description;
+                        LightsOn = !LightsOn;
+
+                        Game.NumberOfMoves++;
+                        Game.Score++;
+
+
+                        if (LightsOn)
+                        {
+                            return "You flip the lightswitch and the lights flicker for a few seconds until they illuminate the hallway. You hear a faint buzzing sound coming from the lights."
+                               + Description;
+                        }
+                        else
+                        {
+                            return Description;
+                        }
                     }
                 }
 
@@ -97,7 +118,7 @@ namespace Tests.Integration.GameEngine
             _game.Parser.Nouns.Add("lightswitch", "lightswitch");
             _game.Parser.Nouns.Add("switch", "lightswitch");
 
-            _outside = new Room(_outside_name, _outside_description, _game);
+            _outside = new Outside(_outside_name, _outside_description, _game);
             _hallway = new Hallway(_hallway_name, _hallway_description, _game);
             _hallway.LightsOn = false;
 
@@ -126,9 +147,8 @@ namespace Tests.Integration.GameEngine
             Assert.AreEqual(_outside_description, _outside.Description);
 
             Assert.AreEqual(_hallway_name, _hallway.Name);
+
             Assert.IsTrue(_hallway.Description.StartsWith("You are standing in a very dimly lit hallway.", StringComparison.Ordinal));
-
-
             Assert.AreEqual(_lounge_name, _lounge.Name);
             Assert.AreEqual(_lounge_description, _lounge.Description);
         }
@@ -147,7 +167,6 @@ namespace Tests.Integration.GameEngine
             reply = _game.ProcessCommand("use switch");
             Assert.IsTrue(reply.StartsWith("You flip the lightswitch and the lights flicker for a few seconds", StringComparison.Ordinal));
 
-
             // Turn lights off
             reply = _game.ProcessCommand("use switch");
             Assert.IsTrue(reply.StartsWith("You are standing in a very dimly lit hallway.", StringComparison.Ordinal));
@@ -162,7 +181,6 @@ namespace Tests.Integration.GameEngine
             // Turn lights on
             reply = _game.ProcessCommand("use switch");
             Assert.IsTrue(reply.StartsWith("You flip the lightswitch and the lights flicker for a few seconds", StringComparison.Ordinal));
-
             Assert.AreEqual(_hallway, _game.CurrentRoom);
 
             reply = _game.ProcessCommand("go south");
