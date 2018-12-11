@@ -31,12 +31,13 @@ namespace Tests.SimpleGame
 
     class Program
     {
-        private static readonly IGame _game = new Game();
+
+        private static IGame _game = new Game();
         private const string _prologue = "Welcome to test adventure.You will be bedazzled with awesomeness.";
 
         private const string _outside_name = "Outside";
         private const string _outside_description = "You are standing on a driveway outside of a house. It is nightime and very cold. " +
-                                                    "There is frost on the ground. There is a door to the north.";
+                                                    "There is frost on the ground. There is a door to the north with a plant pot next to the door mat.";
 
         private const string _hallway_name = "Hallway";
         private const string _hallway_description = "You are standing in a hallway that is modern, yet worn. There is a door to the west." +
@@ -47,6 +48,52 @@ namespace Tests.SimpleGame
 
         private const string _lounge_name = "Lounge";
         private const string _lounge_description = "You are stand in the lounge. There is a sofa and a TV inside. There is a door back to the hallway to the east.";
+
+
+        public class Outside : Room
+        {
+            readonly IObject key = new GameObject("Key", "Its is a small brass key.", "You pick up the key.");
+
+            bool looked_at_plant_pot;
+
+            public Outside(string name, string description, IGame game) : base(name, description, game)
+            {
+                looked_at_plant_pot = false;
+            }
+
+            public override string ProcessCommand(ICommand command)
+            {
+                string reply;
+
+                switch (command.Verb)
+                {
+                    case VerbCodes.Look:
+                        if (command.Noun == "plantpot")
+                        {
+                            looked_at_plant_pot = true;
+                            return "You move the plant pot and find a key sitting under it.";
+                        }
+                        break;
+                    case VerbCodes.Take:
+                        if (command.Noun == "key")
+                        {
+                            if (looked_at_plant_pot)
+                            {
+                                return key.PickUpMessage;
+                            }
+                            else
+                            {
+                                return "What key?";
+                            }
+                        }
+                        break;
+
+                }
+
+                reply = base.ProcessCommand(command);
+                return reply;
+            }
+        }
 
         public class Hallway : Room
         {
@@ -67,8 +114,16 @@ namespace Tests.SimpleGame
                         Game.NumberOfMoves++;
                         Game.Score++;
 
-                        return "You flip the lightswitch and the lights flicker for a few seconds until they illuminate the hallway. You hear a faint buzzing sound coming from the lights."
+
+                        if (LightsOn)
+                        {
+                            return "You flip the lightswitch and the lights flicker for a few seconds until they illuminate the hallway. You hear a faint buzzing sound coming from the lights."
                                + Description;
+                        }
+                        else
+                        {
+                            return Description;
+                        }
                     }
                 }
 
@@ -84,14 +139,20 @@ namespace Tests.SimpleGame
 
         private static void InitializeGame()
         {
+            _game = new Game();
             _game.Prologue = _prologue;
 
             _game.Parser.Nouns.Add("light", "lightswitch");
-            _game.Parser.Nouns.Add("lights", "lightswitch");
             _game.Parser.Nouns.Add("lightswitch", "lightswitch");
             _game.Parser.Nouns.Add("switch", "lightswitch");
+            _game.Parser.Nouns.Add("plantpot", "plantpot");
+            _game.Parser.Nouns.Add("plant", "plantpot");
+            _game.Parser.Nouns.Add("pot", "plantpot");
 
-            _outside = new Room(_outside_name, _outside_description, _game);
+            _game.Parser.Nouns.Add("key", "key");
+            _game.Parser.Nouns.Add("keys", "key");
+
+            _outside = new Outside(_outside_name, _outside_description, _game);
             _hallway = new Hallway(_hallway_name, _hallway_description, _game);
             _hallway.LightsOn = false;
 
@@ -105,6 +166,7 @@ namespace Tests.SimpleGame
             _game.StartRoom = _outside;
             _game.CurrentRoom = _outside;
         }
+
         static void Main(string[] args)
         {
             Console.Clear();

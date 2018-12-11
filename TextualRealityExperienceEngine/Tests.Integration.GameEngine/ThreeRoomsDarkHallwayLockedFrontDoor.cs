@@ -33,13 +33,12 @@ namespace Tests.Integration.GameEngine
     [TestClass]
     public class ThreeRoomsDarkHallwayLockedFrontDoor
     {
-
-        private readonly IGame _game = new Game();
+        private IGame _game = new Game();
         private const string _prologue = "Welcome to test adventure.You will be bedazzled with awesomeness.";
 
         private const string _outside_name = "Outside";
         private const string _outside_description = "You are standing on a driveway outside of a house. It is nightime and very cold. " +
-                                                    "There is frost on the ground. There is a door to the north.";
+                                                    "There is frost on the ground. There is a door to the north with a plant pot next to the door mat.";
 
         private const string _hallway_name = "Hallway";
         private const string _hallway_description = "You are standing in a hallway that is modern, yet worn. There is a door to the west." +
@@ -54,16 +53,45 @@ namespace Tests.Integration.GameEngine
 
         public class Outside : Room
         {
+            readonly IObject key = new GameObject("Key", "Its is a small brass key.", "You pick up the key.");
+
+            bool looked_at_plant_pot;
+
             public Outside(string name, string description, IGame game) : base(name, description, game)
             {
+                looked_at_plant_pot = false;
             }
 
             public override string ProcessCommand(ICommand command)
             {
                 string reply;
 
-                reply = base.ProcessCommand(command);
+                switch (command.Verb)
+                {
+                    case VerbCodes.Look:
+                        if (command.Noun == "plantpot")
+                        {
+                            looked_at_plant_pot = true;
+                            return "You move the plant pot and find a key sitting under it.";
+                        }
+                        break;
+                    case VerbCodes.Take:
+                        if (command.Noun == "key")
+                        {
+                            if (looked_at_plant_pot)
+                            {
+                                return key.PickUpMessage;
+                            }
+                            else
+                            {
+                                return "What key?";
+                            }
+                        }
+                        break;
 
+                }
+
+                reply = base.ProcessCommand(command);
                 return reply;
             }
         }
@@ -112,11 +140,18 @@ namespace Tests.Integration.GameEngine
 
         private void InitializeGame()
         {
+            _game = new Game();
             _game.Prologue = _prologue;
 
             _game.Parser.Nouns.Add("light", "lightswitch");
             _game.Parser.Nouns.Add("lightswitch", "lightswitch");
             _game.Parser.Nouns.Add("switch", "lightswitch");
+            _game.Parser.Nouns.Add("plantpot", "plantpot");
+            _game.Parser.Nouns.Add("plant", "plantpot");
+            _game.Parser.Nouns.Add("pot", "plantpot");
+
+            _game.Parser.Nouns.Add("key", "key");
+            _game.Parser.Nouns.Add("keys", "key");
 
             _outside = new Outside(_outside_name, _outside_description, _game);
             _hallway = new Hallway(_hallway_name, _hallway_description, _game);
@@ -158,7 +193,10 @@ namespace Tests.Integration.GameEngine
         {
             InitializeGame();
 
-            string reply = _game.ProcessCommand("go north");
+            string reply = _game.ProcessCommand("look at plant pot");
+            Assert.IsTrue(reply.StartsWith("You move the plant pot and find a key sitting under it.", StringComparison.Ordinal));
+
+            reply = _game.ProcessCommand("go north");
             Assert.AreEqual(_hallway, _game.CurrentRoom);
 
             Assert.IsTrue(reply.StartsWith("You are standing in a very dimly lit hallway.", StringComparison.Ordinal));

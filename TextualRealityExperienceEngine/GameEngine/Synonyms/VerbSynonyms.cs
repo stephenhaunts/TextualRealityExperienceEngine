@@ -115,6 +115,8 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _synonymMappings.Add("observe", VerbCodes.Look);
             _synonymMappings.Add("watch", VerbCodes.Look);
             _synonymMappings.Add("see", VerbCodes.Look);
+            _synonymMappings.Add("glance", VerbCodes.Look);
+
         }
 
         public void Add(string synonym, VerbCodes verb)

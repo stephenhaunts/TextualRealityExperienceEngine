@@ -232,12 +232,11 @@ namespace TextualRealityExperienceEngine.GameEngine
                     {
                         return Description;
                     }
-                        break;
+                    break;
                 }
             }
 
             return string.Empty;
-
         }
     }
 }
