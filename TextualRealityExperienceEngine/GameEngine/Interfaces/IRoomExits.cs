@@ -30,5 +30,8 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         void AddExit(DoorWay doorway, IRoom room, bool locked = false, string objectToUnlock = "");
         void AddExit(Direction direction, IRoom room);
         IRoom GetRoomForExit(Direction doorway);
+        bool IsDoorLocked(Direction direction);
+        DoorWay GetDoorWay(Direction direction);
+        void SetDoorLock(bool locked, Direction direction);
     }
 }

@@ -217,5 +217,22 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             Assert.AreEqual(string.Empty, command.Noun);
             Assert.AreEqual("gaze", command.FullTextCommand);
         }
+
+        [TestMethod]
+        public void ParseCommandReturnsValidCommandFor_Use_Key_On_Door()
+        {
+            IParser parser = new Parser();
+            parser.Nouns.Add("key", "key");
+            parser.Nouns.Add("floor", "floor");
+            parser.Nouns.Add("door", "door");
+
+            var command = parser.ParseCommand("use key on door");
+
+            Assert.AreEqual(VerbCodes.Use, command.Verb);
+            Assert.AreEqual("key", command.Noun);
+            Assert.AreEqual(PropositionEnum.On, command.Preposition);
+            Assert.AreEqual("door", command.Noun2);
+            Assert.AreEqual("use key on door", command.FullTextCommand);
+        }
     }
 }

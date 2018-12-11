@@ -68,6 +68,30 @@ namespace Tests.Integration.GameEngine
 
                 switch (command.Verb)
                 {
+                    case VerbCodes.Use:
+                        if ((command.Noun == "key") && (command.Noun2 == "door"))
+                        {
+                            if (Game.Inventory.Exists("Key"))
+                            {
+                                SetDoorLock(false, Direction.North);
+                                Game.Score++;
+                                Game.NumberOfMoves++;
+                                return "You turn the key in the lock and you hear a THUNK of the door unlocking.";
+                            }
+                        }
+
+                        if ((command.Noun == "door"))
+                        {
+                            if (Game.Inventory.Exists("Key"))
+                            {
+                                SetDoorLock(false, Direction.North);
+                                Game.Score++;
+                                Game.NumberOfMoves++;
+                                return "You turn the key in the lock and you hear a THUNK of the door unlocking.";
+                            }
+                        }
+
+                        return "You do not have a key.";
                     case VerbCodes.Look:
                         if (command.Noun == "plantpot")
                         {
@@ -178,6 +202,10 @@ namespace Tests.Integration.GameEngine
             _game.Parser.Nouns.Add("doormat", "doormat");
             _game.Parser.Nouns.Add("mat", "doormat");
 
+            _game.Parser.Nouns.Add("door", "door");
+            _game.Parser.Nouns.Add("frondoor", "door");
+
+
             _outside = new Outside(_outside_name, _outside_description, _game);
             _hallway = new Hallway(_hallway_name, _hallway_description, _game);
             _hallway.LightsOn = false;
@@ -186,7 +214,14 @@ namespace Tests.Integration.GameEngine
 
             _lounge = new Room(_lounge_name, _lounge_description, _game);
 
-            _outside.AddExit(Direction.North, _hallway);
+            DoorWay doorway = new DoorWay
+            {
+                Direction = Direction.North,
+                Locked = true,
+                ObjectToUnlock = "key"
+            };
+
+            _outside.AddExit(doorway, _hallway);
             _hallway.AddExit(Direction.West, _lounge);
 
             _game.StartRoom = _outside;
@@ -241,13 +276,23 @@ namespace Tests.Integration.GameEngine
             string reply = _game.ProcessCommand("look at plant pot");
             Assert.IsTrue(reply.StartsWith("You move the plant pot and find a key sitting under it.", StringComparison.Ordinal));
 
+            reply = _game.ProcessCommand("go north");
+            Assert.AreEqual("The door is locked.", reply);
+
+            reply = _game.ProcessCommand("use key on door");
+            Assert.AreEqual("You do not have a key.", reply);
+
             reply = _game.ProcessCommand("pick up key");
             Assert.AreEqual("You pick up the key.", reply);
             Assert.AreEqual(1, _game.Inventory.Count());
             Assert.IsTrue(_game.Inventory.Exists("Key"));
 
-            reply = _game.ProcessCommand("look at door mat");
+            reply = _game.ProcessCommand("look at doormat");
             Assert.IsTrue(reply.StartsWith("It's a doormat where people wipe their feet.", StringComparison.Ordinal));
+
+            reply = _game.ProcessCommand("use key on door");
+            Assert.AreEqual("You turn the key in the lock and you hear a THUNK of the door unlocking.", reply);
+            
 
             reply = _game.ProcessCommand("go north");
             Assert.AreEqual(_hallway, _game.CurrentRoom);

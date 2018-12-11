@@ -155,8 +155,8 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
 
             DoorWay door = new DoorWay();
-            door.Locked = doorway.Locked;
-            door.ObjectToUnlock = doorway.ObjectToUnlock;
+            door.Locked = false;
+            door.ObjectToUnlock = string.Empty;
 
             switch (doorway.Direction)
             {
@@ -202,6 +202,16 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
         }
 
+        public DoorWay GetDoorWay(Direction direction)
+        {
+            return _roomExits.GetDoorWay(direction);
+        }
+
+        public void SetDoorLock(bool locked, Direction direction)
+        {
+            _roomExits.SetDoorLock(locked, direction);
+        }
+
         public virtual string ProcessCommand(ICommand command)
         {
             switch (command.Verb)
@@ -210,13 +220,19 @@ namespace TextualRealityExperienceEngine.GameEngine
                 {
                     try
                     {
-                        var room = _roomExits.GetRoomForExit((Direction)Enum.Parse(typeof(Direction), command.Noun, true));
+                        Direction direction = (Direction)Enum.Parse(typeof(Direction), command.Noun, true);
+                        var room = _roomExits.GetRoomForExit(direction);
 
-                            if (room == null)
-                                return "There is no exit to the " + command.Noun.ToLower();
+                        if (room == null)
+                            return "There is no exit to the " + command.Noun.ToLower();
 
-                            Game.CurrentRoom = room;
-                            Game.NumberOfMoves++;
+                        if (_roomExits.IsDoorLocked(direction))
+                        {
+                                return "The door is locked.";
+                        }
+
+                        Game.CurrentRoom = room;
+                        Game.NumberOfMoves++;
 
                         return room.Description;
                     }

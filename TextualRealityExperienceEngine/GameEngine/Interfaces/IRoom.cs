@@ -36,5 +36,8 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         void AddExit(Direction direction, IRoom room, bool withExit = true);
         string ProcessCommand(ICommand command);
         bool LightsOn { get; set; }
+
+        DoorWay GetDoorWay(Direction direction);
+        void SetDoorLock(bool locked, Direction direction);
     }
 }

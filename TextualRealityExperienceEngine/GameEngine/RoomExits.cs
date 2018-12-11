@@ -83,5 +83,43 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             return null;
         }
+
+        public bool IsDoorLocked(Direction direction)
+        {
+            foreach (KeyValuePair<DoorWay, IRoom> entry in _roomMappings)
+            {
+                if (entry.Key.Direction == direction)
+                {
+                    return entry.Key.Locked;
+                }
+            }
+
+            return false;
+        }
+
+        public DoorWay GetDoorWay(Direction direction)
+        {
+            foreach (KeyValuePair<DoorWay, IRoom> entry in _roomMappings)
+            {
+                if (entry.Key.Direction == direction)
+                {
+                    return entry.Key;
+                }
+            }
+
+            return null;
+        }
+
+        public void SetDoorLock(bool locked, Direction direction)
+        {
+            foreach (KeyValuePair<DoorWay, IRoom> entry in _roomMappings)
+            {
+                if (entry.Key.Direction == direction)
+                {
+                    var door = entry.Key;
+                    door.Locked = locked;
+                }
+            }
+        }
     }
 }

@@ -42,10 +42,25 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine.Stubs
             AddExitCounter++;
         }
 
+        public DoorWay GetDoorWay(Direction direction)
+        {
+            throw new NotImplementedException();
+        }
+
         public IRoom GetRoomForExit(Direction direction)
         {
             GetRoomCounter++;
             return new Room();
+        }
+
+        public bool IsDoorLocked(Direction direction)
+        {
+            return false;
+        }
+
+        public void SetDoorLock(bool locked, Direction direction)
+        {
+            throw new NotImplementedException();
         }
     }
 }
