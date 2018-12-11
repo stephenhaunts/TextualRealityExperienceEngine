@@ -35,6 +35,8 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         int NumberOfMoves { get; set; }
         int Score { get; set; }
 
+        IInventory Inventory { get; set; }
+
         string ProcessCommand(string command);
     }
 }

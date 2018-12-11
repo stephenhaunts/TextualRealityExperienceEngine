@@ -34,6 +34,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         public IParser Parser { get; }
         public int NumberOfMoves { get; set; }
         public int Score { get; set; }
+        public IInventory Inventory { get; set; }
 
         ICommandQueue _commandqueue = new CommandQueue();
 
@@ -42,6 +43,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             Prologue = string.Empty;
             StartRoom = null;
             Parser = new Parser();
+            Inventory = new Inventory();
         }
 
         public Game(string prologue, IRoom room)
@@ -59,6 +61,8 @@ namespace TextualRealityExperienceEngine.GameEngine
             Prologue = prologue;
             StartRoom = room;
             CurrentRoom = room;
+            Parser = new Parser();
+            Inventory = new Inventory();
         }
 
         public string ProcessCommand(string command)

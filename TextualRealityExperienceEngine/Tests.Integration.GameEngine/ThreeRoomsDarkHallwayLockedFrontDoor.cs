@@ -72,7 +72,15 @@ namespace Tests.Integration.GameEngine
                         if (command.Noun == "plantpot")
                         {
                             looked_at_plant_pot = true;
-                            return "You move the plant pot and find a key sitting under it.";
+                            if (!Game.Inventory.Exists("Key"))
+                            {
+                                Game.NumberOfMoves++;
+                                return "You move the plant pot and find a key sitting under it.";
+                            }
+                            else
+                            {
+                                return "It's a plant pot. Quite unremarkable.";
+                            }
                         }
                         break;
                     case VerbCodes.Take:
@@ -80,7 +88,17 @@ namespace Tests.Integration.GameEngine
                         {
                             if (looked_at_plant_pot)
                             {
-                                return key.PickUpMessage;
+                                if (!Game.Inventory.Exists("Key"))
+                                {
+                                    Game.Inventory.Add(key.Name, key);
+                                    Game.Score++;
+                                    Game.NumberOfMoves++;
+                                    return key.PickUpMessage;
+                                }
+                                else
+                                {
+                                    return "You already have the key.";
+                                }
                             }
                             else
                             {
@@ -196,6 +214,12 @@ namespace Tests.Integration.GameEngine
             string reply = _game.ProcessCommand("look at plant pot");
             Assert.IsTrue(reply.StartsWith("You move the plant pot and find a key sitting under it.", StringComparison.Ordinal));
 
+
+            reply = _game.ProcessCommand("pick up key");
+            Assert.AreEqual("You pick up the key.", reply);
+            Assert.AreEqual(1, _game.Inventory.Count());
+            Assert.IsTrue(_game.Inventory.Exists("Key"));
+
             reply = _game.ProcessCommand("go north");
             Assert.AreEqual(_hallway, _game.CurrentRoom);
 
@@ -205,21 +229,12 @@ namespace Tests.Integration.GameEngine
             reply = _game.ProcessCommand("use switch");
             Assert.IsTrue(reply.StartsWith("You flip the lightswitch and the lights flicker for a few seconds", StringComparison.Ordinal));
 
-            // Turn lights off
-            reply = _game.ProcessCommand("use switch");
-            Assert.IsTrue(reply.StartsWith("You are standing in a very dimly lit hallway.", StringComparison.Ordinal));
-
             reply = _game.ProcessCommand("go west");
             Assert.AreEqual(_lounge_description, reply);
             Assert.AreEqual(_lounge, _game.CurrentRoom);
 
             reply = _game.ProcessCommand("go east");
-            Assert.IsTrue(reply.StartsWith("You are standing in a very dimly lit hallway.", StringComparison.Ordinal));
-
-            // Turn lights on
-            reply = _game.ProcessCommand("use switch");
-            Assert.IsTrue(reply.StartsWith("You flip the lightswitch and the lights flicker for a few seconds", StringComparison.Ordinal));
-            Assert.AreEqual(_hallway, _game.CurrentRoom);
+            Assert.IsTrue(reply.StartsWith("You are standing in a hallway", StringComparison.Ordinal));
 
             reply = _game.ProcessCommand("go south");
             Assert.AreEqual(_outside_description, reply);
@@ -227,3 +242,5 @@ namespace Tests.Integration.GameEngine
         }
     }
 }
+
+

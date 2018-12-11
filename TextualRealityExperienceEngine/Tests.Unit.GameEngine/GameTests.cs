@@ -135,5 +135,14 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 
             Assert.AreEqual(0, game.Score);
         }
+
+        [TestMethod]
+        public void ConstructorInitializesInventory()
+        {
+            var game = new Game();
+
+            Assert.IsNotNull(game.Inventory);
+            Assert.AreEqual(0, game.Inventory.Count());
+        }
     }
 }

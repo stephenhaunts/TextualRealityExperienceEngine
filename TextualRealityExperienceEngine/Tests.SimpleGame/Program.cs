@@ -71,7 +71,15 @@ namespace Tests.SimpleGame
                         if (command.Noun == "plantpot")
                         {
                             looked_at_plant_pot = true;
-                            return "You move the plant pot and find a key sitting under it.";
+                            if (!Game.Inventory.Exists("Key"))
+                            {
+                                Game.NumberOfMoves++;
+                                return "You move the plant pot and find a key sitting under it.";
+                            }
+                            else
+                            {
+                                return "It's a plant pot. Quite unremarkable.";
+                            }
                         }
                         break;
                     case VerbCodes.Take:
@@ -79,7 +87,17 @@ namespace Tests.SimpleGame
                         {
                             if (looked_at_plant_pot)
                             {
-                                return key.PickUpMessage;
+                                if (!Game.Inventory.Exists("Key"))
+                                {
+                                    Game.Inventory.Add(key.Name, key);
+                                    Game.Score++;
+                                    Game.NumberOfMoves++;
+                                    return key.PickUpMessage;
+                                }
+                                else
+                                {
+                                    return "You already have the key.";
+                                }
                             }
                             else
                             {

@@ -44,7 +44,10 @@ namespace TextualRealityExperienceEngine.GameEngine
                 throw new ArgumentNullException(nameof(gameObject));
             }
 
-            _inventory.Add(name, gameObject);
+            if (!Exists(name))
+            {
+                _inventory.Add(name, gameObject);
+            }
         }
 
         public void Clear()
