@@ -82,6 +82,10 @@ namespace Tests.Integration.GameEngine
                                 return "It's a plant pot. Quite unremarkable.";
                             }
                         }
+                        if (command.Noun == "doormat")
+                        {
+                            return "It's a doormat where people wipe their feet. On it is written 'There is no place like 10.0.0.1'.";
+                        }
                         break;
                     case VerbCodes.Take:
                         if (command.Noun == "key")
@@ -171,6 +175,9 @@ namespace Tests.Integration.GameEngine
             _game.Parser.Nouns.Add("key", "key");
             _game.Parser.Nouns.Add("keys", "key");
 
+            _game.Parser.Nouns.Add("doormat", "doormat");
+            _game.Parser.Nouns.Add("mat", "doormat");
+
             _outside = new Outside(_outside_name, _outside_description, _game);
             _hallway = new Hallway(_hallway_name, _hallway_description, _game);
             _hallway.LightsOn = false;
@@ -207,6 +214,26 @@ namespace Tests.Integration.GameEngine
         }
 
         [TestMethod]
+        public void TryToCollectTheKeyMultipleTimes()
+        {
+            InitializeGame();
+
+            string reply = _game.ProcessCommand("look at plant pot");
+            Assert.IsTrue(reply.StartsWith("You move the plant pot and find a key sitting under it.", StringComparison.Ordinal));
+
+            reply = _game.ProcessCommand("pick up key");
+            Assert.AreEqual("You pick up the key.", reply);
+            Assert.AreEqual(1, _game.Inventory.Count());
+            Assert.IsTrue(_game.Inventory.Exists("Key"));
+
+            reply = _game.ProcessCommand("look at plant pot");
+            Assert.AreEqual("It's a plant pot. Quite unremarkable.", reply);
+
+            reply = _game.ProcessCommand("pick up key");
+            Assert.AreEqual("You already have the key.", reply);
+        }
+
+        [TestMethod]
         public void WalkAround()
         {
             InitializeGame();
@@ -214,11 +241,13 @@ namespace Tests.Integration.GameEngine
             string reply = _game.ProcessCommand("look at plant pot");
             Assert.IsTrue(reply.StartsWith("You move the plant pot and find a key sitting under it.", StringComparison.Ordinal));
 
-
             reply = _game.ProcessCommand("pick up key");
             Assert.AreEqual("You pick up the key.", reply);
             Assert.AreEqual(1, _game.Inventory.Count());
             Assert.IsTrue(_game.Inventory.Exists("Key"));
+
+            reply = _game.ProcessCommand("look at door mat");
+            Assert.IsTrue(reply.StartsWith("It's a doormat where people wipe their feet.", StringComparison.Ordinal));
 
             reply = _game.ProcessCommand("go north");
             Assert.AreEqual(_hallway, _game.CurrentRoom);

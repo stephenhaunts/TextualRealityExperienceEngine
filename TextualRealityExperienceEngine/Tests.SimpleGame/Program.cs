@@ -81,6 +81,11 @@ namespace Tests.SimpleGame
                                 return "It's a plant pot. Quite unremarkable.";
                             }
                         }
+
+                        if (command.Noun == "doormat")
+                        {
+                            return "It's a doormat where people wipe their feet. On it is written 'There is no place like 10.0.0.1'.";
+                        }
                         break;
                     case VerbCodes.Take:
                         if (command.Noun == "key")
@@ -169,6 +174,9 @@ namespace Tests.SimpleGame
 
             _game.Parser.Nouns.Add("key", "key");
             _game.Parser.Nouns.Add("keys", "key");
+
+            _game.Parser.Nouns.Add("doormat", "doormat");
+            _game.Parser.Nouns.Add("mat", "doormat");
 
             _outside = new Outside(_outside_name, _outside_description, _game);
             _hallway = new Hallway(_hallway_name, _hallway_description, _game);
