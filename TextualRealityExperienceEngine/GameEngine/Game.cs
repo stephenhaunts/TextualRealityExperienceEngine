@@ -26,6 +26,18 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
+    public enum ParserStateEnum
+    {
+        Playing = 0,
+        Command
+    }
+
+    public class GameReply
+    {
+        public ParserStateEnum State { get; set; }
+        public string Reply { get; set; }
+    }
+
     public class Game : IGame
     {
         public string Prologue { get; set; }
@@ -65,16 +77,23 @@ namespace TextualRealityExperienceEngine.GameEngine
             Inventory = new Inventory();
         }
 
-        public string ProcessCommand(string command)
+        public GameReply ProcessCommand(string command)
         {
+            GameReply reply = new GameReply();
+
             if (!string.IsNullOrEmpty(command))
             {
                 var parsedCommand = Parser.ParseCommand(command);
                 _commandqueue.AddCommand(parsedCommand);
-                return CurrentRoom.ProcessCommand(parsedCommand);
+
+                reply.State = ParserStateEnum.Playing;
+                reply.Reply = CurrentRoom.ProcessCommand(parsedCommand);
+                return reply;
             }
 
-            return string.Empty;
+            reply.State = ParserStateEnum.Playing;
+            reply.Reply = string.Empty;
+            return reply;
         }
     }
 }

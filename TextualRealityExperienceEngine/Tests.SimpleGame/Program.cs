@@ -238,12 +238,12 @@ namespace Tests.SimpleGame
             while (true)
             {
                 Console.Write("> ");
-                string reply = _game.ProcessCommand(Console.ReadLine());
+                GameReply reply = _game.ProcessCommand(Console.ReadLine());
 
-                if (!string.IsNullOrEmpty(reply))
+                if (!string.IsNullOrEmpty(reply.Reply))
                 {
                     Console.WriteLine();
-                    ConsoleEx.WordWrap(reply);
+                    ConsoleEx.WordWrap(reply.Reply);
                 }
             }
         }

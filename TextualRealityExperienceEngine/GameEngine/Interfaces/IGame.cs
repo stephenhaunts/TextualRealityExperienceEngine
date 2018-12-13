@@ -37,6 +37,6 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 
         IInventory Inventory { get; set; }
 
-        string ProcessCommand(string command);
+        GameReply ProcessCommand(string command);
     }
 }

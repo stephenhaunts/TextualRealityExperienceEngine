@@ -253,19 +253,19 @@ namespace Tests.Integration.GameEngine
         {
             InitializeGame();
 
-            string reply = _game.ProcessCommand("look at plant pot");
-            Assert.IsTrue(reply.StartsWith("You move the plant pot and find a key sitting under it.", StringComparison.Ordinal));
+            var reply = _game.ProcessCommand("look at plant pot");
+            Assert.IsTrue(reply.Reply.StartsWith("You move the plant pot and find a key sitting under it.", StringComparison.Ordinal));
 
             reply = _game.ProcessCommand("pick up key");
-            Assert.AreEqual("You pick up the key.", reply);
+            Assert.AreEqual("You pick up the key.", reply.Reply);
             Assert.AreEqual(1, _game.Inventory.Count());
             Assert.IsTrue(_game.Inventory.Exists("Key"));
 
             reply = _game.ProcessCommand("look at plant pot");
-            Assert.AreEqual("It's a plant pot. Quite unremarkable.", reply);
+            Assert.AreEqual("It's a plant pot. Quite unremarkable.", reply.Reply);
 
             reply = _game.ProcessCommand("pick up key");
-            Assert.AreEqual("You already have the key.", reply);
+            Assert.AreEqual("You already have the key.", reply.Reply);
         }
 
         [TestMethod]
@@ -273,45 +273,45 @@ namespace Tests.Integration.GameEngine
         {
             InitializeGame();
 
-            string reply = _game.ProcessCommand("look at plant pot");
-            Assert.IsTrue(reply.StartsWith("You move the plant pot and find a key sitting under it.", StringComparison.Ordinal));
+            var reply = _game.ProcessCommand("look at plant pot");
+            Assert.IsTrue(reply.Reply.StartsWith("You move the plant pot and find a key sitting under it.", StringComparison.Ordinal));
 
             reply = _game.ProcessCommand("go north");
-            Assert.AreEqual("The door is locked.", reply);
+            Assert.AreEqual("The door is locked.", reply.Reply);
 
             reply = _game.ProcessCommand("use key on door");
-            Assert.AreEqual("You do not have a key.", reply);
+            Assert.AreEqual("You do not have a key.", reply.Reply);
 
             reply = _game.ProcessCommand("pick up key");
-            Assert.AreEqual("You pick up the key.", reply);
+            Assert.AreEqual("You pick up the key.", reply.Reply);
             Assert.AreEqual(1, _game.Inventory.Count());
             Assert.IsTrue(_game.Inventory.Exists("Key"));
 
             reply = _game.ProcessCommand("look at doormat");
-            Assert.IsTrue(reply.StartsWith("It's a doormat where people wipe their feet.", StringComparison.Ordinal));
+            Assert.IsTrue(reply.Reply.StartsWith("It's a doormat where people wipe their feet.", StringComparison.Ordinal));
 
             reply = _game.ProcessCommand("use key on door");
-            Assert.AreEqual("You turn the key in the lock and you hear a THUNK of the door unlocking.", reply);
+            Assert.AreEqual("You turn the key in the lock and you hear a THUNK of the door unlocking.", reply.Reply);
             
 
             reply = _game.ProcessCommand("go north");
             Assert.AreEqual(_hallway, _game.CurrentRoom);
 
-            Assert.IsTrue(reply.StartsWith("You are standing in a very dimly lit hallway.", StringComparison.Ordinal));
+            Assert.IsTrue(reply.Reply.StartsWith("You are standing in a very dimly lit hallway.", StringComparison.Ordinal));
 
             // Turn lights on
             reply = _game.ProcessCommand("use switch");
-            Assert.IsTrue(reply.StartsWith("You flip the lightswitch and the lights flicker for a few seconds", StringComparison.Ordinal));
+            Assert.IsTrue(reply.Reply.StartsWith("You flip the lightswitch and the lights flicker for a few seconds", StringComparison.Ordinal));
 
             reply = _game.ProcessCommand("go west");
-            Assert.AreEqual(_lounge_description, reply);
+            Assert.AreEqual(_lounge_description, reply.Reply);
             Assert.AreEqual(_lounge, _game.CurrentRoom);
 
             reply = _game.ProcessCommand("go east");
-            Assert.IsTrue(reply.StartsWith("You are standing in a hallway", StringComparison.Ordinal));
+            Assert.IsTrue(reply.Reply.StartsWith("You are standing in a hallway", StringComparison.Ordinal));
 
             reply = _game.ProcessCommand("go south");
-            Assert.AreEqual(_outside_description, reply);
+            Assert.AreEqual(_outside_description, reply.Reply);
             Assert.AreEqual(_outside, _game.CurrentRoom);
         }
     }

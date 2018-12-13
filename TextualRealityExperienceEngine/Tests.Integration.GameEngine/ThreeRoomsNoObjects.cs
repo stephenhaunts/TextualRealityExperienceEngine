@@ -90,20 +90,20 @@ namespace Tests.Integration.GameEngine
         {
             InitializeGame();
 
-            string reply = _game.ProcessCommand("go north");
-            Assert.AreEqual(_hallway_description, reply);
+            var reply = _game.ProcessCommand("go north");
+            Assert.AreEqual(_hallway_description, reply.Reply);
             Assert.AreEqual(_hallway, _game.CurrentRoom);
 
             reply = _game.ProcessCommand("go west");
-            Assert.AreEqual(_lounge_description, reply);
+            Assert.AreEqual(_lounge_description, reply.Reply);
             Assert.AreEqual(_lounge, _game.CurrentRoom);
 
             reply = _game.ProcessCommand("go east");
-            Assert.AreEqual(_hallway_description, reply);
+            Assert.AreEqual(_hallway_description, reply.Reply);
             Assert.AreEqual(_hallway, _game.CurrentRoom);
 
             reply = _game.ProcessCommand("go south");
-            Assert.AreEqual(_outside_description, reply);
+            Assert.AreEqual(_outside_description, reply.Reply);
             Assert.AreEqual(_outside, _game.CurrentRoom);
         }
     }
