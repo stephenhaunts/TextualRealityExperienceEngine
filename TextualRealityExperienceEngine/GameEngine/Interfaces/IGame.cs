@@ -33,6 +33,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         IRoom StartRoom { get; set; }
         IRoom CurrentRoom { get; set; }
         IParser Parser { get; }
+        IGlobalState GlobalState { get; }
 
         int NumberOfMoves { get; set; }
         int Score { get; set; }

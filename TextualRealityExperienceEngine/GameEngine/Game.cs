@@ -35,6 +35,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         public IRoom StartRoom { get; set; }
         public IRoom CurrentRoom { get; set; }
         public IParser Parser { get; }
+        public IGlobalState GlobalState { get; }
         public int NumberOfMoves { get; set; }
         public int Score { get; set; }
         public IInventory Inventory { get; set; }
@@ -47,6 +48,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             HelpText = string.Empty;
             StartRoom = null;
             Parser = new Parser();
+            GlobalState = new GlobalState();
             Inventory = new Inventory();
         }
 
@@ -67,6 +69,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             CurrentRoom = room;
             HelpText = string.Empty;
             Parser = new Parser();
+            GlobalState = new GlobalState();
             Inventory = new Inventory();
         }
 
