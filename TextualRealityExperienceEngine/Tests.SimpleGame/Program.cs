@@ -31,7 +31,6 @@ namespace Tests.SimpleGame
 
     class Program
     {
-
         private static IGame _game = new Game();
         private const string _prologue = "Welcome to test adventure.You will be bedazzled with awesomeness.";
         private const string _help_text = "Your aim is to find the treasure that is hidden somewhere in the house. \r\nYou need to type commands into the game to control the player.";
