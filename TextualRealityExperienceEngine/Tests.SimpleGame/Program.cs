@@ -277,7 +277,28 @@ namespace Tests.SimpleGame
                         Console.WriteLine();
                         Console.WriteLine("You have made " + _game.NumberOfMoves + " so far.");
                         Console.WriteLine("You score is " + _game.Score);
+                        Console.WriteLine();
+                        continue;
+                    case ParserStateEnum.Inventory:
+                        if (_game.Inventory.Count() == 0)
+                        {
+                            Console.WriteLine();
+                            Console.WriteLine("Your inventory is empty.");
+                            Console.WriteLine();
+                        }
+                        else
+                        {
+                            Console.WriteLine();
+                            Console.WriteLine("Inventory");
+                            Console.WriteLine("---------");
 
+                            foreach (var i in _game.Inventory.GetInventory())
+                            {
+                                Console.WriteLine("   " + i);
+                            }
+
+                            Console.WriteLine();
+                        }
                         continue;
                 }
             }

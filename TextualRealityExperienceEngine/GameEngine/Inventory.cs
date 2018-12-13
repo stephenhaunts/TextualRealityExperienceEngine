@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
@@ -85,6 +86,18 @@ namespace TextualRealityExperienceEngine.GameEngine
         public int Count()
         {
             return _inventory.Count;
+        }
+
+        public ReadOnlyCollection<string> GetInventory()
+        {
+            List<string> inventory = new List<string>();
+
+            foreach (KeyValuePair<string, IObject> entry in _inventory)
+            {
+                inventory.Add(entry.Value.Name + ": " + entry.Value.Description);
+            }
+
+            return new ReadOnlyCollection<string>(inventory);
         }
     }
 }

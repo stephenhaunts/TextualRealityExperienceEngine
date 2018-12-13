@@ -23,6 +23,7 @@ SOFTWARE.
 */
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
@@ -33,5 +34,6 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         IObject Get(string name);
         void Clear();
         int Count();
+        ReadOnlyCollection<string> GetInventory();
     }
 }

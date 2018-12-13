@@ -139,6 +139,13 @@ namespace TextualRealityExperienceEngine.GameEngine
                     reply.Reply = lowerCase;
                     return reply;
                 }
+                case "inventory":
+                case "view inventory":
+                {
+                    reply.State = ParserStateEnum.Inventory;
+                    reply.Reply = lowerCase;
+                    return reply;
+                }
             }
 
             reply.State = ParserStateEnum.Playing;
