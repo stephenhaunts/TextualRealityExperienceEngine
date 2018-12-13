@@ -34,6 +34,8 @@ namespace Tests.SimpleGame
 
         private static IGame _game = new Game();
         private const string _prologue = "Welcome to test adventure.You will be bedazzled with awesomeness.";
+        private const string _help_text = "Your aim is to find the treasure that is hidden somewhere in the house. \r\nYou need to type commands into the game to control the player.";
+
 
         private const string _outside_name = "Outside";
         private const string _outside_description = "You are standing on a driveway outside of a house. It is nightime and very cold. " +
@@ -185,7 +187,8 @@ namespace Tests.SimpleGame
         {
             _game = new Game
             {
-                Prologue = _prologue
+                Prologue = _prologue,
+                HelpText = _help_text
             };
 
             _game.Parser.Nouns.Add("light", "lightswitch");
@@ -279,6 +282,7 @@ namespace Tests.SimpleGame
                         Console.WriteLine("You score is " + _game.Score);
                         Console.WriteLine();
                         continue;
+
                     case ParserStateEnum.Inventory:
                         if (_game.Inventory.Count() == 0)
                         {
@@ -299,6 +303,13 @@ namespace Tests.SimpleGame
 
                             Console.WriteLine();
                         }
+                        continue;
+                    case ParserStateEnum.Help:
+                        Console.WriteLine();
+                        Console.WriteLine("Game Manual");
+                        Console.WriteLine("-----------");
+                        Console.WriteLine();
+                        ConsoleEx.WordWrap(_game.HelpText);
                         continue;
                 }
             }

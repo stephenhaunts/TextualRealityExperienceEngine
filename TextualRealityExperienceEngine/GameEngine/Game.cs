@@ -150,6 +150,18 @@ namespace TextualRealityExperienceEngine.GameEngine
                     reply.Reply = lowerCase;
                     return reply;
                 }
+                case "help":
+                case "help me":
+                case "instructions":
+                case "read manual":
+                case "read the manual":
+                case "manual":
+                case "man":
+                {
+                    reply.State = ParserStateEnum.Help;
+                    reply.Reply = lowerCase;
+                    return reply;
+                }
             }
 
             reply.State = ParserStateEnum.Playing;
