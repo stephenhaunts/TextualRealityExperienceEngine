@@ -189,6 +189,7 @@ namespace Tests.SimpleGame
             };
 
             _game.Parser.Nouns.Add("light", "lightswitch");
+            _game.Parser.Nouns.Add("lights", "lightswitch");
             _game.Parser.Nouns.Add("lightswitch", "lightswitch");
             _game.Parser.Nouns.Add("switch", "lightswitch");
             _game.Parser.Nouns.Add("plantpot", "plantpot");
@@ -270,6 +271,13 @@ namespace Tests.SimpleGame
 
                             Environment.Exit(0);
                         }
+                        continue;
+
+                    case ParserStateEnum.Score:
+                        Console.WriteLine();
+                        Console.WriteLine("You have made " + _game.NumberOfMoves + " so far.");
+                        Console.WriteLine("You score is " + _game.Score);
+
                         continue;
                 }
             }

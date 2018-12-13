@@ -129,6 +129,16 @@ namespace TextualRealityExperienceEngine.GameEngine
                     reply.Reply = lowerCase;
                     return reply;
                 }
+                case "show score":
+                case "score":
+                case "view score":
+                case "see score":
+                case "what is my score":
+                {
+                    reply.State = ParserStateEnum.Score;
+                    reply.Reply = lowerCase;
+                    return reply;
+                }
             }
 
             reply.State = ParserStateEnum.Playing;

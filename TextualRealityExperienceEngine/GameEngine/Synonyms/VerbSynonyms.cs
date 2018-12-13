@@ -102,6 +102,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _synonymMappings.Add("flip", VerbCodes.Use);
             _synonymMappings.Add("turn", VerbCodes.Use);
             _synonymMappings.Add("unlock", VerbCodes.Use);
+            _synonymMappings.Add("switch", VerbCodes.Use);
 
 
             _synonymMappings.Add("look", VerbCodes.Look);
