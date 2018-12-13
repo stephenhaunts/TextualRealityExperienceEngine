@@ -29,6 +29,10 @@ namespace TextualRealityExperienceEngine.GameEngine
     public enum ParserStateEnum
     {
         Playing = 0,
-        Command
+        Inventory,
+        Exit,
+        Help,
+        Score,
+        Clearscreen
     }
 }

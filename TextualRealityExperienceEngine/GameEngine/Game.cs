@@ -26,17 +26,6 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
-    public enum ParserStateEnum
-    {
-        Playing = 0,
-        Command
-    }
-
-    public class GameReply
-    {
-        public ParserStateEnum State { get; set; }
-        public string Reply { get; set; }
-    }
 
     public class Game : IGame
     {
@@ -83,16 +72,68 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             if (!string.IsNullOrEmpty(command))
             {
-                var parsedCommand = Parser.ParseCommand(command);
-                _commandqueue.AddCommand(parsedCommand);
+                // Check for game specific override commands
+                reply = CheckGameSpecificCommandOverrides(command);
 
-                reply.State = ParserStateEnum.Playing;
-                reply.Reply = CurrentRoom.ProcessCommand(parsedCommand);
+                if (string.IsNullOrEmpty(reply.Reply))
+                {
+                    reply = RunParser(command);
+                }
+
                 return reply;
             }
 
             reply.State = ParserStateEnum.Playing;
             reply.Reply = string.Empty;
+            return reply;
+        }
+
+        private GameReply RunParser(string command)
+        {
+            GameReply reply = new GameReply();
+
+            // Run the natural language parser.
+            var parsedCommand = Parser.ParseCommand(command);
+            _commandqueue.AddCommand(parsedCommand);
+
+            reply.State = ParserStateEnum.Playing;
+            reply.Reply = CurrentRoom.ProcessCommand(parsedCommand);
+
+            return reply;
+        }
+
+        private GameReply CheckGameSpecificCommandOverrides(string command)
+        {
+            GameReply reply = new GameReply();
+
+            var lowerCase = command.ToLower();
+
+            switch (lowerCase)
+            {
+                case "clear":
+                case "cls":
+                case "clearscreen":
+                case "clear screen":
+                {
+                    reply.State = ParserStateEnum.Clearscreen;
+                    reply.Reply = lowerCase;
+                    return reply;
+                }
+                case "quit":
+                case "exit":
+                case "run away":
+                case "kill yourself":
+                case "kill your self":
+                {
+                    reply.State = ParserStateEnum.Exit;
+                    reply.Reply = lowerCase;
+                    return reply;
+                }
+            }
+
+            reply.State = ParserStateEnum.Playing;
+            reply.Reply = "";
+
             return reply;
         }
     }

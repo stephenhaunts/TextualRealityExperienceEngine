@@ -183,8 +183,10 @@ namespace Tests.SimpleGame
 
         private static void InitializeGame()
         {
-            _game = new Game();
-            _game.Prologue = _prologue;
+            _game = new Game
+            {
+                Prologue = _prologue
+            };
 
             _game.Parser.Nouns.Add("light", "lightswitch");
             _game.Parser.Nouns.Add("lightswitch", "lightswitch");
@@ -203,10 +205,12 @@ namespace Tests.SimpleGame
             _game.Parser.Nouns.Add("frondoor", "door");
 
             _outside = new Outside(_outside_name, _outside_description, _game);
-            _hallway = new Hallway(_hallway_name, _hallway_description, _game);
-            _hallway.LightsOn = false;
 
-            _hallway.LightsOffDescription = _hallway_lights_off;
+            _hallway = new Hallway(_hallway_name, _hallway_description, _game)
+            {
+                LightsOn = false,
+                LightsOffDescription = _hallway_lights_off
+            };
 
             _lounge = new Room(_lounge_name, _lounge_description, _game);
 
@@ -240,10 +244,33 @@ namespace Tests.SimpleGame
                 Console.Write("> ");
                 GameReply reply = _game.ProcessCommand(Console.ReadLine());
 
-                if (!string.IsNullOrEmpty(reply.Reply))
+                switch (reply.State)
                 {
-                    Console.WriteLine();
-                    ConsoleEx.WordWrap(reply.Reply);
+                    case ParserStateEnum.Playing:
+                        if (!string.IsNullOrEmpty(reply.Reply))
+                        {
+                            Console.WriteLine();
+                            ConsoleEx.WordWrap(reply.Reply);
+                        }
+                        continue;
+
+                    case ParserStateEnum.Clearscreen:
+                        Console.Clear();
+                        continue;
+
+                    case ParserStateEnum.Exit:
+                        Console.WriteLine();
+                        Console.Write("Are you sure? (y/n) : ");
+                        var response = Console.ReadLine();
+
+                        if (response.ToLower() == "y")
+                        {
+                            Console.WriteLine();
+                            ConsoleEx.WordWrap("Have it your way.. You spontaniously combust and depart this mortal coil in a puff of smoke....");
+
+                            Environment.Exit(0);
+                        }
+                        continue;
                 }
             }
         }
