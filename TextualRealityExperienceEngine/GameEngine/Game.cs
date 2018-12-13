@@ -30,6 +30,8 @@ namespace TextualRealityExperienceEngine.GameEngine
     public class Game : IGame
     {
         public string Prologue { get; set; }
+        public string HelpText { get; set; }
+
         public IRoom StartRoom { get; set; }
         public IRoom CurrentRoom { get; set; }
         public IParser Parser { get; }
@@ -42,6 +44,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         public Game()
         {
             Prologue = string.Empty;
+            HelpText = string.Empty;
             StartRoom = null;
             Parser = new Parser();
             Inventory = new Inventory();
@@ -62,6 +65,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             Prologue = prologue;
             StartRoom = room;
             CurrentRoom = room;
+            HelpText = string.Empty;
             Parser = new Parser();
             Inventory = new Inventory();
         }

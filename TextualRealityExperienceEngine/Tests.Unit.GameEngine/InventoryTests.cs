@@ -148,5 +148,24 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             Assert.AreEqual(0, inventory.Count());
         }
 
+        [TestMethod]
+        public void GetInventoryReturnsReadOnlyList()
+        {
+            IInventory inventory = new Inventory();
+
+            IObject key = new GameObject("key", "The key of fire mountain.", "You picked up the golden key.");
+            inventory.Add(key.Name, key);
+
+            IObject key2 = new GameObject("key2", "The key of fire mountain.", "You picked up the golden key.");
+            inventory.Add(key2.Name, key2);
+
+            Assert.AreEqual(2, inventory.Count());
+
+            var inventoryList = inventory.GetInventory();
+
+            Assert.AreEqual(2, inventoryList.Count);
+            Assert.AreEqual("key : The key of fire mountain.", inventoryList[0]);
+            Assert.AreEqual("key2 : The key of fire mountain.", inventoryList[1]);
+        }
     }
 }

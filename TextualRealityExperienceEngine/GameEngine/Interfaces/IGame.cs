@@ -28,6 +28,8 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
     public interface IGame
     {
         string Prologue { get; set; }
+        string HelpText { get; set; }
+
         IRoom StartRoom { get; set; }
         IRoom CurrentRoom { get; set; }
         IParser Parser { get; }

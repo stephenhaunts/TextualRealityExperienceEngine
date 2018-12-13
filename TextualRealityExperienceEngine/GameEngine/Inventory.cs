@@ -94,7 +94,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             foreach (KeyValuePair<string, IObject> entry in _inventory)
             {
-                inventory.Add(entry.Value.Name + ": " + entry.Value.Description);
+                inventory.Add(entry.Value.Name + " : " + entry.Value.Description);
             }
 
             return new ReadOnlyCollection<string>(inventory);

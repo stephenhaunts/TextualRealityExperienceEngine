@@ -45,6 +45,13 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
 
         [TestMethod]
+        public void HelpTextIsEmptyWhenCreatedWithDefaultConstructor()
+        {
+            var game = new Game();
+            Assert.AreEqual(string.Empty, game.HelpText);
+        }
+
+        [TestMethod]
         public void StartRoomIsSetByProperty()
         {
             var game = new Game();
@@ -73,6 +80,17 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             game.Prologue = prologue;
 
             Assert.AreEqual(prologue, game.Prologue);
+        }
+
+        [TestMethod]
+        public void HelpTextIsSetByProperty()
+        {
+            var game = new Game();
+            var help = "This is yoru help.";
+
+            game.HelpText = help;
+
+            Assert.AreEqual(help, game.HelpText);
         }
 
         [TestMethod]
