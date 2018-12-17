@@ -40,7 +40,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         public IVerbSynonyms Verbs { get; }
         public INounSynonyms Nouns { get; }
         public IPrepositionMapping Prepositions { get; }
-        ParserStatesEnum parserStates = ParserStatesEnum.Verb;
+        ParserStatesEnum _parserStates = ParserStatesEnum.Verb;
         ICommand _command;
 
         public Parser()
@@ -107,28 +107,28 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             foreach (string word in commandList)
             {
-                if (parserStates == ParserStatesEnum.Verb)
+                if (_parserStates == ParserStatesEnum.Verb)
                 {
                     if (ProcessVerbs(word)) continue;                                                  
                 }
 
-                if (parserStates == ParserStatesEnum.Noun)
+                if (_parserStates == ParserStatesEnum.Noun)
                 {
                     if (ProcessNoun1(word)) continue;
                 }
 
-                if (parserStates == ParserStatesEnum.Preposition)
+                if (_parserStates == ParserStatesEnum.Preposition)
                 {
                     if (ProcessPreposition(word)) continue;
                 }
 
-                if (parserStates == ParserStatesEnum.Noun2)
+                if (_parserStates == ParserStatesEnum.Noun2)
                 {
                     if (ProcessNoun2(word)) continue;
                 }
             }
 
-            parserStates = ParserStatesEnum.Verb;
+            _parserStates = ParserStatesEnum.Verb;
 
             return _command; 
         }
@@ -136,7 +136,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         bool ProcessVerbs(string word)
         {
             var verb = Verbs.GetVerbforSynonum(word);
-            parserStates = ParserStatesEnum.Noun;
+            _parserStates = ParserStatesEnum.Noun;
 
             if (verb != VerbCodes.NoCommand)
             {
@@ -153,7 +153,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             if (!string.IsNullOrEmpty(noun))
             {
                 _command.Noun = noun;
-                parserStates = ParserStatesEnum.Preposition;
+                _parserStates = ParserStatesEnum.Preposition;
 
                 return true;
             }
@@ -167,7 +167,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             if (preposition != PropositionEnum.NotRecognised)
             {
                 _command.Preposition = preposition;
-                parserStates = ParserStatesEnum.Noun2;
+                _parserStates = ParserStatesEnum.Noun2;
 
                 return true;
             }
