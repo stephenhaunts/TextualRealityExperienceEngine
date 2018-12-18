@@ -32,18 +32,18 @@ namespace Tests.Integration.GameEngine
     {
 
         private readonly IGame _game = new Game();
-        private const string _prologue = "Welcome to test adventure.You will be bedazzled with awesomeness.";
+        private const string Prologue = "Welcome to test adventure.You will be bedazzled with awesomeness.";
 
-        private const string _outside_name = "Outside";
-        private const string _outside_description = "You are standing on a driveway outside of a house. It is nightime and very cold. " +
+        private const string OutsideName = "Outside";
+        private const string OutsideDescription = "You are standing on a driveway outside of a house. It is nightime and very cold. " +
                                                     "There is frost on the ground. There is a door to the north.";
 
-        private const string _hallway_name = "Hallway";
-        private const string _hallway_description = "You are standing in a hallway that is modern, yet worn. There is a door to the west." +
+        private const string HallwayName = "Hallway";
+        private const string HallwayDescription = "You are standing in a hallway that is modern, yet worn. There is a door to the west." +
                                                     "To the south the front door leads back to the driveway.";
 
-        private const string _lounge_name = "Lounge";
-        private const string _lounge_description = "You are stand in the lounge. There is a sofa and a TV inside. There is a door back to the hallway to the east.";
+        private const string LoungeName = "Lounge";
+        private const string LoungeDescription = "You are stand in the lounge. There is a sofa and a TV inside. There is a door back to the hallway to the east.";
 
 
         private IRoom _outside;
@@ -52,11 +52,11 @@ namespace Tests.Integration.GameEngine
 
         private void InitializeGame()
         {
-            _game.Prologue = _prologue;
+            _game.Prologue = Prologue;
 
-            _outside = new Room(_outside_name, _outside_description, _game);
-            _hallway = new Room(_hallway_name, _hallway_description, _game);
-            _lounge = new Room(_lounge_name, _lounge_description, _game);
+            _outside = new Room(OutsideName, OutsideDescription, _game);
+            _hallway = new Room(HallwayName, HallwayDescription, _game);
+            _lounge = new Room(LoungeName, LoungeDescription, _game);
 
             _outside.AddExit(Direction.North, _hallway);
             _hallway.AddExit(Direction.West, _lounge);
@@ -70,19 +70,19 @@ namespace Tests.Integration.GameEngine
         {
             InitializeGame();
 
-            Assert.AreEqual(_prologue, _game.Prologue);
+            Assert.AreEqual(Prologue, _game.Prologue);
             Assert.AreEqual(_outside, _game.StartRoom);
             Assert.AreEqual(_outside, _game.CurrentRoom);
             Assert.IsNotNull(_game.Parser);
 
-            Assert.AreEqual(_outside_name, _outside.Name);
-            Assert.AreEqual(_outside_description, _outside.Description);
+            Assert.AreEqual(OutsideName, _outside.Name);
+            Assert.AreEqual(OutsideDescription, _outside.Description);
 
-            Assert.AreEqual(_hallway_name, _hallway.Name);
-            Assert.AreEqual(_hallway_description, _hallway.Description);
+            Assert.AreEqual(HallwayName, _hallway.Name);
+            Assert.AreEqual(HallwayDescription, _hallway.Description);
 
-            Assert.AreEqual(_lounge_name, _lounge.Name);
-            Assert.AreEqual(_lounge_description, _lounge.Description);
+            Assert.AreEqual(LoungeName, _lounge.Name);
+            Assert.AreEqual(LoungeDescription, _lounge.Description);
         }
 
         [TestMethod]
@@ -91,19 +91,19 @@ namespace Tests.Integration.GameEngine
             InitializeGame();
 
             var reply = _game.ProcessCommand("go north");
-            Assert.AreEqual(_hallway_description, reply.Reply);
+            Assert.AreEqual(HallwayDescription, reply.Reply);
             Assert.AreEqual(_hallway, _game.CurrentRoom);
 
             reply = _game.ProcessCommand("go west");
-            Assert.AreEqual(_lounge_description, reply.Reply);
+            Assert.AreEqual(LoungeDescription, reply.Reply);
             Assert.AreEqual(_lounge, _game.CurrentRoom);
 
             reply = _game.ProcessCommand("go east");
-            Assert.AreEqual(_hallway_description, reply.Reply);
+            Assert.AreEqual(HallwayDescription, reply.Reply);
             Assert.AreEqual(_hallway, _game.CurrentRoom);
 
             reply = _game.ProcessCommand("go south");
-            Assert.AreEqual(_outside_description, reply.Reply);
+            Assert.AreEqual(OutsideDescription, reply.Reply);
             Assert.AreEqual(_outside, _game.CurrentRoom);
         }
     }
