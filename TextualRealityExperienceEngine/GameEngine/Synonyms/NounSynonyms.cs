@@ -77,7 +77,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _synonymsMappings.Add(synonym, noun);
         }
 
-        public string GetNounforSynonum(string synonym)
+        public string GetNounForSynonym(string synonym)
         {
             if (string.IsNullOrEmpty(synonym))
             {

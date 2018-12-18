@@ -67,14 +67,14 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _prepositionMappings.Add("from", PropositionEnum.From);
         }
 
-        public void Add(string inputProposotion, PropositionEnum preposition)
+        public void Add(string inputProposition, PropositionEnum preposition)
         {
-            if (string.IsNullOrEmpty(inputProposotion))
+            if (string.IsNullOrEmpty(inputProposition))
             {
-                throw new ArgumentNullException(nameof(inputProposotion));
+                throw new ArgumentNullException(nameof(inputProposition));
             }
 
-            _prepositionMappings.Add(inputProposotion, preposition);
+            _prepositionMappings.Add(inputProposition, preposition);
         }
 
         public PropositionEnum GetPreposition(string preposition)
@@ -83,17 +83,15 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             {
                 throw new ArgumentNullException(nameof(preposition));
             }
-
+          
             try
             {
-                var verb = _prepositionMappings[preposition];
+                return _prepositionMappings[preposition];
             }
             catch (KeyNotFoundException)
             {
                 return PropositionEnum.NotRecognised;
             }
-
-            return _prepositionMappings[preposition];
         }
     }
 }

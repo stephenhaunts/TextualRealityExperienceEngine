@@ -20,9 +20,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
-using System.Collections.Generic;
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
@@ -36,6 +33,6 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         public Direction Direction;
         public bool Locked;
-        public string ObjectToUnlock;
+        public string ObjectToUnlock { get; set; }
     }
 }

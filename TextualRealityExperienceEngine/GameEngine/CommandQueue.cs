@@ -30,27 +30,15 @@ namespace TextualRealityExperienceEngine.GameEngine
 {
     public class CommandQueue : ICommandQueue
     {
-        readonly List<ICommand> _commandQueue = new List<ICommand>();
+        private readonly List<ICommand> _commandQueue = new List<ICommand>();
 
         public void AddCommand(ICommand command)
         {
             _commandQueue.Add(command);
         }
 
-        public int Count
-        {
-            get
-            {
-                return _commandQueue.Count;
-            }
-        }
+        public int Count => _commandQueue.Count;
 
-        public ReadOnlyCollection<ICommand> Commands
-        {
-            get
-            {
-                return new ReadOnlyCollection<ICommand>(_commandQueue);
-            }
-        }
+        public ReadOnlyCollection<ICommand> Commands => new ReadOnlyCollection<ICommand>(_commandQueue);
     }
 }

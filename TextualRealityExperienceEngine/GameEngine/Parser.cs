@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
+
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 using TextualRealityExperienceEngine.GameEngine.Synonyms;
 
@@ -40,8 +40,8 @@ namespace TextualRealityExperienceEngine.GameEngine
         public IVerbSynonyms Verbs { get; }
         public INounSynonyms Nouns { get; }
         public IPrepositionMapping Prepositions { get; }
-        ParserStatesEnum _parserStates = ParserStatesEnum.Verb;
-        ICommand _command;
+        private ParserStatesEnum _parserStates = ParserStatesEnum.Verb;
+        private ICommand _command;
 
         public Parser()
         {
@@ -72,7 +72,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             var lowerCase = command.ToLower();
             var wordList = lowerCase.Split(' ');
 
-            ICommand commandList = new Command();
+            ICommand commandList;
 
             switch (wordList.Length)
             {
@@ -95,7 +95,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             if (reply.Verb == VerbCodes.NoCommand)
             {
-               reply.Verb = Verbs.GetVerbforSynonum(command);             
+               reply.Verb = Verbs.GetVerbForSynonym(command);             
             }
 
             return reply;
@@ -135,7 +135,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         bool ProcessVerbs(string word)
         {
-            var verb = Verbs.GetVerbforSynonum(word);
+            var verb = Verbs.GetVerbForSynonym(word);
             _parserStates = ParserStatesEnum.Noun;
 
             if (verb != VerbCodes.NoCommand)
@@ -149,7 +149,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         bool ProcessNoun1(string word)
         {
-            var noun = Nouns.GetNounforSynonum(word);
+            var noun = Nouns.GetNounForSynonym(word);
             if (!string.IsNullOrEmpty(noun))
             {
                 _command.Noun = noun;
@@ -177,7 +177,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         bool ProcessNoun2(string word)
         {
-            var noun = Nouns.GetNounforSynonum(word);
+            var noun = Nouns.GetNounForSynonym(word);
             if (!string.IsNullOrEmpty(noun))
             {
 

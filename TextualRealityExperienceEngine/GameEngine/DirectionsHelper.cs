@@ -30,8 +30,8 @@ namespace TextualRealityExperienceEngine.GameEngine
     {
         public static ICommand GetDirectionCommand(string command)
         {
-            ICommand toReturn = new Command();
-            string lowerCaseCommand = command.ToLower();
+            var toReturn = new Command();
+            var lowerCaseCommand = command.ToLower();
 
             switch (lowerCaseCommand)
             {
@@ -40,155 +40,126 @@ namespace TextualRealityExperienceEngine.GameEngine
                     toReturn.Noun = "north";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "south":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "south";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "east":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "east";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "west":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "west";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "northeast":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "northeast";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "southeast":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "southeast";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "northwest":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "northwest";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "southwest":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "southwest";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
-
                 case "n":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "north";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "s":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "south";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "e":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "east";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "w":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "west";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "ne":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "northeast";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "se":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "southeast";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "nw":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "northwest";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "sw":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "southwest";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
-
-
-
                 case "f":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "north";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "b":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "south";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "forward":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "north";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "backward":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "south";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "forwards":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "north";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "backwards":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "south";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "right":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "east";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "left":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "west";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "r":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "east";
                     toReturn.FullTextCommand = lowerCaseCommand;
                     break;
-
                 case "l":
                     toReturn.Verb = Synonyms.VerbCodes.Go;
                     toReturn.Noun = "west";

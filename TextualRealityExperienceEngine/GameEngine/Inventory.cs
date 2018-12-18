@@ -31,7 +31,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 {
     public class Inventory : IInventory 
     {
-        Dictionary<string, IObject> _inventory = new Dictionary<string, IObject>();
+        private readonly Dictionary<string, IObject> _inventory = new Dictionary<string, IObject>();
 
         public void Add(string name, IObject gameObject)
         {
@@ -90,9 +90,9 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         public ReadOnlyCollection<string> GetInventory()
         {
-            List<string> inventory = new List<string>();
+            var inventory = new List<string>();
 
-            foreach (KeyValuePair<string, IObject> entry in _inventory)
+            foreach (var entry in _inventory)
             {
                 inventory.Add(entry.Value.Name + " : " + entry.Value.Description);
             }

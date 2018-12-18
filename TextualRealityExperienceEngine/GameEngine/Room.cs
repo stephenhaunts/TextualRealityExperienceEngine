@@ -24,12 +24,13 @@ SOFTWARE.
 using System;
 
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.Synonyms;
 
 namespace TextualRealityExperienceEngine.GameEngine 
 {
     public class Room : IRoom
     {
-        readonly IRoomExits _roomExits = new RoomExits();
+        private readonly IRoomExits _roomExits = new RoomExits();
         public string Name { get; set; }
         public string LightsOffDescription { get; set; }
         public IGame Game { get; set; }
@@ -63,19 +64,11 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         public string Description 
         {
-            get 
+            get
             {
-                if (!LightsOn)
-                {
-                    return LightsOffDescription;
-                }
-
-                return _description;
+                return !LightsOn ? LightsOffDescription : _description;
             }
-            set 
-            {
-                _description = value;
-            }
+            set => _description = value;
         }
 
         public Room(string name, string description, IGame game)
@@ -105,9 +98,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 return;
             }
 
-            DoorWay door = new DoorWay();
-            door.Locked = false;
-            door.ObjectToUnlock = string.Empty;
+            var door = new DoorWay {Locked = false, ObjectToUnlock = string.Empty};
 
             switch (direction)
             {
@@ -142,6 +133,8 @@ namespace TextualRealityExperienceEngine.GameEngine
                 case Direction.SouthWest:
                     room.AddExit(Direction.NorthEast, this, false);
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
             }
         }
 
@@ -154,9 +147,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 return;
             }
 
-            DoorWay door = new DoorWay();
-            door.Locked = false;
-            door.ObjectToUnlock = string.Empty;
+            var door = new DoorWay {Locked = false, ObjectToUnlock = string.Empty};
 
             switch (doorway.Direction)
             {
@@ -199,6 +190,8 @@ namespace TextualRealityExperienceEngine.GameEngine
                     door.Direction = Direction.NorthEast;
                     room.AddExit(door, this, false);
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -242,7 +235,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                         return "Oops";
                     }
                 }
-                case Synonyms.VerbCodes.Look:
+                case VerbCodes.Look:
                 {
                     if (string.IsNullOrEmpty(command.Noun))
                     {
@@ -250,6 +243,16 @@ namespace TextualRealityExperienceEngine.GameEngine
                     }
                     break;
                 }
+                case VerbCodes.NoCommand:
+                    break;
+                case VerbCodes.Take:
+                    break;
+                case VerbCodes.Use:
+                    break;
+                case VerbCodes.Drop:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             return string.Empty;

@@ -24,14 +24,13 @@ SOFTWARE.
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
     public class GlobalState : IGlobalState 
     {
-        Dictionary<string, object> _globalState = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> _globalState = new Dictionary<string, object>();
 
         public void Add(string name, object state)
         {

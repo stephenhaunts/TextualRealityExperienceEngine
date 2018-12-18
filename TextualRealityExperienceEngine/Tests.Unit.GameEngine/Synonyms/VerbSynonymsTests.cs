@@ -43,7 +43,7 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         {
             var verbSynonyms = new VerbSynonyms();
 
-            Assert.AreEqual(VerbCodes.Take, verbSynonyms.GetVerbforSynonum("get"));
+            Assert.AreEqual(VerbCodes.Take, verbSynonyms.GetVerbForSynonym("get"));
         }
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         {
             var verbSynonyms = new VerbSynonyms();
 
-            Assert.AreEqual(VerbCodes.NoCommand, verbSynonyms.GetVerbforSynonum("flop"));
+            Assert.AreEqual(VerbCodes.NoCommand, verbSynonyms.GetVerbForSynonym("flop"));
         }
 
         [TestMethod]
@@ -60,8 +60,8 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         {
             var verbSynonyms = new VerbSynonyms();
 
-            Assert.AreEqual(VerbCodes.Take, verbSynonyms.GetVerbforSynonum("take"));
-            Assert.AreEqual(VerbCodes.Take, verbSynonyms.GetVerbforSynonum("get"));
+            Assert.AreEqual(VerbCodes.Take, verbSynonyms.GetVerbForSynonym("take"));
+            Assert.AreEqual(VerbCodes.Take, verbSynonyms.GetVerbForSynonym("get"));
         }
     }
 }

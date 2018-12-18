@@ -28,6 +28,6 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
     public interface IVerbSynonyms
     {
         void Add(string synonym, VerbCodes verb);
-        VerbCodes GetVerbforSynonum(string synonym);
+        VerbCodes GetVerbForSynonym(string synonym);
     }
 }

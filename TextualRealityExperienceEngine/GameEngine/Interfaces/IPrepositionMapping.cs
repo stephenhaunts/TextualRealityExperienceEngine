@@ -27,7 +27,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
     public interface IPrepositionMapping
     {
-        void Add(string inputProposotion, PropositionEnum preposition);
+        void Add(string inputProposition, PropositionEnum preposition);
         PropositionEnum GetPreposition(string preposition);
     }
 }

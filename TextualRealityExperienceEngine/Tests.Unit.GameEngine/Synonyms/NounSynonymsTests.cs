@@ -52,7 +52,7 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var nounSynonyms = new NounSynonyms();
             nounSynonyms.Add("golden key", "key");
 
-            Assert.AreEqual("key", nounSynonyms.GetNounforSynonum("golden key"));
+            Assert.AreEqual("key", nounSynonyms.GetNounForSynonym("golden key"));
         }
 
         [TestMethod]
@@ -60,7 +60,7 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         {
             var nounSynonyms = new NounSynonyms();
 
-            Assert.AreEqual(string.Empty, nounSynonyms.GetNounforSynonum("golden key"));
+            Assert.AreEqual(string.Empty, nounSynonyms.GetNounForSynonym("golden key"));
         }
 
         [TestMethod]
@@ -70,8 +70,8 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             nounSynonyms.Add("golden key", "key");
             nounSynonyms.Add("rusty key", "key");
 
-            Assert.AreEqual("key", nounSynonyms.GetNounforSynonum("golden key"));
-            Assert.AreEqual("key", nounSynonyms.GetNounforSynonum("rusty key"));
+            Assert.AreEqual("key", nounSynonyms.GetNounForSynonym("golden key"));
+            Assert.AreEqual("key", nounSynonyms.GetNounForSynonym("rusty key"));
         }
     }
 }

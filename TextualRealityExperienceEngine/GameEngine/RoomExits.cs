@@ -28,7 +28,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 {
     public sealed class RoomExits : IRoomExits
     {
-        readonly Dictionary<DoorWay, IRoom> _roomMappings = new Dictionary<DoorWay, IRoom>();
+        private readonly Dictionary<DoorWay, IRoom> _roomMappings = new Dictionary<DoorWay, IRoom>();
 
         public void AddExit(Direction direction, IRoom room)
         {
@@ -44,7 +44,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 ObjectToUnlock = string.Empty
             };
 
-            foreach (KeyValuePair<DoorWay, IRoom> entry in _roomMappings)
+            foreach (var entry in _roomMappings)
             {
                 if (entry.Key.Direction == direction)
                 {
@@ -73,7 +73,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         public IRoom GetRoomForExit(Direction direction)
         {
-            foreach (KeyValuePair<DoorWay, IRoom> entry in _roomMappings)
+            foreach (var entry in _roomMappings)
             {
                 if (entry.Key.Direction == direction)
                 {

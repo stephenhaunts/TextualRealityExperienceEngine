@@ -31,15 +31,15 @@ namespace TextualRealityExperienceEngine.GameEngine
         // Based on code from https://www.codeproject.com/Articles/51488/Implementing-Word-Wrap-in-C
         public static void WordWrap(string paragraph)
         {
-            const string _newline = "\r\n";
+            const string newline = "\r\n";
             int pos, next;
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             // Parse each line of text
             for (pos = 0; pos < paragraph.Length; pos = next)
             {
                 // Find end of line
-                int eol = paragraph.IndexOf(_newline, pos, StringComparison.CurrentCulture);
+                var eol = paragraph.IndexOf(newline, pos, StringComparison.CurrentCulture);
 
                 if (eol == -1)
                 {
@@ -47,7 +47,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 }
                 else
                 {
-                    next = eol + _newline.Length;
+                    next = eol + newline.Length;
                 }
 
                 // Copy this line of text, breaking into smaller lines as needed
@@ -55,7 +55,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 {
                     do
                     {
-                        int len = eol - pos;
+                        var len = eol - pos;
 
                         if (len > Console.WindowWidth)
                         {
@@ -63,7 +63,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                         }
 
                         sb.Append(paragraph, pos, len);
-                        sb.Append(_newline);
+                        sb.Append(newline);
 
                         // Trim whitespace following break
                         pos += len;
@@ -77,7 +77,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 }
                 else
                 {
-                    sb.Append(_newline); // Empty line
+                    sb.Append(newline); // Empty line
                 }
             }
 
@@ -87,7 +87,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         private static int BreakLine(string text, int pos, int max)
         {
             // Find last whitespace in line
-            int i = max - 1;
+            var i = max - 1;
 
             while (i >= 0 && !Char.IsWhiteSpace(text[pos + i]))
             {

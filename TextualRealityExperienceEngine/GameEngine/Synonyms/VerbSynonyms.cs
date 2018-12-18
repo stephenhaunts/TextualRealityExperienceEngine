@@ -132,7 +132,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _synonymMappings.Add(synonym, verb);
         }
 
-        public VerbCodes GetVerbforSynonum(string synonym)
+        public VerbCodes GetVerbForSynonym(string synonym)
         {
             if (string.IsNullOrEmpty(synonym))
             {
@@ -141,14 +141,12 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
 
             try
             {
-                var verb = _synonymMappings[synonym];
+                return _synonymMappings[synonym];
             }
             catch (KeyNotFoundException)
             {
                 return VerbCodes.NoCommand;
             }
-
-            return _synonymMappings[synonym];
         }
     }
 }

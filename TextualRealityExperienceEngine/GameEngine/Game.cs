@@ -40,7 +40,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         public int Score { get; set; }
         public IInventory Inventory { get; set; }
 
-        ICommandQueue _commandqueue = new CommandQueue();
+        private readonly ICommandQueue _commandQueue = new CommandQueue();
 
         public Game()
         {
@@ -59,13 +59,8 @@ namespace TextualRealityExperienceEngine.GameEngine
                 throw new ArgumentNullException(nameof(prologue), "The prologue can not be empty.");
             }
 
-            if (room == null)
-            {
-                throw new ArgumentNullException(nameof(room), "The initial room state can not be null.");
-            }
-
             Prologue = prologue;
-            StartRoom = room;
+            StartRoom = room ?? throw new ArgumentNullException(nameof(room), "The initial room state can not be null.");
             CurrentRoom = room;
             HelpText = string.Empty;
             Parser = new Parser();
@@ -75,7 +70,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         public GameReply ProcessCommand(string command)
         {
-            GameReply reply = new GameReply();
+            var reply = new GameReply();
 
             if (!string.IsNullOrEmpty(command))
             {
@@ -92,16 +87,17 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             reply.State = ParserStateEnum.Playing;
             reply.Reply = string.Empty;
+            
             return reply;
         }
 
         private GameReply RunParser(string command)
         {
-            GameReply reply = new GameReply();
+            var reply = new GameReply();
 
             // Run the natural language parser.
             var parsedCommand = Parser.ParseCommand(command);
-            _commandqueue.AddCommand(parsedCommand);
+            _commandQueue.AddCommand(parsedCommand);
 
             reply.State = ParserStateEnum.Playing;
             reply.Reply = CurrentRoom.ProcessCommand(parsedCommand);
@@ -109,9 +105,9 @@ namespace TextualRealityExperienceEngine.GameEngine
             return reply;
         }
 
-        private GameReply CheckGameSpecificCommandOverrides(string command)
+        private static GameReply CheckGameSpecificCommandOverrides(string command)
         {
-            GameReply reply = new GameReply();
+            var reply = new GameReply();
 
             var lowerCase = command.ToLower();
 
@@ -121,6 +117,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 case "cls":
                 case "clearscreen":
                 case "clear screen":
+    
                 {
                     reply.State = ParserStateEnum.Clearscreen;
                     reply.Reply = lowerCase;
