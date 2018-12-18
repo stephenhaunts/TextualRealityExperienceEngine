@@ -25,12 +25,34 @@ using TextualRealityExperienceEngine.GameEngine.Synonyms;
 
 namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface ICommand
     {
+        /// <summary>
+        /// 
+        /// </summary>
         string FullTextCommand { get; set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
         VerbCodes Verb { get; set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
         string Noun { get; set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
         PropositionEnum Preposition { get; set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
         string Noun2 { get; set; }
     }
 }
