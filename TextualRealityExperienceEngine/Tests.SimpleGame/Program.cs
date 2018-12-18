@@ -137,7 +137,7 @@ namespace Tests.SimpleGame
                         Console.Write("Are you sure? (y/n) : ");
                         var response = Console.ReadLine();
 
-                        if (response.ToLower() == "y")
+                        if (response != null && response.ToLower() == "y")
                         {
                             Console.WriteLine();
                             ConsoleEx.WordWrap("Have it your way.. You spontaniously combust and depart this mortal coil in a puff of smoke....");
