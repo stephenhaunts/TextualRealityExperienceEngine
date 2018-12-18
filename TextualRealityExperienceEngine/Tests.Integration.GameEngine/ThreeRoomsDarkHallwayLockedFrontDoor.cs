@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
-using System.Globalization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
@@ -34,115 +33,107 @@ namespace Tests.Integration.GameEngine
     public class ThreeRoomsDarkHallwayLockedFrontDoor
     {
         private IGame _game = new Game();
-        private const string _prologue = "Welcome to test adventure.You will be bedazzled with awesomeness.";
+        private const string Prologue = "Welcome to test adventure.You will be bedazzled with awesomeness.";
 
-        private const string _outside_name = "Outside";
-        private const string _outside_description = "You are standing on a driveway outside of a house. It is nightime and very cold. " +
+        private const string OutsideName = "Outside";
+        private const string OutsideDescription = "You are standing on a driveway outside of a house. It is nightime and very cold. " +
                                                     "There is frost on the ground. There is a door to the north with a plant pot next to the door mat.";
 
-        private const string _hallway_name = "Hallway";
-        private const string _hallway_description = "You are standing in a hallway that is modern, yet worn. There is a door to the west." +
+        private const string HallwayName = "Hallway";
+        private const string HallwayDescription = "You are standing in a hallway that is modern, yet worn. There is a door to the west." +
                                                     "To the south the front door leads back to the driveway.";
 
-        private const string _hallway_lights_off = "You are standing in a very dimly lit hallway. Your eyes struggle to adjust to the low light. " + 
+        private const string HallwayLightsOff = "You are standing in a very dimly lit hallway. Your eyes struggle to adjust to the low light. " + 
                                                    "You notice there is a swith on the wall to your left.";
 
-        private const string _lounge_name = "Lounge";
-        private const string _lounge_description = "You are stand in the lounge. There is a sofa and a TV inside. There is a door back to the hallway to the east.";
+        private const string LoungeName = "Lounge";
+        private const string LoungeDescription = "You are stand in the lounge. There is a sofa and a TV inside. There is a door back to the hallway to the east.";
 
 
-        public class Outside : Room
+        private class Outside : Room
         {
-            readonly IObject key = new GameObject("Key", "Its is a small brass key.", "You pick up the key.");
+            private readonly IObject _key = new GameObject("Key", "Its is a small brass key.", "You pick up the key.");
 
-            bool looked_at_plant_pot;
+            bool _lookedAtPlantPot;
 
             public Outside(string name, string description, IGame game) : base(name, description, game)
             {
-                looked_at_plant_pot = false;
+                _lookedAtPlantPot = false;
             }
 
             public override string ProcessCommand(ICommand command)
             {
-                string reply;
-
                 switch (command.Verb)
                 {
                     case VerbCodes.Use:
-                        if ((command.Noun == "key") && (command.Noun2 == "door"))
+                        switch (command.Noun)
                         {
-                            if (Game.Inventory.Exists("Key"))
-                            {
+                            case "key" when (command.Noun2 == "door") && Game.Inventory.Exists("Key"):
                                 SetDoorLock(false, Direction.North);
+                                
                                 Game.Score++;
                                 Game.NumberOfMoves++;
+                                
                                 return "You turn the key in the lock and you hear a THUNK of the door unlocking.";
-                            }
-                        }
-
-                        if ((command.Noun == "door"))
-                        {
-                            if (Game.Inventory.Exists("Key"))
-                            {
+                            case "door" when Game.Inventory.Exists("Key"):
                                 SetDoorLock(false, Direction.North);
+                                
                                 Game.Score++;
                                 Game.NumberOfMoves++;
+                                
                                 return "You turn the key in the lock and you hear a THUNK of the door unlocking.";
-                            }
+                            default:
+                                return "You do not have a key.";
                         }
 
-                        return "You do not have a key.";
                     case VerbCodes.Look:
-                        if (command.Noun == "plantpot")
+                        switch (command.Noun)
                         {
-                            looked_at_plant_pot = true;
-                            if (!Game.Inventory.Exists("Key"))
+                            case "plantpot":
                             {
+                                _lookedAtPlantPot = true;
+                                if (Game.Inventory.Exists("Key")) return "It's a plant pot. Quite unremarkable.";
+                                
                                 Game.NumberOfMoves++;
                                 return "You move the plant pot and find a key sitting under it.";
+
                             }
-                            else
-                            {
-                                return "It's a plant pot. Quite unremarkable.";
-                            }
+                            case "doormat":
+                                return "It's a doormat where people wipe their feet. On it is written 'There is no place like 10.0.0.1'.";
                         }
-                        if (command.Noun == "doormat")
-                        {
-                            return "It's a doormat where people wipe their feet. On it is written 'There is no place like 10.0.0.1'.";
-                        }
+
                         break;
                     case VerbCodes.Take:
                         if (command.Noun == "key")
                         {
-                            if (looked_at_plant_pot)
-                            {
-                                if (!Game.Inventory.Exists("Key"))
-                                {
-                                    Game.Inventory.Add(key.Name, key);
-                                    Game.Score++;
-                                    Game.NumberOfMoves++;
-                                    return key.PickUpMessage;
-                                }
-                                else
-                                {
-                                    return "You already have the key.";
-                                }
-                            }
-                            else
-                            {
-                                return "What key?";
-                            }
+                            if (!_lookedAtPlantPot) return "What key?";
+                            if (Game.Inventory.Exists("Key")) return "You already have the key.";
+                            
+                            Game.Inventory.Add(_key.Name, _key);
+                            Game.Score++;
+                            Game.NumberOfMoves++;
+                            
+                            return _key.PickUpMessage;
+
                         }
                         break;
 
+                    case VerbCodes.NoCommand:
+                        break;
+                    case VerbCodes.Go:
+                        break;
+                    case VerbCodes.Drop:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
 
-                reply = base.ProcessCommand(command);
+                var reply = base.ProcessCommand(command);
                 return reply;
             }
         }
 
-        public class Hallway : Room
+        private class Hallway : Room
         {
             public Hallway(string name, string description, IGame game) : base(name, description, game)
             {
@@ -150,8 +141,6 @@ namespace Tests.Integration.GameEngine
 
             public override string ProcessCommand(ICommand command)
             {
-                string reply;
-
                 if (command.Verb == VerbCodes.Use)
                 {
                     if (command.Noun == "lightswitch")
@@ -164,17 +153,15 @@ namespace Tests.Integration.GameEngine
 
                         if (LightsOn)
                         {
-                            return "You flip the lightswitch and the lights flicker for a few seconds until they illuminate the hallway. You hear a faint buzzing sound coming from the lights."
+                            return "You flip the light switch and the lights flicker for a few seconds until they illuminate the hallway. You hear a faint buzzing sound coming from the lights."
                                + Description;
                         }
-                        else
-                        {
-                            return Description;
-                        }
+
+                        return Description;
                     }
                 }
 
-                reply = base.ProcessCommand(command);
+                var reply = base.ProcessCommand(command);
 
                 return reply;
             }
@@ -186,8 +173,7 @@ namespace Tests.Integration.GameEngine
 
         private void InitializeGame()
         {
-            _game = new Game();
-            _game.Prologue = _prologue;
+            _game = new Game {Prologue = Prologue};
 
             _game.Parser.Nouns.Add("light", "lightswitch");
             _game.Parser.Nouns.Add("lightswitch", "lightswitch");
@@ -206,15 +192,16 @@ namespace Tests.Integration.GameEngine
             _game.Parser.Nouns.Add("frondoor", "door");
 
 
-            _outside = new Outside(_outside_name, _outside_description, _game);
-            _hallway = new Hallway(_hallway_name, _hallway_description, _game);
-            _hallway.LightsOn = false;
+            _outside = new Outside(OutsideName, OutsideDescription, _game);
+            _hallway = new Hallway(HallwayName, HallwayDescription, _game)
+            {
+                LightsOn = false, LightsOffDescription = HallwayLightsOff
+            };
 
-            _hallway.LightsOffDescription = _hallway_lights_off;
 
-            _lounge = new Room(_lounge_name, _lounge_description, _game);
+            _lounge = new Room(LoungeName, LoungeDescription, _game);
 
-            DoorWay doorway = new DoorWay
+            var doorway = new DoorWay
             {
                 Direction = Direction.North,
                 Locked = true,
@@ -233,19 +220,19 @@ namespace Tests.Integration.GameEngine
         {
             InitializeGame();
 
-            Assert.AreEqual(_prologue, _game.Prologue);
+            Assert.AreEqual(Prologue, _game.Prologue);
             Assert.AreEqual(_outside, _game.StartRoom);
             Assert.AreEqual(_outside, _game.CurrentRoom);
             Assert.IsNotNull(_game.Parser);
 
-            Assert.AreEqual(_outside_name, _outside.Name);
-            Assert.AreEqual(_outside_description, _outside.Description);
+            Assert.AreEqual(OutsideName, _outside.Name);
+            Assert.AreEqual(OutsideDescription, _outside.Description);
 
-            Assert.AreEqual(_hallway_name, _hallway.Name);
+            Assert.AreEqual(HallwayName, _hallway.Name);
 
             Assert.IsTrue(_hallway.Description.StartsWith("You are standing in a very dimly lit hallway.", StringComparison.Ordinal));
-            Assert.AreEqual(_lounge_name, _lounge.Name);
-            Assert.AreEqual(_lounge_description, _lounge.Description);
+            Assert.AreEqual(LoungeName, _lounge.Name);
+            Assert.AreEqual(LoungeDescription, _lounge.Description);
         }
 
         [TestMethod]
@@ -301,18 +288,71 @@ namespace Tests.Integration.GameEngine
 
             // Turn lights on
             reply = _game.ProcessCommand("use switch");
-            Assert.IsTrue(reply.Reply.StartsWith("You flip the lightswitch and the lights flicker for a few seconds", StringComparison.Ordinal));
+            Assert.IsTrue(reply.Reply.StartsWith("You flip the light switch and the lights flicker for a few seconds", StringComparison.Ordinal));
 
             reply = _game.ProcessCommand("go west");
-            Assert.AreEqual(_lounge_description, reply.Reply);
+            Assert.AreEqual(LoungeDescription, reply.Reply);
             Assert.AreEqual(_lounge, _game.CurrentRoom);
 
             reply = _game.ProcessCommand("go east");
             Assert.IsTrue(reply.Reply.StartsWith("You are standing in a hallway", StringComparison.Ordinal));
 
             reply = _game.ProcessCommand("go south");
-            Assert.AreEqual(_outside_description, reply.Reply);
+            Assert.AreEqual(OutsideDescription, reply.Reply);
             Assert.AreEqual(_outside, _game.CurrentRoom);
+        }
+        
+          [TestMethod]
+        public void SaveLoadGame()
+        {
+            InitializeGame();
+
+            var reply = _game.ProcessCommand("look at plant pot");
+            Assert.IsTrue(reply.Reply.StartsWith("You move the plant pot and find a key sitting under it.", StringComparison.Ordinal));
+
+            reply = _game.ProcessCommand("go north");
+            Assert.AreEqual("The door is locked.", reply.Reply);
+
+            reply = _game.ProcessCommand("use key on door");
+            Assert.AreEqual("You do not have a key.", reply.Reply);
+
+            reply = _game.ProcessCommand("pick up key");
+            Assert.AreEqual("You pick up the key.", reply.Reply);
+            Assert.AreEqual(1, _game.Inventory.Count());
+            Assert.IsTrue(_game.Inventory.Exists("Key"));
+
+            reply = _game.ProcessCommand("look at doormat");
+            Assert.IsTrue(reply.Reply.StartsWith("It's a doormat where people wipe their feet.", StringComparison.Ordinal));
+
+            reply = _game.ProcessCommand("use key on door");
+            Assert.AreEqual("You turn the key in the lock and you hear a THUNK of the door unlocking.", reply.Reply);
+            
+
+            reply = _game.ProcessCommand("go north");
+            Assert.AreEqual(_hallway, _game.CurrentRoom);
+
+            Assert.IsTrue(reply.Reply.StartsWith("You are standing in a very dimly lit hallway.", StringComparison.Ordinal));
+
+            // Turn lights on
+            reply = _game.ProcessCommand("use switch");
+            Assert.IsTrue(reply.Reply.StartsWith("You flip the light switch and the lights flicker for a few seconds", StringComparison.Ordinal));
+
+            reply = _game.ProcessCommand("go west");
+            Assert.AreEqual(LoungeDescription, reply.Reply);
+            Assert.AreEqual(_lounge, _game.CurrentRoom);
+
+            reply = _game.ProcessCommand("go east");
+            Assert.IsTrue(reply.Reply.StartsWith("You are standing in a hallway", StringComparison.Ordinal));
+
+            reply = _game.ProcessCommand("go south");
+            Assert.AreEqual(OutsideDescription, reply.Reply);
+            Assert.AreEqual(_outside, _game.CurrentRoom);
+
+            var saveGame = _game.SaveGame();
+            InitializeGame();
+            _game.LoadGame(saveGame);
+            
+            
         }
     }
 }

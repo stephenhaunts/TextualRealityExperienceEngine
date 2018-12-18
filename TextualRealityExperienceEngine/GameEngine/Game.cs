@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
@@ -81,7 +83,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 {
                     reply = RunParser(command);
                 }
-
+                
                 return reply;
             }
 
@@ -168,6 +170,21 @@ namespace TextualRealityExperienceEngine.GameEngine
             reply.Reply = "";
 
             return reply;
+        }
+
+        public ReadOnlyCollection<ICommand> SaveGame()
+        {
+            return _commandQueue.Commands; 
+        }
+
+        public void LoadGame(ReadOnlyCollection<ICommand> commands)
+        {
+            _commandQueue.Clear();
+
+            foreach (var command in commands)
+            {
+                ProcessCommand(command.FullTextCommand);
+            }
         }
     }
 }

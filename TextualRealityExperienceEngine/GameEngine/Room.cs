@@ -1,4 +1,4 @@
-﻿/*
+/*
 MIT License
 
 Copyright (c) 2018 
@@ -64,10 +64,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         public string Description 
         {
-            get
-            {
-                return !LightsOn ? LightsOffDescription : _description;
-            }
+            get => !LightsOn ? LightsOffDescription : _description;
             set => _description = value;
         }
 

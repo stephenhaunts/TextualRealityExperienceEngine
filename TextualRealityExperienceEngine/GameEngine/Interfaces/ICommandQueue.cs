@@ -29,5 +29,6 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
     {
         void AddCommand(ICommand command);
         ReadOnlyCollection<ICommand> Commands { get; }
+        void Clear();
     }
 }

@@ -40,5 +40,10 @@ namespace TextualRealityExperienceEngine.GameEngine
         public int Count => _commandQueue.Count;
 
         public ReadOnlyCollection<ICommand> Commands => new ReadOnlyCollection<ICommand>(_commandQueue);
+        
+        public void Clear()
+        {
+            _commandQueue.Clear();
+        }
     }
 }
