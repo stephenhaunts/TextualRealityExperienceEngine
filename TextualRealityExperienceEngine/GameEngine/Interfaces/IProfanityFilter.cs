@@ -21,48 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using TextualRealityExperienceEngine.GameEngine.Synonyms;
 
 namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public interface ICommand
+    public interface IProfanityFilter
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        string FullTextCommand { get; set; }
+        bool IsProfanity(string word);
         
-        /// <summary>
-        /// 
-        /// </summary>
-        VerbCodes Verb { get; set; }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        string Noun { get; set; }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        PropositionEnum Preposition { get; set; }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        string Noun2 { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        bool ProfanityDetected { get; set; }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        string Profanity { get; set; }
+        string StringContainsProfanity(string word);
     }
 }

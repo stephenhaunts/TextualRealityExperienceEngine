@@ -34,6 +34,8 @@ namespace TextualRealityExperienceEngine.GameEngine
         public string Noun { get; set; }
         public PropositionEnum Preposition { get; set; }
         public string Noun2 { get; set; }
+        public bool ProfanityDetected { get; set; }
+        public string Profanity { get; set; }
 
         public Command()
         {
@@ -41,6 +43,8 @@ namespace TextualRealityExperienceEngine.GameEngine
             Noun = string.Empty;
             Preposition = PropositionEnum.NotRecognised;
             Noun2 = string.Empty;
+            ProfanityDetected = false;
+            Profanity = string.Empty;
         }
     }
 }

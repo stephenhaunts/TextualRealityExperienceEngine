@@ -234,5 +234,45 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             Assert.AreEqual("door", command.Noun2);
             Assert.AreEqual("use key on door", command.FullTextCommand);
         }
+
+        [TestMethod]
+        public void ProfanityFilterGetsTrippedForFullCommand()
+        {
+            IParser parser = new Parser();
+         
+            var command = parser.ParseCommand("2 girls 1 cup");
+            Assert.IsTrue(command.ProfanityDetected);
+            Assert.AreEqual("2 girls 1 cup", command.Profanity);
+        }
+        
+        [TestMethod]
+        public void ProfanityFilterGetsTrippedForWorkInPartialCommand()
+        {
+            IParser parser = new Parser();
+         
+            var command = parser.ParseCommand("flappy cunt bananna");
+            Assert.IsTrue(command.ProfanityDetected);
+            Assert.AreEqual("cunt", command.Profanity);
+        }
+        
+        [TestMethod]
+        public void ProfanityFilterNotTrippedForFullCommand()
+        {
+            IParser parser = new Parser();
+         
+            var command = parser.ParseCommand("fluffy clouds");
+            Assert.IsFalse(command.ProfanityDetected);
+            Assert.AreSame(string.Empty, command.Profanity);
+        }
+        
+        [TestMethod]
+        public void ProfanityFilterGetsTrippedForProfanePhraseInMiddleOfCommand()
+        {
+            IParser parser = new Parser();
+         
+            var command = parser.ParseCommand("watch 2 girls 1 cup on tv");
+            Assert.IsTrue(command.ProfanityDetected);
+            Assert.AreEqual("2 girls 1 cup", command.Profanity);
+        }
     }
 }

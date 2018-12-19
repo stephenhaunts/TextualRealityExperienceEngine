@@ -23,15 +23,18 @@ SOFTWARE.
 */
 
 using System.Linq;
+using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
-    public class ProfanityFilter
+    public class ProfanityFilter : IProfanityFilter
     {
-        private string[] _wordList =
-            {"", 
-             "33", 
+        private readonly string[] _wordList =
+        {
              "2 girls 1 cup",
+             "two girls one cup",
+             "two girls 1 cup",
+             "2 girls one cup",
              "2g1c",
              "4r5e",
              "5h1t",
@@ -64,7 +67,6 @@ namespace TextualRealityExperienceEngine.GameEngine
              "arsehole",
              "aryan",
              "ass",
-             "ass fuck",
              "ass fuck",
              "ass hole",
              "assbag",
@@ -752,933 +754,934 @@ namespace TextualRealityExperienceEngine.GameEngine
              "fuq",
              "futanari",
              "fux",
-             "fux0r"
-/*fvck
-fxck
-gae
-gai
-gang bang
-gangbang
-gang-bang
-gang-bang
-gangbanged
-gangbangs
-ganja
-gash
-gassy ass
-gassy ass
-gay
-gay sex
-gayass
-gaybob
-gaydo
-gayfuck
-gayfuckist
-gaylord
-gays
-gaysex
-gaytard
-gaywad
-gender bender
-genitals
-gey
-gfy
-ghay
-ghey
-giant cock
-gigolo
-ginger
-gippo
-girl on
-girl on top
-girls gone wild
-git
-glans
-goatcx
-goatse
-god
-god damn
-godamn
-godamnit
-goddam
-god-dam
-goddammit
-goddamn
-goddamned
-god-damned
-goddamnit
-godsdamn
-gokkun
-golden shower
-goldenshower
-golliwog
-gonad
-gonads
-goo girl
-gooch
-goodpoop
-gook
-gooks
-goregasm
-gringo
-grope
-group sex
-gspot
-g-spot
-gtfo
-guido
-guro
-h0m0
-h0mo
-ham flap
-ham flap
-hand job
-handjob
-hard core
-hard on
-hardcore
-hardcoresex
-he11
-hebe
-heeb
-hell
-hemp
-hentai
-heroin
-herp
-herpes
-herpy
-heshe
-he-she
-hircismus
-hitler
-hiv
-ho
-hoar
-hoare
-hobag
-hoe
-hoer
-holy shit
-hom0
-homey
-homo
-homodumbshit
-homoerotic
-homoey
-honkey
-honky
-hooch
-hookah
-hooker
-hoor
-hootch
-hooter
-hooters
-hore
-horniest
-horny
-hot carl
-hot chick
-hotsex
-how to kill
-how to murdep
-how to murder
-huge fat
-hump
-humped
-humping
-hun
-hussy
-hymen
-iap
-iberian slap
-inbred
-incest
-injun
-intercourse
-jack off
-jackass
-jackasses
-jackhole
-jackoff
-jack-off
-jaggi
-jagoff
-jail bait
-jailbait
-jap
-japs
-jelly donut
-jerk
-jerk off
-jerk0ff
-jerkass
-jerked
-jerkoff
-jerk-off
-jigaboo
-jiggaboo
-jiggerboo
-jism
-jiz
-jiz
-jizm
-jizm
-jizz
-jizzed
-jock
-juggs
-jungle bunny
-junglebunny
-junkie
-junky
-kafir
-kawk
-kike
-kikes
-kill
-kinbaku
-kinkster
-kinky
-klan
-knob
-knob end
-knobbing
-knobead
-knobed
-knobend
-knobhead
-knobjocky
-knobjokey
-kock
-kondum
-kondums
-kooch
-kooches
-kootch
-kraut
-kum
-kummer
-kumming
-kums
-kunilingus
-kunja
-kunt
-kwif
-kwif
-kyke
-l3i+ch
-l3itch
-labia
-lameass
-lardass
-leather restraint
-leather straight jacket
-lech
-lemon party
-LEN
-leper
-lesbian
-lesbians
-lesbo
-lesbos
-lez
-lezza/lesbo
-lezzie
-lmao
-lmfao
-loin
-loins
-lolita
-looney
-lovemaking
-lube
-lust
-lusting
-lusty
-m0f0
-m0fo
-m45terbate
-ma5terb8
-ma5terbate
-mafugly
-mafugly
-make me come
-male squirting
-mams
-masochist
-massa
-masterb8
-masterbat*
-masterbat3
-masterbate
-master-bate
-master-bate
-masterbating
-masterbation
-masterbations
-masturbate
-masturbating
-masturbation
-maxi
-mcfagget
-menage a trois
-menses
-menstruate
-menstruation
-meth
-m-fucking
-mick
-microphallus
-middle finger
-midget
-milf
-minge
-minger
-missionary position
-mof0
-mofo
-mo-fo
-molest
-mong
-moo moo foo foo
-moolie
-moron
-mothafuck
-mothafucka
-mothafuckas
-mothafuckaz
-mothafucked
-mothafucked
-mothafucker
-mothafuckers
-mothafuckin
-mothafucking
-mothafucking
-mothafuckings
-mothafucks
-mother fucker
-mother fucker
-motherfuck
-motherfucka
-motherfucked
-motherfucker
-motherfuckers
-motherfuckin
-motherfucking
-motherfuckings
-motherfuckka
-motherfucks
-mound of venus
-mr hands
-muff
-muff diver
-muff puff
-muff puff
-muffdiver
-muffdiving
-munging
-munter
-murder
-mutha
-muthafecker
-muthafuckker
-muther
-mutherfucker
-n1gga
-n1gger
-naked
-nambla
-napalm
-nappy
-nawashi
-nazi
-nazism
-need the dick
-need the dick
-negro
-neonazi
-nig nog
-nigaboo
-nigg3r
-nigg4h
-nigga
-niggah
-niggas
-niggaz
-nigger
-niggers
-niggle
-niglet
-nig-nog
-nimphomania
-nimrod
-ninny
-ninnyhammer
-nipple
-nipples
-nob
-nob jokey
-nobhead
-nobjocky
-nobjokey
-nonce
-nsfw images
-nude
-nudity
-numbnuts
-nut butter
-nut butter
-nut sack
-nutsack
-nutter
-nympho
-nymphomania
-octopussy
-old bag
-omg
-omorashi
-one cup two girls
-one guy one jar
-opiate
-opium
-orally
-organ
-orgasim
-orgasims
-orgasm
-orgasmic
-orgasms
-orgies
-orgy
-ovary
-ovum
-ovums
-p.u.s.s.y.
-p0rn
-paedophile
-paki
-panooch
-pansy
-pantie
-panties
-panty
-pawn
-pcp
-pecker
-peckerhead
-pedo
-pedobear
-pedophile
-pedophilia
-pedophiliac
-pee
-peepee
-pegging
-penetrate
-penetration
-penial
-penile
-penis
-penisbanger
-penisfucker
-penispuffer
-perversion
-phallic
-phone sex
-phonesex
-phuck
-phuk
-phuked
-phuking
-phukked
-phukking
-phuks
-phuq
-piece of shit
-pigfucker
-pikey
-pillowbiter
-pimp
-pimpis
-pinko
-piss
-piss off
-piss pig
-pissed
-pissed off
-pisser
-pissers
-pisses
-pisses
-pissflaps
-pissin
-pissin
-pissing
-pissoff
-pissoff
-piss-off
-pisspig
-playboy
-pleasure chest
-pms
-polack
-pole smoker
-polesmoker
-pollock
-ponyplay
-poof
-poon
-poonani
-poonany
-poontang
-poop
-poop chute
-poopchute
-Poopuncher
-porch monkey
-porchmonkey
-porn
-porno
-pornography
-pornos
-pot
-potty
-prick
-pricks
-prickteaser
-prig
-prince albert piercing
-prod
-pron
-prone bone
-pronebone
-prone-bone
-prostitute
-prude
-psycho
-pthc
-pube
-pubes
-pubic
-pubis
-punani
-punanny
-punany
-punkass
-punky
-punta
-puss
-pusse
-pussi
-pussies
-pussy
-pussy fart
-pussy fart
-pussy palace
-pussy palace
-pussylicking
-pussypounder
-pussys
-pust
-puto
-queaf
-queef
-queer
-queerbait
-queerhole
-queero
-queers
-quicky
-quim
-racy
-raghead
-raging boner
-rape
-raped
-raper
-rapey
-raping
-rapist
-raunch
-rectal
-rectum
-rectus
-reefer
-reetard
-reich
-renob
-retard
-retarded
-reverse cowgirl
-revue
-rimjaw
-rimjob
-rimming
-ritard
-rosy palm
-rosy palm and her 5 sisters
-rtard
-r-tard
-rubbish
-rum
-rump
-rumprammer
-ruski
-rusty trombone
-s hit
-s&m
-s.h.i.t.
-s.o.b.
-s_h_i_t
-s0b
-sadism
-sadist
-sambo
-sand nigger
-sandbar
-sandbar
-Sandler
-sandnigger
-sanger
-santorum
-sausage queen
-sausage queen
-scag
-scantily
-scat
-schizo
-schlong
-scissoring
-screw
-screwed
-screwing
-scroat
-scrog
-scrot
-scrote
-scrotum
-scrud
-scum
-seaman
-seamen
-seduce
-seks
-semen
-sex
-sexo
-sexual
-sexy
-sh!+
-sh!t
-sh1t
-s-h-1-t
-shag
-shagger
-shaggin
-shagging
-shamedame
-shaved beaver
-shaved pussy
-shemale
-shi+
-shibari
-shirt lifter
-shit
-s-h-i-t
-shit ass
-shit fucker
-shit fucker
-shitass
-shitbag
-shitbagger
-shitblimp
-shitbrains
-shitbreath
-shitcanned
-shitcunt
-shitdick
-shite
-shiteater
-shited
-shitey
-shitface
-shitfaced
-shitfuck
-shitfull
-shithead
-shitheads
-shithole
-shithouse
-shiting
-shitings
-shits
-shitspitter
-shitstain
-shitt
-shitted
-shitter
-shitters
-shitters
-shittier
-shittiest
-shitting
-shittings
-shitty
-shiz
-shiznit
-shota
-shrimping
-sissy
-skag
-skank
-skeet
-skullfuck
-slag
-slanteye
-slave
-sleaze
-sleazy
-slope
-slope
-slut
-slut bucket
-slut bucket
-slutbag
-slutdumper
-slutkiss
-sluts
-smartass
-smartasses
-smeg
-smegma
-smut
-smutty
-snatch
-sniper
-snowballing
-snuff
-s-o-b
-sod off
-sodom
-sodomize
-sodomy
-son of a bitch
-son of a motherless goat
-son of a whore
-son-of-a-bitch
-souse
-soused
-spac
-spade
-sperm
-spic
-spick
-spik
-spiks
-splooge
-splooge moose
-spooge
-spook
-spread legs
-spunk
-stfu
-stiffy
-stoned
-strap on
-strapon
-strappado
-strip
-strip club
-stroke
-stupid
-style doggy
-suck
-suckass
-sucked
-sucking
-sucks
-suicide girls
-sultry women
-sumofabiatch
-swastika
-swinger
-t1t
-t1tt1e5
-t1tties
-taff
-taig
-tainted love
-taking the piss
-tampon
-tard
-tart
-taste my
-tawdry
-tea bagging
-teabagging
-teat
-teets
-teez
-teste
-testee
-testes
-testical
-testicle
-testis
-threesome
-throating
-thrust
-thug
-thundercunt
-tied up
-tight white
-tinkle
-tit
-tit wank
-tit wank
-titfuck
-titi
-tities
-tits
-titt
-tittie5
-tittiefucker
-titties
-titty
-tittyfuck
-tittyfucker
-tittywank
-titwank
-toke
-tongue in a
-toots
-topless
-tosser
-towelhead
-tramp
-tranny
-transsexual
-trashy
-tribadism
-trumped
-tub girl
-tubgirl
-turd
-tush
-tushy
-tw4t
-twat
-twathead
-twatlips
-twats
-twatty
-twatwaffle
-twink
-twinkie
-two fingers
-two fingers with tongue
-two girls one cup
-twunt
-twunter
-ugly
-unclefucker
-undies
-undressing
-unwed
-upskirt
-urethra play
-urinal
-urine
-urophilia
-uterus
-uzi
-v14gra
-v1gra
-vag
-vagina
-vajayjay
-va-j-j
-valium
-venus mound
-veqtable
-viagra
-vibrator
-violet wand
-virgin
-vixen
-vjayjay
-vodka
-vomit
-vorarephilia
-voyeur
-vulgar
-vulva
-w00se
-wad
-wang
-wank
-wanker
-wankjob
-wanky
-wazoo
-wedgie
-weed
-weenie
-weewee
-weiner
-weirdo
-wench
-wet dream
-wetback
-wh0re
-wh0reface
-white power
-whiz
-whoar
-whoralicious
-whore
-whorealicious
-whorebag
-whored
-whoreface
-whorehopper
-whorehouse
-whores
-whoring
-wigger
-willies
-willy
-window licker
-wiseass
-wiseasses
-wog
-womb
-wop
-wrapping men
-wrinkled starfish
-wtf
-xrated
-x-rated
-xx
-xxx
-yaoi
-yeasty
-yellow showers
-yid
-yiffy
-yobbo
-zibbi
-zoophilia
-zubb*/
-           
-             
-            };
+             "fux0r",
+             "fvck",
+             "fxck",
+             "gae",
+             "gai",
+             "gang bang",
+             "gangbang",
+             "gang-bang",
+             "gangbanged",
+             "gangbangs",
+             "ganja",
+             "gash",
+             "gassy ass",
+             "gay",
+             "gay sex",
+             "gayass",
+             "gaybob",
+             "gaydo",
+             "gayfuck",
+             "gayfuckist",
+             "gaylord",
+             "gays",
+             "gaysex",
+             "gaytard",
+             "gaywad",
+             "gender bender",
+             "genitals",
+             "gey",
+             "gfy",
+             "ghay",
+             "ghey",
+             "giant cock",
+             "gigolo",
+             "ginger",
+             "gippo",
+             "girl on",
+             "girl on top",
+             "girls gone wild",
+             "git",
+             "glans",
+             "goatcx",
+             "goatse",
+             "god",
+             "god damn",
+             "godamn",
+             "godamnit",
+             "goddam",
+             "god-dam",
+             "goddammit",
+             "goddamn",
+             "goddamned",
+             "god-damned",
+             "goddamnit",
+             "godsdamn",
+             "gokkun",
+             "golden shower",
+             "goldenshower",
+             "golliwog",
+             "gonad",
+             "gonads",
+             "goo girl",
+             "gooch",
+             "goodpoop",
+             "gook",
+             "gooks",
+             "goregasm",
+             "gringo",
+             "grope",
+             "group sex",
+             "gspot",
+             "g-spot",
+             "gtfo",
+             "guido",
+             "guro",
+             "h0m0",
+             "h0mo",
+             "ham flap",
+             "hand job",
+             "handjob",
+             "hard core",
+             "hard on",
+             "hardcore",
+             "hardcoresex",
+             "he11",
+             "hebe",
+             "heeb",
+             "hell",
+             "hemp",
+             "hentai",
+             "heroin",
+             "herp",
+             "herpes",
+             "herpy",
+             "heshe",
+             "he-she",
+             "hircismus",
+             "hitler",
+             "hiv",
+             "ho",
+             "hoar",
+             "hoare",
+             "hobag",
+             "hoe",
+             "hoer",
+             "holy shit",
+             "hom0",
+             "homey",
+             "homo",
+             "homodumbshit",
+             "homoerotic",
+             "homoey",
+             "honkey",
+             "honky",
+             "hooch",
+             "hookah",
+             "hooker",
+             "hoor",
+             "hootch",
+             "hooter",
+             "hooters",
+             "hore",
+             "horniest",
+             "horny",
+             "hot carl",
+             "hot chick",
+             "hotsex",
+             "how to kill",
+             "how to murdep",
+             "how to murder",
+             "huge fat",
+             "hump",
+             "humped",
+             "humping",
+             "hun",
+             "hussy",
+             "hymen",
+             "iap",
+             "iberian slap",
+             "inbred",
+             "incest",
+             "injun",
+             "intercourse",
+             "jack off",
+             "jackass",
+             "jackasses",
+             "jackhole",
+             "jackoff",
+             "jack-off",
+             "jaggi",
+             "jagoff",
+             "jail bait",
+             "jailbait",
+             "jap",
+             "japs",
+             "jelly donut",
+             "jerk",
+             "jerk off",
+             "jerk0ff",
+             "jerkass",
+             "jerked",
+             "jerkoff",
+             "jerk-off",
+             "jigaboo",
+             "jiggaboo",
+             "jiggerboo",
+             "jism",
+             "jiz",
+             "jizm",
+             "jizm",
+             "jizz",
+             "jizzed",
+             "jock",
+             "juggs",
+             "jungle bunny",
+             "junglebunny",
+             "junkie",
+             "junky",
+             "kafir",
+             "kawk",
+             "kike",
+             "kikes",
+             "kill",
+             "kinbaku",
+             "kinkster",
+             "kinky",
+             "klan",
+             "knob",
+             "knob end",
+             "knobbing",
+             "knobead",
+             "knobed",
+             "knobend",
+             "knobhead",
+             "knobjocky",
+             "knobjokey",
+             "kock",
+             "kondum",
+             "kondums",
+             "kooch",
+             "kooches",
+             "kootch",
+             "kraut",
+             "kum",
+             "kummer",
+             "kumming",
+             "kums",
+             "kunilingus",
+             "kunja",
+             "kunt",
+             "kwif",
+             "kyke",
+             "l3i+ch",
+             "l3itch",
+             "labia",
+             "lameass",
+             "lardass",
+             "leather restraint",
+             "leather straight jacket",
+             "lech",
+             "lemon party",
+             "LEN",
+             "leper",
+             "lesbian",
+             "lesbians",
+             "lesbo",
+             "lesbos",
+             "lez",
+             "lezza/lesbo",
+             "lezzie",
+             "lmao",
+             "lmfao",
+             "loin",
+             "loins",
+             "lolita",
+             "looney",
+             "lovemaking",
+             "lube",
+             "lust",
+             "lusting",
+             "lusty",
+             "m0f0",
+             "m0fo",
+             "m45terbate",
+             "ma5terb8",
+             "ma5terbate",
+             "mafugly",
+             "mafugly",
+             "make me come",
+             "male squirting",
+             "mams",
+             "masochist",
+             "massa",
+             "masterb8",
+             "masterbat*",
+             "masterbat3",
+             "masterbate",
+             "master-bate",
+             "masterbating",
+             "masterbation",
+             "masterbations",
+             "masturbate",
+             "masturbating",
+             "masturbation",
+             "maxi",
+             "mcfagget",
+             "menage a trois",
+             "menses",
+             "menstruate",
+             "menstruation",
+             "meth",
+             "m-fucking",
+             "mick",
+             "microphallus",
+             "middle finger",
+             "midget",
+             "milf",
+             "minge",
+             "minger",
+             "missionary position",
+             "mof0",
+             "mofo",
+             "mo-fo",
+             "molest",
+             "mong",
+             "moo moo foo foo",
+             "moolie",
+             "moron",
+             "mothafuck",
+             "mothafucka",
+             "mothafuckas",
+             "mothafuckaz",
+             "mothafucked",
+             "mothafucker",
+             "mothafuckers",
+             "mothafuckin",
+             "mothafucking",
+             "mothafucking",
+             "mothafuckings",
+             "mothafucks",
+             "mother fucker",
+             "motherfuck",
+             "motherfucka",
+             "motherfucked",
+             "motherfucker",
+             "motherfuckers",
+             "motherfuckin",
+             "motherfucking",
+             "motherfuckings",
+             "motherfuckka",
+             "motherfucks",
+             "mound of venus",
+             "mr hands",
+             "muff",
+             "muff diver",
+             "muff puff",
+             "muffdiver",
+             "muffdiving",
+             "munging",
+             "munter",
+             "murder",
+             "mutha",
+             "muthafecker",
+             "muthafuckker",
+             "muther",
+             "mutherfucker",
+             "n1gga",
+             "n1gger",
+             "naked",
+             "nambla",
+             "napalm",
+             "nappy",
+             "nawashi",
+             "nazi",
+             "nazism",
+             "need the dick",
+             "negro",
+             "neonazi",
+             "nig nog",
+             "nigaboo",
+             "nigg3r",
+             "nigg4h",
+             "nigga",
+             "niggah",
+             "niggas",
+             "niggaz",
+             "nigger",
+             "niggers",
+             "niggle",
+             "niglet",
+             "nig-nog",
+             "nimphomania",
+             "nimrod",
+             "ninny",
+             "ninnyhammer",
+             "nipple",
+             "nipples",
+             "nob",
+             "nob jokey",
+             "nobhead",
+             "nobjocky",
+             "nobjokey",
+             "nonce",
+             "nsfw images",
+             "nude",
+             "nudity",
+             "numbnuts",
+             "nut butter",
+             "nut butter",
+             "nut sack",
+             "nutsack",
+             "nutter",
+             "nympho",
+             "nymphomania",
+             "octopussy",
+             "old bag",
+             "omg",
+             "omorashi",
+             "one cup two girls",
+             "1 cup 2 girls",
+             "one cup 2 girls",
+             "1 cup two girls",
+             "one guy one jar",
+             "1 guy one jar",
+             "one guy 1 jar",
+             "opiate",
+             "opium",
+             "orally",
+             "organ",
+             "orgasim",
+             "orgasims",
+             "orgasm",
+             "orgasmic",
+             "orgasms",
+             "orgies",
+             "orgy",
+             "ovary",
+             "ovum",
+             "ovums",
+             "p.u.s.s.y.",
+             "p.u.s.s.y",
+             "p0rn",
+             "paedophile",
+             "paki",
+             "panooch",
+             "pansy",
+             "pantie",
+             "panties",
+             "panty",
+             "pawn",
+             "pcp",
+             "pecker",
+             "peckerhead",
+             "pedo",
+             "pedobear",
+             "pedophile",
+             "pedophilia",
+             "pedophiliac",
+             "pee",
+             "peepee",
+             "pegging",
+             "penetrate",
+             "penetration",
+             "penial",
+             "penile",
+             "penis",
+             "penisbanger",
+             "penisfucker",
+             "penispuffer",
+             "perversion",
+             "phallic",
+             "phone sex",
+             "phonesex",
+             "phuck",
+             "phuk",
+             "phuked",
+             "phuking",
+             "phukked",
+             "phukking",
+             "phuks",
+             "phuq",
+             "piece of shit",
+             "pigfucker",
+             "pikey",
+             "pillowbiter",
+             "pimp",
+             "pimpis",
+             "pinko",
+             "piss",
+             "piss off",
+             "piss pig",
+             "pissed",
+             "pissed off",
+             "pisser",
+             "pissers",
+             "pisses",
+             "pisses",
+             "pissflaps",
+             "piss flaps",
+             "pissin",
+             "pissin",
+             "pissing",
+             "pissoff",
+             "pissoff",
+             "piss-off",
+             "pisspig",
+             "playboy",
+             "pleasure chest",
+             "pms",
+             "polack",
+             "pole smoker",
+             "polesmoker",
+             "pollock",
+             "ponyplay",
+             "poof",
+             "poon",
+             "poonani",
+             "poonany",
+             "poontang",
+             "poop",
+             "poop chute",
+             "poopchute",
+             "Poopuncher",
+             "porch monkey",
+             "porchmonkey",
+             "porn",
+             "porno",
+             "pornography",
+             "pornos",
+             "pot",
+             "potty",
+             "prick",
+             "pricks",
+             "prickteaser",
+             "prig",
+             "prince albert piercing",
+             "prod",
+             "pron",
+             "prone bone",
+             "pronebone",
+             "prone-bone",
+             "prostitute",
+             "prude",
+             "psycho",
+             "pthc",
+             "pube",
+             "pubes",
+             "pubic",
+             "pubis",
+             "punani",
+             "punanny",
+             "punany",
+             "punkass",
+             "punky",
+             "punta",
+             "puss",
+             "pusse",
+             "pussi",
+             "pussies",
+             "pussy",
+             "pussy fart",
+             "pussy palace",
+             "pussylicking",
+             "pussypounder",
+             "pussys",
+             "pust",
+             "puto",
+             "queaf",
+             "queef",
+             "queer",
+             "queerbait",
+             "queerhole",
+             "queero",
+             "queers",
+             "quicky",
+             "quim",
+             "racy",
+             "raghead",
+             "raging boner",
+             "rape",
+             "raped",
+             "raper",
+             "rapey",
+             "raping",
+             "rapist",
+             "raunch",
+             "rectal",
+             "rectum",
+             "rectus",
+             "reefer",
+             "reetard",
+             "reich",
+             "renob",
+             "retard",
+             "retarded",
+             "reverse cowgirl",
+             "revue",
+             "rimjaw",
+             "rimjob",
+             "rimming",
+             "ritard",
+             "rosy palm",
+             "rosy palm and her 5 sisters",
+             "rtard",
+             "r-tard",
+             "rubbish",
+             "rum",
+             "rump",
+             "rumprammer",
+             "ruski",
+             "rusty trombone",
+             "shit",
+             "s&m",
+             "s.h.i.t.",
+             "s.o.b.",
+             "s_h_i_t",
+             "s0b",
+             "sadism",
+             "sadist",
+             "sambo",
+             "sand nigger",
+             "sandbar",
+             "sandbar",
+             "Sandler",
+             "sandnigger",
+             "sanger",
+             "santorum",
+             "sausage queen",
+             "scag",
+             "scantily",
+             "scat",
+             "schizo",
+             "schlong",
+             "scissoring",
+             "screw",
+             "screwed",
+             "screwing",
+             "scroat",
+             "scrog",
+             "scrot",
+             "scrote",
+             "scrotum",
+             "scrud",
+             "scum",
+             "seaman",
+             "seduce",
+             "seks",
+             "semen",
+             "sex",
+             "sexo",
+             "sexual",
+             "sexy",
+             "sh!+",
+             "sh!t",
+             "sh1t",
+             "s-h-1-t",
+             "shag",
+             "shagger",
+             "shaggin",
+             "shagging",
+             "shamedame",
+             "shaved beaver",
+             "shaved pussy",
+             "shemale",
+             "shi+",
+             "shibari",
+             "shirt lifter",
+             "shit",
+             "s-h-i-t",
+             "shit ass",
+             "shit fucker",
+             "shitass",
+             "shitbag",
+             "shitbagger",
+             "shitblimp",
+             "shitbrains",
+             "shitbreath",
+             "shitcanned",
+             "shitcunt",
+             "shitdick",
+             "shite",
+             "shiteater",
+             "shited",
+             "shitey",
+             "shitface",
+             "shitfaced",
+             "shitfuck",
+             "shitfull",
+             "shithead",
+             "shitheads",
+             "shithole",
+             "shithouse",
+             "shiting",
+             "shitings",
+             "shits",
+             "shitspitter",
+             "shitstain",
+             "shitt",
+             "shitted",
+             "shitter",
+             "shitters",
+             "shitters",
+             "shittier",
+             "shittiest",
+             "shitting",
+             "shittings",
+             "shitty",
+             "shiz",
+             "shiznit",
+             "shota",
+             "shrimping",
+             "sissy",
+             "skag",
+             "skank",
+             "skeet",
+             "skullfuck",
+             "slag",
+             "slanteye",
+             "slave",
+             "sleaze",
+             "sleazy",
+             "slope",
+             "slut",
+             "slut bucket",
+             "slutbag",
+             "slutdumper",
+             "slutkiss",
+             "sluts",
+             "smartass",
+             "smartasses",
+             "smeg",
+             "smegma",
+             "smut",
+             "smutty",
+             "snatch",
+             "sniper",
+             "snowballing",
+             "snuff",
+             "s-o-b",
+             "sod off",
+             "sodom",
+             "sodomize",
+             "sodomy",
+             "son of a bitch",
+             "son of a motherless goat",
+             "son of a whore",
+             "son-of-a-bitch",
+             "souse",
+             "soused",
+             "spac",
+             "spade",
+             "sperm",
+             "spic",
+             "spick",
+             "spik",
+             "spiks",
+             "splooge",
+             "splooge moose",
+             "spooge",
+             "spook",
+             "spread legs",
+             "spunk",
+             "stfu",
+             "stiffy",
+             "stoned",
+             "strap on",
+             "strapon",
+             "strappado",
+             "strip",
+             "strip club",
+             "stroke",
+             "stupid",
+             "style doggy",
+             "suck",
+             "suckass",
+             "sucked",
+             "sucking",
+             "sucks",
+             "suicide girls",
+             "sultry women",
+             "sumofabiatch",
+             "swastikav",
+             "swinger",
+             "t1t",
+             "t1tt1e5",
+             "t1tties",
+             "taff",
+             "taig",
+             "tainted love",
+             "taking the piss",
+             "tampon",
+             "tard",
+             "tart",
+             "taste my",
+             "tawdry",
+             "tea bagging",
+             "teabagging",
+             "teat",
+             "teets",
+             "teez",
+             "teste",
+             "testee",
+             "testes",
+             "testical",
+             "testicle",
+             "testis",
+             "threesome",
+             "throating",
+             "thrust",
+             "thug",
+             "thundercunt",
+             "thunder cunt",
+             "tied up",
+             "tight white",
+             "tinkle",
+             "tit",
+             "tit wank",
+             "titfuck",
+             "titi",
+             "tities",
+             "tits",
+             "titt",
+             "tittie5",
+             "tittiefucker",
+             "titties",
+             "titty",
+             "tittyfuck",
+             "tittyfucker",
+             "tittywank",
+             "titwank",
+             "toke",
+             "tongue in a",
+             "toots",
+             "topless",
+             "tosser",
+             "towelhead",
+             "tramp",
+             "tranny",
+             "transsexual",
+             "trashy",
+             "tribadism",
+             "trumped",
+             "tub girl",
+             "tubgirl",
+             "turd",
+             "tush",
+             "tushy",
+             "tw4t",
+             "twat",
+             "twathead",
+             "twatlips",
+             "twats",
+             "twatty",
+             "twatwaffle",
+             "twink",
+             "twinkie",
+             "two fingers",
+             "two fingers with tongue",
+             "two girls one cup",
+             "twunt",
+             "twunter",
+             "ugly",
+             "unclefucker",
+             "undies",
+             "undressing",
+             "unwed",
+             "upskirt",
+             "urethra play",
+             "urinal",
+             "urine",
+             "urophilia",
+             "uterus",
+             "uzi",
+             "v14gra",
+             "v1gra",
+             "vag",
+             "vagina",
+             "vajayjay",
+             "va-j-j",
+             "valium",
+             "venus mound",
+             "veqtable",
+             "viagra",
+             "vibrator",
+             "violet wand",
+             "virgin",
+             "vixen",
+             "vjayjay",
+             "vodka",
+             "vomit",
+             "vorarephilia",
+             "voyeur",
+             "vulgar",
+             "vulva",
+             "w00se",
+             "wad",
+             "wang",
+             "wank",
+             "wanker",
+             "wankjob",
+             "wanky",
+             "wazoo",
+             "wedgie",
+             "weed",
+             "weenie",
+             "weewee",
+             "weiner",
+             "weirdo",
+             "wench",
+             "wet dream",
+             "wetback",
+             "wh0re",
+             "wh0reface",
+             "white power",
+             "whiz",
+             "whoar",
+             "whoralicious",
+             "whore",
+             "whorealicious",
+             "whorebag",
+             "whored",
+             "whoreface",
+             "whorehopper",
+             "whorehouse",
+             "whores",
+             "whoring",
+             "wigger",
+             "willies",
+             "willy",
+             "window licker",
+             "wiseass",
+             "wiseasses",
+             "wog",
+             "womb",
+             "wop",
+             "wrapping men",
+             "wrinkled starfish",
+             "wtf",
+             "xrated",
+             "x-rated",
+             "xx",
+             "xxx",
+             "yaoi",
+             "yeasty",
+             "yellow showers",
+             "yid",
+             "yiffy",
+             "yobbo",
+             "zibbi",
+             "zoophilia",
+             "zubb",
+        };
 
         public bool IsProfanity(string word)
         {
             return _wordList.Contains(word.ToLower());
+        }
+
+        public string StringContainsProfanity(string word)
+        {
+            foreach (var profanity in _wordList)
+            {
+                if (word.Contains(profanity))
+                {
+                    return profanity;
+                }
+            }
+
+            return string.Empty;
         }
     }
 }

@@ -42,6 +42,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         public IPrepositionMapping Prepositions { get; }
         private ParserStatesEnum _parserStates = ParserStatesEnum.Verb;
         private ICommand _command;
+        private IProfanityFilter _profanityFilter = new ProfanityFilter();
 
         public Parser()
         {
@@ -71,42 +72,44 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             var lowerCase = command.ToLower();
             var wordList = lowerCase.Split(' ');
+            _command = new Command();
 
-            ICommand commandList;
-
+            var profanity = _profanityFilter.StringContainsProfanity(lowerCase);
+            if (!string.IsNullOrEmpty(profanity))
+            {
+                _command.ProfanityDetected = true;
+                _command.Profanity = profanity;
+            }
+            
             switch (wordList.Length)
             {
                 case 0:
                     return new Command();
                 case 1:
-                    commandList = SingleWordCommand(wordList[0]);
-                    commandList.FullTextCommand = lowerCase;
-                    return commandList;
+                    SingleWordCommand(wordList[0]);
+                    _command.FullTextCommand = lowerCase;
+                    return _command;
                 default:
-                    commandList = MultiWordCommand(wordList);
-                    commandList.FullTextCommand = lowerCase;
-                    return commandList;
+                    MultiWordCommand(wordList);
+                    _command.FullTextCommand = lowerCase;
+                    return _command;
             }                      
         }
 
-        ICommand SingleWordCommand(string command)
+        private void SingleWordCommand(string command)
         {
-            var reply = DirectionsHelper.GetDirectionCommand(command);
+            _command = DirectionsHelper.GetDirectionCommand(command);
 
-            if (reply.Verb == VerbCodes.NoCommand)
+            if (_command.Verb == VerbCodes.NoCommand)
             {
-               reply.Verb = Verbs.GetVerbForSynonym(command);             
+                _command.Verb = Verbs.GetVerbForSynonym(command);             
             }
-
-            return reply;
         }
 
-        ICommand MultiWordCommand(string[] commandList)
+        private void MultiWordCommand(string[] commandList)
         {
-            _command = new Command();
-
-            foreach (string word in commandList)
-            {
+            foreach (var word in commandList)
+            {                
                 if (_parserStates == ParserStatesEnum.Verb)
                 {
                     if (ProcessVerbs(word)) continue;                                                  
@@ -124,16 +127,14 @@ namespace TextualRealityExperienceEngine.GameEngine
 
                 if (_parserStates == ParserStatesEnum.Noun2)
                 {
-                    if (ProcessNoun2(word)) continue;
+                    ProcessNoun2(word);
                 }
             }
 
             _parserStates = ParserStatesEnum.Verb;
-
-            return _command; 
         }
 
-        bool ProcessVerbs(string word)
+        private bool ProcessVerbs(string word)
         {
             var verb = Verbs.GetVerbForSynonym(word);
             _parserStates = ParserStatesEnum.Noun;
@@ -147,7 +148,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             return false;
         }
 
-        bool ProcessNoun1(string word)
+        private bool ProcessNoun1(string word)
         {
             var noun = Nouns.GetNounForSynonym(word);
             if (!string.IsNullOrEmpty(noun))
@@ -161,26 +162,26 @@ namespace TextualRealityExperienceEngine.GameEngine
             return false;
         }
 
-        bool ProcessPreposition(string word)
+        private bool ProcessPreposition(string word)
         {
             var preposition = Prepositions.GetPreposition(word);
+            
             if (preposition != PropositionEnum.NotRecognised)
             {
                 _command.Preposition = preposition;
                 _parserStates = ParserStatesEnum.Noun2;
-
                 return true;
             }
 
             return false;
         }
 
-        bool ProcessNoun2(string word)
+        private bool ProcessNoun2(string word)
         {
             var noun = Nouns.GetNounForSynonym(word);
+            
             if (!string.IsNullOrEmpty(noun))
             {
-
                 _command.Noun2 = noun;
                 return true;
             }
