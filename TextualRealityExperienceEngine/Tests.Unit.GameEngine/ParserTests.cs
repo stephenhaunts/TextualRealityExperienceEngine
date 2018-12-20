@@ -274,5 +274,16 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             Assert.IsTrue(command.ProfanityDetected);
             Assert.AreEqual("2 girls 1 cup", command.Profanity);
         }
+        
+        [TestMethod]
+        public void ProfanityFilterDoesntDetectProfanityIfDisabled()
+        {
+            IParser parser = new Parser();
+            parser.EnableProfanityFilter = false;
+         
+            var command = parser.ParseCommand("flappy cunt bananna");
+            Assert.IsFalse(command.ProfanityDetected);
+            Assert.AreEqual(string.Empty, command.Profanity);
+        }
     }
 }

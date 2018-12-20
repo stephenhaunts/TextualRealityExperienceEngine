@@ -27,6 +27,12 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
+    /// <summary>
+    /// This class will detect profanity and racial slurs contained within some text and return an indication flag.
+    ///
+    /// WARNING : This file contains a lot of very offensive terminology. Do not read the content of this source code
+    /// file if you are easily offended.
+    /// </summary>
     public class ProfanityFilter : IProfanityFilter
     {
         private readonly string[] _wordList =
@@ -1209,7 +1215,6 @@ namespace TextualRealityExperienceEngine.GameEngine
              "pisser",
              "pissers",
              "pisses",
-             "pisses",
              "pissflaps",
              "piss flaps",
              "pissin",
@@ -1668,14 +1673,21 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         public bool IsProfanity(string word)
         {
-            return _wordList.Contains(word.ToLower());
+            return !string.IsNullOrEmpty(word) && _wordList.Contains(word.ToLower());
         }
 
-        public string StringContainsProfanity(string word)
+        public string StringContainsFirstProfanity(string word)
         {
-            foreach (var profanity in _wordList)
+            if (string.IsNullOrEmpty(word))
             {
-                if (word.Contains(profanity))
+                return string.Empty;
+            }
+
+            var words = word.Split(' ');
+                 
+            foreach (var profanity in words)
+            {
+                if (_wordList.Contains(profanity.ToLower()))
                 {
                     return profanity;
                 }

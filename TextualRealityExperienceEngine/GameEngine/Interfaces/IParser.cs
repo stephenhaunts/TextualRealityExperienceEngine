@@ -30,5 +30,6 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         IVerbSynonyms Verbs { get; }
         INounSynonyms Nouns { get; }
         IPrepositionMapping Prepositions { get; }
+        bool EnableProfanityFilter { get; set; }
     }
 }

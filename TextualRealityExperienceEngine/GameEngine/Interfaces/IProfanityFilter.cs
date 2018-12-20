@@ -28,6 +28,6 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
     {
         bool IsProfanity(string word);
         
-        string StringContainsProfanity(string word);
+        string StringContainsFirstProfanity(string word);
     }
 }

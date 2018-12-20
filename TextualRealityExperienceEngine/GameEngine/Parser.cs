@@ -39,16 +39,18 @@ namespace TextualRealityExperienceEngine.GameEngine
     {
         public IVerbSynonyms Verbs { get; }
         public INounSynonyms Nouns { get; }
+        public bool EnableProfanityFilter { get; set; }
         public IPrepositionMapping Prepositions { get; }
         private ParserStatesEnum _parserStates = ParserStatesEnum.Verb;
         private ICommand _command;
-        private IProfanityFilter _profanityFilter = new ProfanityFilter();
+        private readonly IProfanityFilter _profanityFilter = new ProfanityFilter();
 
         public Parser()
         {
             Verbs = new VerbSynonyms();
             Nouns = new NounSynonyms();
             Prepositions = new PrepositionMapping();
+            EnableProfanityFilter = true;
         }
 
         public Parser(IVerbSynonyms verbSynonyms, INounSynonyms nounSynonyms, IPrepositionMapping prepositionMapping)
@@ -56,6 +58,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             Verbs = verbSynonyms;
             Nouns = nounSynonyms;
             Prepositions = prepositionMapping;
+            EnableProfanityFilter = true;
         }
 
         public ICommand ParseCommand(string command)
@@ -74,13 +77,16 @@ namespace TextualRealityExperienceEngine.GameEngine
             var wordList = lowerCase.Split(' ');
             _command = new Command();
 
-            var profanity = _profanityFilter.StringContainsProfanity(lowerCase);
-            if (!string.IsNullOrEmpty(profanity))
+            if (EnableProfanityFilter)
             {
-                _command.ProfanityDetected = true;
-                _command.Profanity = profanity;
+                var profanity = _profanityFilter.StringContainsFirstProfanity(lowerCase);
+                if (!string.IsNullOrEmpty(profanity))
+                {
+                    _command.ProfanityDetected = true;
+                    _command.Profanity = profanity;
+                }
             }
-            
+
             switch (wordList.Length)
             {
                 case 0:
