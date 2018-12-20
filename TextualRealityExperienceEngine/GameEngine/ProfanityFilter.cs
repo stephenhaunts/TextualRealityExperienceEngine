@@ -64,6 +64,8 @@ namespace TextualRealityExperienceEngine.GameEngine
              "anal leakage",
              "analprobe",
              "anilingus",
+             "angrydragon",
+             "angry dragon",
              "anus",
              "apeshit",
              "ar5e",
