@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
@@ -1676,14 +1678,15 @@ namespace TextualRealityExperienceEngine.GameEngine
             return !string.IsNullOrEmpty(word) && _wordList.Contains(word.ToLower());
         }
 
-        public string StringContainsFirstProfanity(string word)
+        public string StringContainsFirstProfanity(string sentence)
         {
-            if (string.IsNullOrEmpty(word))
+            if (string.IsNullOrEmpty(sentence))
             {
                 return string.Empty;
             }
 
-            var words = word.Split(' ');
+            sentence = sentence.ToLower();
+            var words = sentence.Split(' ');
                  
             foreach (var profanity in words)
             {
@@ -1694,6 +1697,28 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
 
             return string.Empty;
+        }
+
+        public ReadOnlyCollection<string> DetectAllProfanities(string sentence)
+        {
+            if (string.IsNullOrEmpty(sentence))
+            {
+                return new ReadOnlyCollection<string>(new List<string>());
+            }
+
+            sentence = sentence.ToLower();
+            sentence = sentence.Replace(".", "");
+            sentence = sentence.Replace(",", "");
+
+            var words = sentence.Split(' ');
+            var swearList = words.Where(profanity => _wordList.Contains(profanity)).ToList();
+
+            if (_wordList.Contains(sentence))
+            {
+                swearList.Add(sentence);
+            }
+            
+            return new ReadOnlyCollection<string>(swearList);
         }
     }
 }

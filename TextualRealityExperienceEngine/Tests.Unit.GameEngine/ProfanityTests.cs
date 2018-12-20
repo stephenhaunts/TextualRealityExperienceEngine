@@ -112,5 +112,63 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             Assert.AreEqual("shit", swearWord);
         }
         
+        [TestMethod]
+        public void StringContainsProfanityReturnsFirstSwearWordForSentenceContainingMultipleWearWordsForMixedCase()
+        {
+            var filter = new ProfanityFilter();
+            var swearWord = filter.StringContainsFirstProfanity("Mary had a little ShIt lamb who was a little FuCkEr.");
+            
+            Assert.AreEqual("shit", swearWord);
+        }
+
+        [TestMethod]
+        public void DetectAllProfanitiesReturnsEmptyListForEmptyInput()
+        {
+            var filter = new ProfanityFilter();
+            var swearList = filter.DetectAllProfanities(string.Empty);
+            
+            Assert.AreEqual(0, swearList.Count);
+        }
+        
+        [TestMethod]
+        public void DetectAllProfanitiesReturnsNulListForEmptyInput()
+        {
+            var filter = new ProfanityFilter();
+            var swearList = filter.DetectAllProfanities(null);
+            
+            Assert.AreEqual(0, swearList.Count);
+        }
+        
+        [TestMethod]
+        public void DetectAllProfanitiesReturns2SwearWords()
+        {
+            var filter = new ProfanityFilter();
+            var swearList = filter.DetectAllProfanities("You are a complete twat and a dick.");
+            
+            Assert.AreEqual(2, swearList.Count);
+            Assert.AreEqual("twat", swearList[0]);
+            Assert.AreEqual("dick", swearList[1]);
+        }
+        
+        [TestMethod]
+        public void DetectAllProfanitiesReturns2SwearWordsforMixedCase()
+        {
+            var filter = new ProfanityFilter();
+            var swearList = filter.DetectAllProfanities("You are a complete tWat and a DiCk.");
+            
+            Assert.AreEqual(2, swearList.Count);
+            Assert.AreEqual("twat", swearList[0]);
+            Assert.AreEqual("dick", swearList[1]);
+        }
+        
+        [TestMethod]
+        public void DetectAllProfanitiesReturns1SwearPhrase()
+        {
+            var filter = new ProfanityFilter();
+            var swearList = filter.DetectAllProfanities("2 girls 1 cup");
+            
+            Assert.AreEqual(1, swearList.Count);
+            Assert.AreEqual("2 girls 1 cup", swearList[0]);
+        }
     }
 }
