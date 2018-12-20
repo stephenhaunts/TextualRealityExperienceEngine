@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.2",
+    "signature": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.2": {
+      "Tests.SimpleGame/1.0.0": {
+        "dependencies": {
+          "GameEngine": "1.0.0"
+        },
+        "runtime": {
+          "Tests.SimpleGame.dll": {}
+        }
+      },
+      "GameEngine/1.0.0": {
+        "runtime": {
+          "GameEngine.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Tests.SimpleGame/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "GameEngine/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

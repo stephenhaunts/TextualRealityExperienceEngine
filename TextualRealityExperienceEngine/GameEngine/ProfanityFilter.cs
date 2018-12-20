@@ -1689,7 +1689,12 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             sentence = sentence.ToLower();
             var words = sentence.Split(' ');
-                 
+
+            if (_wordList.Contains(sentence))
+            {
+                return sentence;
+            }
+
             foreach (var profanity in words)
             {
                 if (_wordList.Contains(profanity.ToLower()))
