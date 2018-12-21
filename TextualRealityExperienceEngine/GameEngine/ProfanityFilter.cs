@@ -1702,7 +1702,15 @@ namespace TextualRealityExperienceEngine.GameEngine
                     return profanity;
                 }
             }
-
+            
+            foreach (var profanity in _wordList)
+            {
+                if (sentence.Contains(profanity.ToLower()))
+                {
+                    return profanity;
+                }
+            }
+                
             return string.Empty;
         }
 
@@ -1712,7 +1720,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             {
                 return new ReadOnlyCollection<string>(new List<string>());
             }
-
+            
             sentence = sentence.ToLower();
             sentence = sentence.Replace(".", "");
             sentence = sentence.Replace(",", "");
@@ -1724,7 +1732,9 @@ namespace TextualRealityExperienceEngine.GameEngine
             {
                 swearList.Add(sentence);
             }
-            
+
+            swearList.AddRange(_wordList.Where(profanity => sentence.Contains(profanity)));
+
             return new ReadOnlyCollection<string>(swearList);
         }
     }

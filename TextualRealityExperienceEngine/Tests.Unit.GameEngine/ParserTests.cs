@@ -265,15 +265,15 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             Assert.AreSame(string.Empty, command.Profanity);
         }
         
-//        [TestMethod]
-//        public void ProfanityFilterGetsTrippedForProfanePhraseInMiddleOfCommand()
-//        {
-//            IParser parser = new Parser();
-//         
-//            var command = parser.ParseCommand("watch 2 girls 1 cup on tv");
-//            Assert.IsTrue(command.ProfanityDetected);
-//            Assert.AreEqual("2 girls 1 cup", command.Profanity);
-//        }
+        [TestMethod]
+        public void ProfanityFilterGetsTrippedForProfanePhraseInMiddleOfCommand()
+        {
+            IParser parser = new Parser();
+         
+            var command = parser.ParseCommand("watch 2 girls 1 cup on tv");
+            Assert.IsTrue(command.ProfanityDetected);
+            Assert.AreEqual("2 girls 1 cup", command.Profanity);
+        }
         
         [TestMethod]
         public void ProfanityFilterDoesntDetectProfanityIfDisabled()

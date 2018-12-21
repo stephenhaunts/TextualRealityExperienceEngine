@@ -39,7 +39,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         public IParser Parser { get; }
         public IGlobalState GlobalState { get; }
         public int NumberOfMoves { get; set; }
-        public int Score { get; set; }
+        public int Score { get; private set; }
         public IInventory Inventory { get; set; }
 
         private readonly ICommandQueue _commandQueue = new CommandQueue();
@@ -105,6 +105,11 @@ namespace TextualRealityExperienceEngine.GameEngine
             reply.Reply = CurrentRoom.ProcessCommand(parsedCommand);
 
             return reply;
+        }
+
+        public void IncreaseScore(int increaseBy)
+        {
+            Score = Score + increaseBy;
         }
 
         private static GameReply CheckGameSpecificCommandOverrides(string command)

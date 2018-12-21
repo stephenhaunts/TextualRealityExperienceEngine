@@ -88,7 +88,7 @@ namespace Tests.SimpleGame
                             if (!Game.Inventory.Exists("Key"))
                             {
                                 Game.Inventory.Add(_key.Name, _key);
-                                Game.Score++;
+                                Game.IncreaseScore(1);
                                 Game.NumberOfMoves++;
                                 return _key.PickUpMessage;
                             }

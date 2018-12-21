@@ -86,7 +86,7 @@ namespace Tests.SimpleGame
                 LightsOffDescription = HallwayLightsOff
             };
 
-            _lounge = new Room(LoungeName, LoungeDescription, _game);
+            _lounge = new Lounge(LoungeName, LoungeDescription, _game);
 
             DoorWay doorway = new DoorWay
             {

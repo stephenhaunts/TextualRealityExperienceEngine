@@ -37,9 +37,11 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         IGlobalState GlobalState { get; }
 
         int NumberOfMoves { get; set; }
-        int Score { get; set; }
+        int Score { get; }
 
         IInventory Inventory { get; set; }
+
+        void IncreaseScore(int increaseBy);
 
         GameReply ProcessCommand(string command);
 

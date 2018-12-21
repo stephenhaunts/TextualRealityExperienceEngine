@@ -145,7 +145,7 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var filter = new ProfanityFilter();
             var swearList = filter.DetectAllProfanities("You are a complete twat and a dick.");
             
-            Assert.AreEqual(2, swearList.Count);
+            Assert.AreEqual(4, swearList.Count);
             Assert.AreEqual("twat", swearList[0]);
             Assert.AreEqual("dick", swearList[1]);
         }
@@ -156,7 +156,7 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var filter = new ProfanityFilter();
             var swearList = filter.DetectAllProfanities("You are a complete tWat and a DiCk.");
             
-            Assert.AreEqual(2, swearList.Count);
+            Assert.AreEqual(4, swearList.Count);
             Assert.AreEqual("twat", swearList[0]);
             Assert.AreEqual("dick", swearList[1]);
         }
@@ -167,8 +167,9 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var filter = new ProfanityFilter();
             var swearList = filter.DetectAllProfanities("2 girls 1 cup");
             
-            Assert.AreEqual(1, swearList.Count);
+            Assert.AreEqual(2, swearList.Count);
             Assert.AreEqual("2 girls 1 cup", swearList[0]);
+            Assert.AreEqual("2 girls 1 cup", swearList[1]);
         }
     }
 }

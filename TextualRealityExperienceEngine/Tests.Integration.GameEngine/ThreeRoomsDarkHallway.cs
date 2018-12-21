@@ -63,7 +63,7 @@ namespace Tests.Integration.GameEngine
                     LightsOn = !LightsOn;
 
                     Game.NumberOfMoves++;
-                    Game.Score++;
+                    Game.IncreaseScore(1);
 
 
                     if (LightsOn)

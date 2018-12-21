@@ -71,14 +71,14 @@ namespace Tests.Integration.GameEngine
                             case "key" when (command.Noun2 == "door") && Game.Inventory.Exists("Key"):
                                 SetDoorLock(false, Direction.North);
                                 
-                                Game.Score++;
+                                Game.IncreaseScore(1);
                                 Game.NumberOfMoves++;
                                 
                                 return "You turn the key in the lock and you hear a THUNK of the door unlocking.";
                             case "door" when Game.Inventory.Exists("Key"):
                                 SetDoorLock(false, Direction.North);
                                 
-                                Game.Score++;
+                                Game.IncreaseScore(1);
                                 Game.NumberOfMoves++;
                                 
                                 return "You turn the key in the lock and you hear a THUNK of the door unlocking.";
@@ -110,7 +110,7 @@ namespace Tests.Integration.GameEngine
                             if (Game.Inventory.Exists("Key")) return "You already have the key.";
                             
                             Game.Inventory.Add(_key.Name, _key);
-                            Game.Score++;
+                            Game.IncreaseScore(1);
                             Game.NumberOfMoves++;
                             
                             return _key.PickUpMessage;
@@ -148,7 +148,7 @@ namespace Tests.Integration.GameEngine
                         LightsOn = !LightsOn;
 
                         Game.NumberOfMoves++;
-                        Game.Score++;
+                        Game.IncreaseScore(1);
 
 
                         if (LightsOn)
