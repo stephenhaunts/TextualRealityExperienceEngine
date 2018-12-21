@@ -41,6 +41,8 @@ namespace TextualRealityExperienceEngine.GameEngine
         public int NumberOfMoves { get; set; }
         public int Score { get; private set; }
         
+        public IContentManagement ContentManagement { get; }
+        
         public bool HintSystemEnabled { get; set; }
 
         public int HintCost
@@ -77,6 +79,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             Inventory = new Inventory();
             Difficulty = DifficultyEnum.Easy;
             HintSystemEnabled = false;
+            ContentManagement = new ContentManagement();
         }
 
         public Game(string prologue, IRoom room)
@@ -95,6 +98,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             Inventory = new Inventory();
             Difficulty = DifficultyEnum.Easy;
             HintSystemEnabled = false;
+            ContentManagement = new ContentManagement();
         }
 
         public GameReply ProcessCommand(string command)

@@ -44,6 +44,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         void IncreaseScore(int increaseBy);
         void DecreaseScore(int decreaseBy);
         GameReply ProcessCommand(string command);
+        IContentManagement ContentManagement { get; }
         ReadOnlyCollection<ICommand> SaveGame();
         void LoadGame(ReadOnlyCollection<ICommand> commands);
     }

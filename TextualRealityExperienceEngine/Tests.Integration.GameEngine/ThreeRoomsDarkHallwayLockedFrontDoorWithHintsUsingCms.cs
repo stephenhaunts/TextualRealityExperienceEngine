@@ -31,26 +31,10 @@ using TextualRealityExperienceEngine.GameEngine.Synonyms;
 namespace Tests.Integration.GameEngine
 {
     [TestClass]
-    public class ThreeRoomsDarkHallwayLockedFrontDoorWithHints
+    public class ThreeRoomsDarkHallwayLockedFrontDoorWithHintsUsingCms
     {
         private IGame _game = new Game();
-        private const string Prologue = "Welcome to test adventure.You will be bedazzled with awesomeness.";
-
-        private const string OutsideName = "Outside";
-        private const string OutsideDescription = "You are standing on a driveway outside of a house. It is nightime and very cold. " +
-                                                    "There is frost on the ground. There is a door to the north with a plant pot next to the door mat.";
-
-        private const string HallwayName = "Hallway";
-        private const string HallwayDescription = "You are standing in a hallway that is modern, yet worn. There is a door to the west." +
-                                                    "To the south the front door leads back to the driveway.";
-
-        private const string HallwayLightsOff = "You are standing in a very dimly lit hallway. Your eyes struggle to adjust to the low light. " + 
-                                                   "You notice there is a swith on the wall to your left.";
-
-        private const string LoungeName = "Lounge";
-        private const string LoungeDescription = "You are stand in the lounge. There is a sofa and a TV inside. There is a door back to the hallway to the east.";
-
-
+  
         private class Outside : Room
         {
             private readonly IObject _key = new GameObject("Key", "Its is a small brass key.", "You pick up the key.");
@@ -198,8 +182,12 @@ namespace Tests.Integration.GameEngine
 
         private void InitializeGame()
         {
-            _game = new Game {Prologue = Prologue};
+            _game = new Game();
+            
+            AddContentItems();
 
+            _game.Prologue = _game.ContentManagement.RetrieveContentItem("Prologue");
+            
             _game.Parser.Nouns.Add("light", "lightswitch");
             _game.Parser.Nouns.Add("lightswitch", "lightswitch");
             _game.Parser.Nouns.Add("switch", "lightswitch");
@@ -218,14 +206,18 @@ namespace Tests.Integration.GameEngine
 
             _game.HintSystemEnabled = true;
             
-            _outside = new Outside(OutsideName, OutsideDescription, _game);
-            _hallway = new Hallway(HallwayName, HallwayDescription, _game)
+            _outside = new Outside(_game.ContentManagement.RetrieveContentItem("OutsideName"), 
+                    _game.ContentManagement.RetrieveContentItem("OutsideDescription"), _game);
+            
+            _hallway = new Hallway(_game.ContentManagement.RetrieveContentItem("HallwayName"), 
+                               _game.ContentManagement.RetrieveContentItem("HallwayDescription"), _game)
             {
-                LightsOn = false, LightsOffDescription = HallwayLightsOff
+                LightsOn = false, LightsOffDescription = _game.ContentManagement.RetrieveContentItem("HallwayLightsOff")
             };
 
 
-            _lounge = new Room(LoungeName, LoungeDescription, _game);
+            _lounge = new Room(_game.ContentManagement.RetrieveContentItem("LoungeName"), 
+                _game.ContentManagement.RetrieveContentItem("LoungeDescription"), _game);
 
             var doorway = new DoorWay
             {
@@ -238,7 +230,25 @@ namespace Tests.Integration.GameEngine
             _hallway.AddExit(Direction.West, _lounge);
 
             _game.StartRoom = _outside;
-            _game.CurrentRoom = _outside;
+            _game.CurrentRoom = _outside;           
+        }
+
+        private void AddContentItems()
+        {
+            _game.ContentManagement.AddContentItem("Prologue","Welcome to test adventure.You will be bedazzled with awesomeness.");
+            _game.ContentManagement.AddContentItem("OutsideName", "Outside");
+            _game.ContentManagement.AddContentItem("OutsideDescription", "You are standing on a driveway outside of a house. It is nighttime and very cold. " +
+                                                                         "There is frost on the ground. There is a door to the north with a plant pot next to the door mat.");
+            
+            _game.ContentManagement.AddContentItem("HallwayName", "Hallway");
+            _game.ContentManagement.AddContentItem("HallwayDescription", "You are standing in a hallway that is modern, yet worn. There is a door to the west." +
+                                                                         "To the south the front door leads back to the driveway.");
+            
+            _game.ContentManagement.AddContentItem("HallwayLightsOff", "You are standing in a very dimly lit hallway. Your eyes struggle to adjust to the low light. " + 
+                                                                       "You notice there is a switch on the wall to your left.");
+            
+            _game.ContentManagement.AddContentItem("LoungeName", "Lounge");
+            _game.ContentManagement.AddContentItem("LoungeDescription", "You are stand in the lounge. There is a sofa and a TV inside. There is a door back to the hallway to the east.");
         }
 
         [TestMethod]
@@ -246,19 +256,19 @@ namespace Tests.Integration.GameEngine
         {
             InitializeGame();
 
-            Assert.AreEqual(Prologue, _game.Prologue);
+            Assert.AreEqual(_game.ContentManagement.RetrieveContentItem("Prologue"), _game.Prologue);
             Assert.AreEqual(_outside, _game.StartRoom);
             Assert.AreEqual(_outside, _game.CurrentRoom);
             Assert.IsNotNull(_game.Parser);
 
-            Assert.AreEqual(OutsideName, _outside.Name);
-            Assert.AreEqual(OutsideDescription, _outside.Description);
+            Assert.AreEqual(_game.ContentManagement.RetrieveContentItem("OutsideName"), _outside.Name);
+            Assert.AreEqual(_game.ContentManagement.RetrieveContentItem("OutsideDescription"), _outside.Description);
 
-            Assert.AreEqual(HallwayName, _hallway.Name);
+            Assert.AreEqual(_game.ContentManagement.RetrieveContentItem("HallwayName"), _hallway.Name);
 
             Assert.IsTrue(_hallway.Description.StartsWith("You are standing in a very dimly lit hallway.", StringComparison.Ordinal));
-            Assert.AreEqual(LoungeName, _lounge.Name);
-            Assert.AreEqual(LoungeDescription, _lounge.Description);
+            Assert.AreEqual(_game.ContentManagement.RetrieveContentItem("LoungeName"), _lounge.Name);
+            Assert.AreEqual(_game.ContentManagement.RetrieveContentItem("LoungeDescription"), _lounge.Description);
         }
 
         [TestMethod]
@@ -329,14 +339,14 @@ namespace Tests.Integration.GameEngine
             Assert.IsTrue(reply.Reply.StartsWith("You flip the light switch and the lights flicker for a few seconds", StringComparison.Ordinal));
 
             reply = _game.ProcessCommand("go west");
-            Assert.AreEqual(LoungeDescription, reply.Reply);
+            Assert.AreEqual(_game.ContentManagement.RetrieveContentItem("LoungeDescription"), reply.Reply);
             Assert.AreEqual(_lounge, _game.CurrentRoom);
 
             reply = _game.ProcessCommand("go east");
             Assert.IsTrue(reply.Reply.StartsWith("You are standing in a hallway", StringComparison.Ordinal));
 
             reply = _game.ProcessCommand("go south");
-            Assert.AreEqual(OutsideDescription, reply.Reply);
+            Assert.AreEqual(_game.ContentManagement.RetrieveContentItem("OutsideDescription"), reply.Reply);
             Assert.AreEqual(_outside, _game.CurrentRoom);
         }
         
@@ -376,21 +386,19 @@ namespace Tests.Integration.GameEngine
             Assert.IsTrue(reply.Reply.StartsWith("You flip the light switch and the lights flicker for a few seconds", StringComparison.Ordinal));
 
             reply = _game.ProcessCommand("go west");
-            Assert.AreEqual(LoungeDescription, reply.Reply);
+            Assert.AreEqual(_game.ContentManagement.RetrieveContentItem("LoungeDescription"), reply.Reply);
             Assert.AreEqual(_lounge, _game.CurrentRoom);
 
             reply = _game.ProcessCommand("go east");
             Assert.IsTrue(reply.Reply.StartsWith("You are standing in a hallway", StringComparison.Ordinal));
 
             reply = _game.ProcessCommand("go south");
-            Assert.AreEqual(OutsideDescription, reply.Reply);
+            Assert.AreEqual(_game.ContentManagement.RetrieveContentItem("OutsideDescription"), reply.Reply);
             Assert.AreEqual(_outside, _game.CurrentRoom);
 
             var saveGame = _game.SaveGame();
             InitializeGame();
-            _game.LoadGame(saveGame);
-            
-            
+            _game.LoadGame(saveGame);     
         }
     }
 }
