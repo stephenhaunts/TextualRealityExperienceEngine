@@ -80,7 +80,7 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
         
         [TestMethod]        
-        public void RetriveContentItemGetsItemsFromCms()
+        public void RetrieveContentItemGetsItemsFromCms()
         {
             var content = new ContentManagement();
             content.AddContentItem("MyId", "This is a string");
