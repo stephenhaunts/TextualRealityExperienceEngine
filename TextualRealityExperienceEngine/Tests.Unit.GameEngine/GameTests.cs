@@ -162,5 +162,35 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             Assert.IsNotNull(game.Inventory);
             Assert.AreEqual(0, game.Inventory.Count());
         }
+        
+        [TestMethod]
+        public void IncreaseScoreForEasyDifficultyUsesMultiplierOf1()
+        {
+            var game = new Game {Difficulty = DifficultyEnum.Easy};
+
+            Assert.AreEqual(0, game.Score);          
+            game.IncreaseScore(1);            
+            Assert.AreEqual(1, game.Score);
+        }
+        
+        [TestMethod]
+        public void IncreaseScoreForMediumDifficultyUsesMultiplierOf2()
+        {
+            var game = new Game {Difficulty = DifficultyEnum.Medium};
+
+            Assert.AreEqual(0, game.Score);           
+            game.IncreaseScore(1);            
+            Assert.AreEqual(2, game.Score);
+        }
+        
+        [TestMethod]
+        public void IncreaseScoreForHardDifficultyUsesMultiplierOf3()
+        {
+            var game = new Game {Difficulty = DifficultyEnum.Hard};
+
+            Assert.AreEqual(0, game.Score);           
+            game.IncreaseScore(1);           
+            Assert.AreEqual(3, game.Score);
+        }
     }
 }

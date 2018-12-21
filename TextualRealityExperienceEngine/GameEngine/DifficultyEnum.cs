@@ -1,4 +1,4 @@
-﻿/*
+/*
 MIT License
 
 Copyright (c) 2018 
@@ -21,32 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
-using System.Collections.ObjectModel;
-
-namespace TextualRealityExperienceEngine.GameEngine.Interfaces
+namespace TextualRealityExperienceEngine.GameEngine
 {
-    public interface IGame
+    public enum DifficultyEnum
     {
-        string Prologue { get; set; }
-        string HelpText { get; set; }
-
-        IRoom StartRoom { get; set; }
-        IRoom CurrentRoom { get; set; }        
-        DifficultyEnum Difficulty { get; set; }       
-        IParser Parser { get; }
-        IGlobalState GlobalState { get; }
-
-        int NumberOfMoves { get; set; }
-        int Score { get; }
-
-        IInventory Inventory { get; set; }
-
-        void IncreaseScore(int increaseBy);
-
-        GameReply ProcessCommand(string command);
-
-        ReadOnlyCollection<ICommand> SaveGame();
-        void LoadGame(ReadOnlyCollection<ICommand> commands);
+        Easy = 0,
+        Medium,
+        Hard
     }
 }

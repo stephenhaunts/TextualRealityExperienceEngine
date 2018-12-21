@@ -41,6 +41,8 @@ namespace TextualRealityExperienceEngine.GameEngine
         public int NumberOfMoves { get; set; }
         public int Score { get; private set; }
         public IInventory Inventory { get; set; }
+        
+        public DifficultyEnum Difficulty { get; set; }
 
         private readonly ICommandQueue _commandQueue = new CommandQueue();
 
@@ -52,6 +54,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             Parser = new Parser();
             GlobalState = new GlobalState();
             Inventory = new Inventory();
+            Difficulty = DifficultyEnum.Easy;
         }
 
         public Game(string prologue, IRoom room)
@@ -68,6 +71,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             Parser = new Parser();
             GlobalState = new GlobalState();
             Inventory = new Inventory();
+            Difficulty = DifficultyEnum.Easy;
         }
 
         public GameReply ProcessCommand(string command)
@@ -109,7 +113,24 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         public void IncreaseScore(int increaseBy)
         {
-            Score = Score + increaseBy;
+            int scoreMultiplier;
+
+            switch (Difficulty)
+            {
+                case DifficultyEnum.Easy:
+                    scoreMultiplier = 1;
+                    break;
+                case DifficultyEnum.Medium:
+                    scoreMultiplier = 2;
+                    break;
+                case DifficultyEnum.Hard:
+                    scoreMultiplier = 3;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
+            Score = Score + increaseBy * scoreMultiplier;
         }
 
         private static GameReply CheckGameSpecificCommandOverrides(string command)
