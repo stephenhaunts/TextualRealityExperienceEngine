@@ -11,7 +11,7 @@ namespace Tests.SimpleGame
 
         public override string ProcessCommand(ICommand command)
         {
-            return base.ProcessCommand(command);
+            return command.ProfanityDetected ? "There is no need to be rude." : base.ProcessCommand(command);
         }
     }
 }

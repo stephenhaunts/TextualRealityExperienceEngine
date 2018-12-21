@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System.Collections.ObjectModel;
+using System.Dynamic;
 
 namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
@@ -30,22 +31,19 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
     {
         string Prologue { get; set; }
         string HelpText { get; set; }
-
         IRoom StartRoom { get; set; }
         IRoom CurrentRoom { get; set; }        
         DifficultyEnum Difficulty { get; set; }       
         IParser Parser { get; }
         IGlobalState GlobalState { get; }
-
         int NumberOfMoves { get; set; }
         int Score { get; }
-
+        bool HintSystemEnabled { get; set; }
+        int HintCost { get; }
         IInventory Inventory { get; set; }
-
         void IncreaseScore(int increaseBy);
-
+        void DecreaseScore(int decreaseBy);
         GameReply ProcessCommand(string command);
-
         ReadOnlyCollection<ICommand> SaveGame();
         void LoadGame(ReadOnlyCollection<ICommand> commands);
     }

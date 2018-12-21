@@ -32,5 +32,6 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
         Use = 3,
         Look = 4,
         Drop = 5,
+        Hint = 6
     }
 }

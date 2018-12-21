@@ -40,6 +40,27 @@ namespace TextualRealityExperienceEngine.GameEngine
         public IGlobalState GlobalState { get; }
         public int NumberOfMoves { get; set; }
         public int Score { get; private set; }
+        
+        public bool HintSystemEnabled { get; set; }
+
+        public int HintCost
+        {
+            get
+            {
+                switch (Difficulty)
+                {
+                    case DifficultyEnum.Easy:
+                        return 1;                        
+                    case DifficultyEnum.Medium:
+                        return 3;
+                    case DifficultyEnum.Hard:
+                        return 10;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }  
+            }
+        }
+
         public IInventory Inventory { get; set; }
         
         public DifficultyEnum Difficulty { get; set; }
@@ -55,6 +76,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             GlobalState = new GlobalState();
             Inventory = new Inventory();
             Difficulty = DifficultyEnum.Easy;
+            HintSystemEnabled = false;
         }
 
         public Game(string prologue, IRoom room)
@@ -72,6 +94,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             GlobalState = new GlobalState();
             Inventory = new Inventory();
             Difficulty = DifficultyEnum.Easy;
+            HintSystemEnabled = false;
         }
 
         public GameReply ProcessCommand(string command)
@@ -131,6 +154,11 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
             
             Score = Score + increaseBy * scoreMultiplier;
+        }
+
+        public void DecreaseScore(int decreaseBy)
+        {
+            Score = Score - decreaseBy;
         }
 
         private static GameReply CheckGameSpecificCommandOverrides(string command)

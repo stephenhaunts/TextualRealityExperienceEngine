@@ -192,5 +192,26 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             game.IncreaseScore(1);           
             Assert.AreEqual(3, game.Score);
         }
+
+        [TestMethod]
+        public void HintCostReturns1ForEasyDifficulty()
+        {
+            var game = new Game {Difficulty = DifficultyEnum.Easy};
+            Assert.AreEqual(1, game.HintCost);
+        }
+        
+        [TestMethod]
+        public void HintCostReturns3ForMediumDifficulty()
+        {
+            var game = new Game {Difficulty = DifficultyEnum.Medium};
+            Assert.AreEqual(3, game.HintCost);
+        }
+        
+        [TestMethod]
+        public void HintCostReturns10ForHardDifficulty()
+        {
+            var game = new Game {Difficulty = DifficultyEnum.Hard};
+            Assert.AreEqual(10, game.HintCost);
+        }
     }
 }

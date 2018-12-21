@@ -21,6 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+using System.Xml.Schema;
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 using TextualRealityExperienceEngine.GameEngine.Synonyms;
@@ -32,6 +34,7 @@ namespace Tests.SimpleGame
         private readonly IObject _key = new GameObject("Key", "Its is a small brass key.", "You pick up the key.");
 
         private bool _lookedAtPlantPot;
+        private bool _doorUnlocked = false;
 
         public Outside(string name, string description, IGame game) : base(name, description, game)
         {
@@ -39,29 +42,23 @@ namespace Tests.SimpleGame
         }
 
         public override string ProcessCommand(ICommand command)
-        {
+        {            
             switch (command.Verb)
             {
                 case VerbCodes.Use:
-                    if ((command.Noun == "key") && (command.Noun2 == "door"))
+                    switch (command.Noun)
                     {
-                        if (Game.Inventory.Exists("Key"))
-                        {
+                        case "key" when (command.Noun2 == "door") && Game.Inventory.Exists("Key"):
+                            SetDoorLock(false, Direction.North);
+                            _doorUnlocked = true;
+                            return "You turn the key in the lock and you hear a THUNK of the door unlocking.";
+                        case "door" when Game.Inventory.Exists("Key"):
+                            _doorUnlocked = true;
                             SetDoorLock(false, Direction.North);
                             return "You turn the key in the lock and you hear a THUNK of the door unlocking.";
-                        }
+                        default:
+                            return "You do not have a key.";
                     }
-
-                    if ((command.Noun == "door"))
-                    {
-                        if (Game.Inventory.Exists("Key"))
-                        {
-                            SetDoorLock(false, Direction.North);
-                            return "You turn the key in the lock and you hear a THUNK of the door unlocking.";
-                        }
-                    }
-
-                    return "You do not have a key.";
 
                 case VerbCodes.Look:
                     switch (command.Noun)
@@ -99,9 +96,39 @@ namespace Tests.SimpleGame
                         return "What key?";
                     }
                     break;
+                case VerbCodes.Hint:
+                    if (Game.Score - Game.HintCost < 0)
+                    {
+                        Game.DecreaseScore(Game.HintCost);
+                        return "You do not have enough points to buy a hint.";
+                    }
+                    
+                    if (!_lookedAtPlantPot)
+                    {
+                        Game.DecreaseScore(Game.HintCost);
+                        return "The plant pot looks interesting.";
+                    }
+
+                    if (_lookedAtPlantPot && !Game.Inventory.Exists("Key"))
+                    {
+                        Game.DecreaseScore(Game.HintCost);
+                        return "That key looks like it might be useful.";
+                    }
+
+                    if (!_doorUnlocked)
+                    {
+                        return "I wonder if the key you picked up will unlock the front door.";
+                    }
+                    
+                    break;
 
             }
 
+            if (command.ProfanityDetected)
+            {
+                return "There is no need to be rude.";
+            }
+            
             var reply = base.ProcessCommand(command);
             return reply;
         }

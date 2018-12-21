@@ -27,10 +27,10 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace Tests.SimpleGame
 {
-    internal partial class Program
+    internal class Program
     {
         private static IGame _game = new Game();
-        private const string Prologue = "Welcome to test adventure.You will be bedazzled with awesomeness.";
+        private const string Prologue = "Welcome to test adventure. You will be bedazzled with awesomeness.";
         private const string HelpText = "Your aim is to find the treasure that is hidden somewhere in the house. \r\nYou need to type commands into the game to control the player.";
 
 
@@ -87,8 +87,10 @@ namespace Tests.SimpleGame
             };
 
             _lounge = new Lounge(LoungeName, LoungeDescription, _game);
+            
+            _game.HintSystemEnabled = true;
 
-            DoorWay doorway = new DoorWay
+            var doorway = new DoorWay
             {
                 Direction = Direction.North,
                 Locked = true,

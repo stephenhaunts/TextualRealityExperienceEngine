@@ -248,6 +248,22 @@ namespace TextualRealityExperienceEngine.GameEngine
                     break;
                 case VerbCodes.Drop:
                     break;
+                case VerbCodes.Hint:
+                    if (Game.HintSystemEnabled)
+                    {
+                        switch (Game.Difficulty)
+                        {
+                            case DifficultyEnum.Easy:
+                                return "There are no more hints available.";                                
+                            case DifficultyEnum.Medium:
+                                return "There are no more hints available.";                                
+                            case DifficultyEnum.Hard:
+                                return "Hints are not allowed for the Hard difficulty.";                                
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }                        
+                    }
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

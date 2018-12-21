@@ -36,6 +36,11 @@ namespace Tests.SimpleGame
         public override string ProcessCommand(ICommand command)
         {
             string reply;
+            
+            if (command.ProfanityDetected)
+            {
+                return "There is no need to be rude.";
+            }
 
             if (command.Verb == VerbCodes.Use)
             {
