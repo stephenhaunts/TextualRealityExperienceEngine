@@ -99,7 +99,6 @@ namespace Tests.SimpleGame
                 case VerbCodes.Hint:
                     if (Game.Score - Game.HintCost < 0)
                     {
-                        Game.DecreaseScore(Game.HintCost);
                         return "You do not have enough points to buy a hint.";
                     }
                     
@@ -118,10 +117,8 @@ namespace Tests.SimpleGame
                     if (!_doorUnlocked)
                     {
                         return "I wonder if the key you picked up will unlock the front door.";
-                    }
-                    
+                    }                    
                     break;
-
             }
 
             if (command.ProfanityDetected)

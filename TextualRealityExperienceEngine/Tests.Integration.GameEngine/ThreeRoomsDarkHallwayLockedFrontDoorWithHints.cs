@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using System.Diagnostics.SymbolStore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
@@ -55,6 +56,7 @@ namespace Tests.Integration.GameEngine
             private readonly IObject _key = new GameObject("Key", "Its is a small brass key.", "You pick up the key.");
 
             bool _lookedAtPlantPot;
+            bool _doorUnlocked = false;
 
             public Outside(string name, string description, IGame game) : base(name, description, game)
             {
@@ -70,14 +72,14 @@ namespace Tests.Integration.GameEngine
                         {
                             case "key" when (command.Noun2 == "door") && Game.Inventory.Exists("Key"):
                                 SetDoorLock(false, Direction.North);
-                                
+                                _doorUnlocked = true;
                                 Game.IncreaseScore(1);
                                 Game.NumberOfMoves++;
                                 
                                 return "You turn the key in the lock and you hear a THUNK of the door unlocking.";
                             case "door" when Game.Inventory.Exists("Key"):
                                 SetDoorLock(false, Direction.North);
-                                
+                                _doorUnlocked = true;
                                 Game.IncreaseScore(1);
                                 Game.NumberOfMoves++;
                                 
@@ -124,6 +126,29 @@ namespace Tests.Integration.GameEngine
                         break;
                     case VerbCodes.Drop:
                         break;
+                    case VerbCodes.Hint:
+                        if (Game.Score - Game.HintCost < 0)
+                        {
+                            return "You do not have enough points to buy a hint.";
+                        }
+                    
+                        if (!_lookedAtPlantPot)
+                        {
+                            Game.DecreaseScore(Game.HintCost);
+                            return "The plant pot looks interesting.";
+                        }
+
+                        if (_lookedAtPlantPot && !Game.Inventory.Exists("Key"))
+                        {
+                            Game.DecreaseScore(Game.HintCost);
+                            return "That key looks like it might be useful.";
+                        }
+
+                        if (!_doorUnlocked)
+                        {
+                            return "I wonder if the key you picked up will unlock the front door.";
+                        }                    
+                        break;                    
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -260,10 +285,17 @@ namespace Tests.Integration.GameEngine
         public void WalkAround()
         {
             InitializeGame();
+            _game.IncreaseScore(100);
 
-            var reply = _game.ProcessCommand("look at plant pot");
+            var reply = _game.ProcessCommand("hint");
+            Assert.AreEqual("The plant pot looks interesting.", reply.Reply);
+
+            reply = _game.ProcessCommand("look at plant pot");
             Assert.IsTrue(reply.Reply.StartsWith("You move the plant pot and find a key sitting under it.", StringComparison.Ordinal));
 
+            reply = _game.ProcessCommand("hint");
+            Assert.AreEqual("That key looks like it might be useful.", reply.Reply);
+            
             reply = _game.ProcessCommand("go north");
             Assert.AreEqual("The door is locked.", reply.Reply);
 
@@ -273,7 +305,10 @@ namespace Tests.Integration.GameEngine
             reply = _game.ProcessCommand("pick up key");
             Assert.AreEqual("You pick up the key.", reply.Reply);
             Assert.AreEqual(1, _game.Inventory.Count());
-            Assert.IsTrue(_game.Inventory.Exists("Key"));
+            Assert.IsTrue(_game.Inventory.Exists("Key"));                        
+            
+            reply = _game.ProcessCommand("hint");
+            Assert.AreEqual("I wonder if the key you picked up will unlock the front door.", reply.Reply);
 
             reply = _game.ProcessCommand("look at doormat");
             Assert.IsTrue(reply.Reply.StartsWith("It's a doormat where people wipe their feet.", StringComparison.Ordinal));
@@ -281,6 +316,8 @@ namespace Tests.Integration.GameEngine
             reply = _game.ProcessCommand("use key on door");
             Assert.AreEqual("You turn the key in the lock and you hear a THUNK of the door unlocking.", reply.Reply);
             
+            reply = _game.ProcessCommand("hint");
+            Assert.AreEqual("There are no more hints available.", reply.Reply);
 
             reply = _game.ProcessCommand("go north");
             Assert.AreEqual(_hallway, _game.CurrentRoom);
@@ -303,7 +340,7 @@ namespace Tests.Integration.GameEngine
             Assert.AreEqual(_outside, _game.CurrentRoom);
         }
         
-          [TestMethod]
+        [TestMethod]
         public void SaveLoadGame()
         {
             InitializeGame();
