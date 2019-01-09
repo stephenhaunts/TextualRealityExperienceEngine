@@ -167,5 +167,59 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             Assert.AreEqual("key : The key of fire mountain.", inventoryList[0]);
             Assert.AreEqual("key2 : The key of fire mountain.", inventoryList[1]);
         }
+        
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void RemoveObjectThrowsArgumentNullExceptionIsNameIsNull()
+        {
+            IInventory inventory = new Inventory();
+            inventory.RemoveObject("");
+        }
+        
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void RemoveObjectThrowsArgumentNullExceptionIsNameIsEmpty()
+        {
+            IInventory inventory = new Inventory();
+            inventory.RemoveObject(string.Empty);
+        }
+        
+        [TestMethod]
+        public void RemoveObjectRemovesSingleObjectFromInvetory()
+        {
+            IInventory inventory = new Inventory();
+
+            IObject key = new GameObject("key", "The key of fire mountain.", "You picked up the golden key.");
+            inventory.Add(key.Name, key);
+
+            IObject key2 = new GameObject("key2", "The key of fire mountain.", "You picked up the golden key.");
+            inventory.Add(key2.Name, key2);
+
+            Assert.AreEqual(2, inventory.Count());
+
+            Assert.IsTrue(inventory.RemoveObject("key"));
+
+            Assert.AreEqual(1, inventory.Count());
+            Assert.AreEqual("key2", inventory.Get("key2").Name);
+        }
+        
+                
+        [TestMethod]
+        public void RemoveObjectForObjectThatDoesntExist()
+        {
+            IInventory inventory = new Inventory();
+
+            IObject key = new GameObject("key", "The key of fire mountain.", "You picked up the golden key.");
+            inventory.Add(key.Name, key);
+
+            IObject key2 = new GameObject("key2", "The key of fire mountain.", "You picked up the golden key.");
+            inventory.Add(key2.Name, key2);
+
+            Assert.AreEqual(2, inventory.Count());
+
+            Assert.IsFalse(inventory.RemoveObject("key4"));           
+            
+            Assert.AreEqual(2, inventory.Count());
+        }
     }
 }

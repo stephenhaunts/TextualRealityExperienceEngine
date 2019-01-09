@@ -66,6 +66,22 @@ namespace TextualRealityExperienceEngine.GameEngine
             return _inventory.ContainsKey(name);
         }
 
+        public bool RemoveObject(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            if (Exists(name))
+            {
+                _inventory.Remove(name);
+                return true;
+            }
+
+            return false;
+        }
+
         public IObject Get(string name)
         {
             if (string.IsNullOrEmpty(name))

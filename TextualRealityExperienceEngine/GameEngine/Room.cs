@@ -22,7 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
-
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 using TextualRealityExperienceEngine.GameEngine.Synonyms;
 
@@ -35,6 +36,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         public string LightsOffDescription { get; set; }
         public IGame Game { get; set; }
         private string _description;
+        private List<IObject> _droppedObjects = new List<IObject>();
 
         public bool LightsOn { get; set;}
 
@@ -43,6 +45,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             Name = string.Empty;
             Description = string.Empty;
             LightsOn = true;
+            _droppedObjects = new List<IObject>();
         }
 
         public Room(IGame game)
@@ -51,6 +54,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             Description = string.Empty;
             Game = game;
             LightsOn = true;
+            _droppedObjects = new List<IObject>();
         }
 
         public Room(IRoomExits roomExits, IGame game)
@@ -60,6 +64,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             _roomExits = roomExits;
             Game = game;
             LightsOn = true;
+            _droppedObjects = new List<IObject>();
         }
 
         public string Description 
@@ -132,6 +137,36 @@ namespace TextualRealityExperienceEngine.GameEngine
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+            }
+        }
+
+        public ReadOnlyCollection<IObject> DroppedObjects => new ReadOnlyCollection<IObject>(_droppedObjects);
+
+        public void DropObject(IObject objectToDrop)
+        {
+            if (objectToDrop == null)
+            {
+                throw new ArgumentNullException(nameof(objectToDrop));
+            }
+
+            if (Game.Inventory.Exists(objectToDrop.Name))
+            {
+                Game.Inventory.RemoveObject(objectToDrop.Name);
+                _droppedObjects.Add(objectToDrop);
+            }
+        }
+
+        public void PickUpDroppedObject(IObject objectToPickup)
+        {
+            if (objectToPickup == null)
+            {
+                throw new ArgumentNullException(nameof(objectToPickup));
+            }
+
+            if (_droppedObjects.Contains(objectToPickup))
+            {
+                _droppedObjects.Remove(objectToPickup);
+                Game.Inventory.Add(objectToPickup.Name, objectToPickup);
             }
         }
 

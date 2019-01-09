@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System.Collections.ObjectModel;
+
 namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
     public interface IRoom
@@ -31,6 +33,11 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         string LightsOffDescription { get; set; }
 
         IGame Game { get; set; }
+        
+        ReadOnlyCollection<IObject> DroppedObjects { get; }
+        void DropObject(IObject objectToDrop);
+        void PickUpDroppedObject(IObject objectToPickup);
+        
         void AddExit(DoorWay doorway, IRoom room, bool withExit = true);
         void AddExit(Direction direction, IRoom room, bool withExit = true);
         string ProcessCommand(ICommand command);

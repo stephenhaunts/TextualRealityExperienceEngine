@@ -29,6 +29,8 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
     {
         void Add(string name, IObject gameObject);
         bool Exists(string name);
+
+        bool RemoveObject(string name);
         IObject Get(string name);
         void Clear();
         int Count();

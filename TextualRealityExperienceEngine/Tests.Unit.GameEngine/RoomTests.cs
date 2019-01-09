@@ -190,9 +190,10 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         public void LightsOffReturnsDarkDescription()
         {
             IGame game = new Game();
-            var room = new Room("TestRoom", "The room is light.", game);
-            room.LightsOn = true;
-            room.LightsOffDescription = "It is dark.";
+            var room = new Room("TestRoom", "The room is light.", game)
+            {
+                LightsOn = true, LightsOffDescription = "It is dark."
+            };
 
             Assert.AreEqual("The room is light.", room.Description);
 
