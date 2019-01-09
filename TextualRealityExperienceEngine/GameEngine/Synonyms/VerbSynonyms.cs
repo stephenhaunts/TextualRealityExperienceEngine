@@ -56,7 +56,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _synonymMappings.Add("earn", VerbCodes.Take);
             _synonymMappings.Add("hold", VerbCodes.Take);
             _synonymMappings.Add("reach", VerbCodes.Take);
-            _synonymMappings.Add("aquire", VerbCodes.Take);
+            _synonymMappings.Add("acquire", VerbCodes.Take);
             _synonymMappings.Add("attain", VerbCodes.Take);
             _synonymMappings.Add("catch", VerbCodes.Take);
             _synonymMappings.Add("clasp", VerbCodes.Take);
@@ -83,7 +83,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _synonymMappings.Add("reject", VerbCodes.Drop);
             _synonymMappings.Add("disown", VerbCodes.Drop);
             _synonymMappings.Add("forfeit", VerbCodes.Drop);
-            _synonymMappings.Add("relinqush", VerbCodes.Drop);
+            _synonymMappings.Add("relinquish", VerbCodes.Drop);
             _synonymMappings.Add("renounce", VerbCodes.Drop);
             _synonymMappings.Add("resign", VerbCodes.Drop);
             _synonymMappings.Add("sacrifice", VerbCodes.Drop);
@@ -103,7 +103,6 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _synonymMappings.Add("turn", VerbCodes.Use);
             _synonymMappings.Add("unlock", VerbCodes.Use);
             _synonymMappings.Add("switch", VerbCodes.Use);
-
 
             _synonymMappings.Add("look", VerbCodes.Look);
             _synonymMappings.Add("examine", VerbCodes.Look);

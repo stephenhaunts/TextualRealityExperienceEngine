@@ -131,7 +131,7 @@ namespace Tests.SimpleGame
                     case ParserStateEnum.Playing:
                         if (!string.IsNullOrEmpty(reply.Reply))
                         {
-                            Console.WriteLine();
+                            Console.WriteLine();                            
                             ConsoleEx.WordWrap(reply.Reply);
                         }
                         continue;
