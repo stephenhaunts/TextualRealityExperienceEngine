@@ -7,11 +7,12 @@ namespace Tests.SimpleGame
     {
         public Lounge(string name, string description, IGame game) : base(name, description, game)
         {
+            game.ContentManagement.AddContentItem("NoNeedToBeRudeLounge", "There is no need to be rude.");
         }
 
         public override string ProcessCommand(ICommand command)
         {
-            return command.ProfanityDetected ? "There is no need to be rude." : base.ProcessCommand(command);
+            return command.ProfanityDetected ? Game.ContentManagement.RetrieveContentItem("NoNeedToBeRudeLounge") : base.ProcessCommand(command);
         }
     }
 }

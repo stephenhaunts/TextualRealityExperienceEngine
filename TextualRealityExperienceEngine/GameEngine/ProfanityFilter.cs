@@ -1251,7 +1251,6 @@ namespace TextualRealityExperienceEngine.GameEngine
              "porno",
              "pornography",
              "pornos",
-             "pot",
              "potty",
              "prick",
              "pricks",

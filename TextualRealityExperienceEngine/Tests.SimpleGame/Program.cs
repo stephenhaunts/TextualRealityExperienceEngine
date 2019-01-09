@@ -29,25 +29,19 @@ namespace Tests.SimpleGame
 {
     internal class Program
     {
-        private static IGame _game = new Game();
-        
-        private const string HelpText = "Your aim is to find the treasure that is hidden somewhere in the house. \r\nYou need to type commands into the game to control the player.";
-        
+        private static IGame _game = new Game(); 
         private static IRoom _outside;
         private static IRoom _hallway;
         private static IRoom _lounge;
 
         private static void InitializeGame()
         {
-            _game = new Game
-            {
-                HelpText = HelpText
-            };
+            _game = new Game();
 
             AddContentItems();
 
             _game.Prologue = _game.ContentManagement.RetrieveContentItem("Prologue");
-            
+            _game.HelpText = _game.ContentManagement.RetrieveContentItem("HelpText");
             _game.Parser.Nouns.Add("light", "lightswitch");
             _game.Parser.Nouns.Add("lights", "lightswitch");
             _game.Parser.Nouns.Add("lightswitch", "lightswitch");
@@ -63,7 +57,7 @@ namespace Tests.SimpleGame
             _game.Parser.Nouns.Add("mat", "doormat");
 
             _game.Parser.Nouns.Add("door", "door");
-            _game.Parser.Nouns.Add("frondoor", "door");
+            _game.Parser.Nouns.Add("frontdoor", "door");
 
             _outside = new Outside(_game.ContentManagement.RetrieveContentItem("OutsideName"), 
                                _game.ContentManagement.RetrieveContentItem("OutsideDescription"), _game);
@@ -110,9 +104,13 @@ namespace Tests.SimpleGame
             
             _game.ContentManagement.AddContentItem("LoungeName", "Lounge");
             _game.ContentManagement.AddContentItem("LoungeDescription", "You are stand in the lounge. There is a sofa and a TV inside. There is a door back to the hallway to the east.");
+            _game.ContentManagement.AddContentItem("HelpText", "Your aim is to find the treasure that is hidden somewhere in the house. \r\nYou need to type commands into the game to control the player.");
+
+            _game.ContentManagement.AddContentItem("AreYouSure", "Are you sure? (y/n) : ");
+            _game.ContentManagement.AddContentItem("ExitMessage", "Have it your way.. You spontaneously combust and depart this mortal coil in a puff of smoke....");           
         }
-        
-        static void Main(string[] args)
+
+        private static void Main(string[] args)
         {
             Console.Clear();
             InitializeGame();
@@ -144,13 +142,13 @@ namespace Tests.SimpleGame
 
                     case ParserStateEnum.Exit:
                         Console.WriteLine();
-                        Console.Write("Are you sure? (y/n) : ");
+                        Console.Write(_game.ContentManagement.RetrieveContentItem("AreYouSure"));
                         var response = Console.ReadLine();
 
                         if (response != null && response.ToLower() == "y")
                         {
                             Console.WriteLine();
-                            ConsoleEx.WordWrap("Have it your way.. You spontaniously combust and depart this mortal coil in a puff of smoke....");
+                            ConsoleEx.WordWrap(_game.ContentManagement.RetrieveContentItem("ExitMessage"));
 
                             Environment.Exit(0);
                         }

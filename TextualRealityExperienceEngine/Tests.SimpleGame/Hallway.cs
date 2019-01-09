@@ -31,6 +31,9 @@ namespace Tests.SimpleGame
     {
         public Hallway(string name, string description, IGame game) : base(name, description, game)
         {
+            game.ContentManagement.AddContentItem("NoNeedToBeRude", "There is no need to be rude.");
+            game.ContentManagement.AddContentItem("FlipLightSwitch",
+                "You flip the light switch and the lights flicker for a few seconds until they illuminate the hallway. You hear a faint buzzing sound coming from the lights.");
         }
 
         public override string ProcessCommand(ICommand command)
@@ -39,7 +42,7 @@ namespace Tests.SimpleGame
             
             if (command.ProfanityDetected)
             {
-                return "There is no need to be rude.";
+                return Game.ContentManagement.RetrieveContentItem("NoNeedToBeRude");
             }
 
             if (command.Verb == VerbCodes.Use)
@@ -54,7 +57,7 @@ namespace Tests.SimpleGame
 
                     if (LightsOn)
                     {
-                        return "You flip the lightswitch and the lights flicker for a few seconds until they illuminate the hallway. You hear a faint buzzing sound coming from the lights."
+                        return Game.ContentManagement.RetrieveContentItem("FlipLightSwitch")
                                + Description;
                     }
                     else

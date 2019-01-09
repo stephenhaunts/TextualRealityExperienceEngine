@@ -39,6 +39,19 @@ namespace Tests.SimpleGame
         public Outside(string name, string description, IGame game) : base(name, description, game)
         {
             _lookedAtPlantPot = false;
+            
+            game.ContentManagement.AddContentItem("TurnKey", "You turn the key in the lock and you hear a THUNK of the door unlocking.");
+            game.ContentManagement.AddContentItem("DoNotHaveKey", "You do not have a key.");
+            game.ContentManagement.AddContentItem("ItsAPlantPot", "It's a plant pot. Quite unremarkable.");
+            game.ContentManagement.AddContentItem("MovePlantPot", "You move the plant pot and find a key sitting under it.");
+            game.ContentManagement.AddContentItem("DoorMat", "It's a doormat where people wipe their feet. On it is written 'There is no place like 10.0.0.1'.");
+            game.ContentManagement.AddContentItem("AlreadyHaveKey", "You already have the key.");
+            game.ContentManagement.AddContentItem("WhatKey", "What Key?");
+            game.ContentManagement.AddContentItem("NotEnoughHintPoints", "You do not have enough points to buy a hint.");
+            game.ContentManagement.AddContentItem("InterestingPlantPot", "The plant pot looks interesting.");
+            game.ContentManagement.AddContentItem("UsefulKey", "That key looks like it might be useful.");
+            game.ContentManagement.AddContentItem("IWonderIfKey", "I wonder if the key you picked up will unlock the front door.");
+            game.ContentManagement.AddContentItem("NoNeedToBeRudeOutside", "There is no need to be rude.");
         }
 
         public override string ProcessCommand(ICommand command)
@@ -51,13 +64,13 @@ namespace Tests.SimpleGame
                         case "key" when (command.Noun2 == "door") && Game.Inventory.Exists("Key"):
                             SetDoorLock(false, Direction.North);
                             _doorUnlocked = true;
-                            return "You turn the key in the lock and you hear a THUNK of the door unlocking.";
+                            return Game.ContentManagement.RetrieveContentItem("TurnKey");
                         case "door" when Game.Inventory.Exists("Key"):
                             _doorUnlocked = true;
                             SetDoorLock(false, Direction.North);
-                            return "You turn the key in the lock and you hear a THUNK of the door unlocking.";
+                            return Game.ContentManagement.RetrieveContentItem("TurnKey");
                         default:
-                            return "You do not have a key.";
+                            return Game.ContentManagement.RetrieveContentItem("DoNotHaveKey");
                     }
 
                 case VerbCodes.Look:
@@ -66,14 +79,14 @@ namespace Tests.SimpleGame
                         case "plantpot":
                         {
                             _lookedAtPlantPot = true;
-                            if (Game.Inventory.Exists("Key")) return "It's a plant pot. Quite unremarkable.";
+                            if (Game.Inventory.Exists("Key")) return Game.ContentManagement.RetrieveContentItem("ItsAPlantPot");
                             
                             Game.NumberOfMoves++;
-                            return "You move the plant pot and find a key sitting under it.";
+                            return Game.ContentManagement.RetrieveContentItem("MovePlantPot");
 
                         }
                         case "doormat":
-                            return "It's a doormat where people wipe their feet. On it is written 'There is no place like 10.0.0.1'.";
+                            return Game.ContentManagement.RetrieveContentItem("DoorMat");
                     }
 
                     break;
@@ -90,40 +103,40 @@ namespace Tests.SimpleGame
                                 return _key.PickUpMessage;
                             }
 
-                            return "You already have the key.";
+                            return Game.ContentManagement.RetrieveContentItem("AlreadyHaveKey");
                         }
 
-                        return "What key?";
+                        return Game.ContentManagement.RetrieveContentItem("WhatKey");
                     }
                     break;
                 case VerbCodes.Hint:
                     if (Game.Score - Game.HintCost < 0)
                     {
-                        return "You do not have enough points to buy a hint.";
+                        return Game.ContentManagement.RetrieveContentItem("NotEnoughHintPoints");
                     }
                     
                     if (!_lookedAtPlantPot)
                     {
                         Game.DecreaseScore(Game.HintCost);
-                        return "The plant pot looks interesting.";
+                        return Game.ContentManagement.RetrieveContentItem("InterestingPlantPot");
                     }
 
                     if (_lookedAtPlantPot && !Game.Inventory.Exists("Key"))
                     {
                         Game.DecreaseScore(Game.HintCost);
-                        return "That key looks like it might be useful.";
+                        return Game.ContentManagement.RetrieveContentItem("UsefulKey");
                     }
 
                     if (!_doorUnlocked)
                     {
-                        return "I wonder if the key you picked up will unlock the front door.";
+                        return Game.ContentManagement.RetrieveContentItem("IWonderIfKey");
                     }                    
                     break;
             }
 
             if (command.ProfanityDetected)
             {
-                return "There is no need to be rude.";
+                return Game.ContentManagement.RetrieveContentItem("NoNeedToBeRudeOutside");
             }
             
             var reply = base.ProcessCommand(command);
