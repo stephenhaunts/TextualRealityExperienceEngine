@@ -142,32 +142,48 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         public ReadOnlyCollection<IObject> DroppedObjects => new ReadOnlyCollection<IObject>(_droppedObjects);
 
-        public void DropObject(IObject objectToDrop)
+        public bool DropObject(string objectName)
         {
-            if (objectToDrop == null)
+            if (string.IsNullOrEmpty(objectName))
             {
-                throw new ArgumentNullException(nameof(objectToDrop));
+                throw new ArgumentNullException(nameof(objectName));
+            }
+            
+            objectName = objectName.ToLower();
+            
+            if (Game.Inventory.Exists(objectName))
+            {
+                var droppedObject = Game.Inventory.Get(objectName);
+                Game.Inventory.RemoveObject(objectName);
+                _droppedObjects.Add(droppedObject);
+
+                return true;
             }
 
-            if (Game.Inventory.Exists(objectToDrop.Name))
-            {
-                Game.Inventory.RemoveObject(objectToDrop.Name);
-                _droppedObjects.Add(objectToDrop);
-            }
+            return false;
         }
 
-        public void PickUpDroppedObject(IObject objectToPickup)
+        public bool PickUpDroppedObject(string objectName)
         {
-            if (objectToPickup == null)
+            if (string.IsNullOrEmpty(objectName))
             {
-                throw new ArgumentNullException(nameof(objectToPickup));
+                throw new ArgumentNullException(nameof(objectName));
             }
 
-            if (_droppedObjects.Contains(objectToPickup))
+            objectName = objectName.ToLower();
+            
+            foreach (var i in _droppedObjects)
             {
-                _droppedObjects.Remove(objectToPickup);
-                Game.Inventory.Add(objectToPickup.Name, objectToPickup);
+                if (i.Name == objectName)
+                {                  
+                    _droppedObjects.Remove(i);
+                    Game.Inventory.Add(i.Name, i);
+            
+                    return true;
+                }
             }
+            
+            return false;
         }
 
         public void AddExit(DoorWay doorway, IRoom room, bool withExit = true)

@@ -40,6 +40,8 @@ namespace TextualRealityExperienceEngine.GameEngine
                 throw new ArgumentNullException(nameof(name));
             }
 
+            name = name.ToLower();
+            
             if (gameObject == null)
             {
                 throw new ArgumentNullException(nameof(gameObject));
@@ -63,7 +65,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 throw new ArgumentNullException(nameof(name));
             }
 
-            return _inventory.ContainsKey(name);
+            return _inventory.ContainsKey(name.ToLower());
         }
 
         public bool RemoveObject(string name)
@@ -73,6 +75,8 @@ namespace TextualRealityExperienceEngine.GameEngine
                 throw new ArgumentNullException(nameof(name));
             }
 
+            name = name.ToLower();
+            
             if (Exists(name))
             {
                 _inventory.Remove(name);
@@ -91,7 +95,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             try
             {
-                return _inventory[name];
+                return _inventory[name.ToLower()];
             }
             catch (KeyNotFoundException)
             {

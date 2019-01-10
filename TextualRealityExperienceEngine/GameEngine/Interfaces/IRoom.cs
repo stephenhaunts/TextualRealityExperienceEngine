@@ -35,8 +35,8 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         IGame Game { get; set; }
         
         ReadOnlyCollection<IObject> DroppedObjects { get; }
-        void DropObject(IObject objectToDrop);
-        void PickUpDroppedObject(IObject objectToPickup);
+        bool DropObject(string objectName);
+        bool PickUpDroppedObject(string objectName);
         
         void AddExit(DoorWay doorway, IRoom room, bool withExit = true);
         void AddExit(Direction direction, IRoom room, bool withExit = true);
