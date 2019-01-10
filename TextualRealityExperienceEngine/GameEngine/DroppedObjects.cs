@@ -71,7 +71,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             
             foreach (var i in _droppedObjects)
             {
-                if (i.Name == objectName)
+                if (i.Name.ToLower() == objectName)
                 {                  
                     _droppedObjects.Remove(i);
                     _game.Inventory.Add(i.Name, i);

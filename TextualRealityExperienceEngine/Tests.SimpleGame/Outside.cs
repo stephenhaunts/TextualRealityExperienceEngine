@@ -35,6 +35,7 @@ namespace Tests.SimpleGame
 
         private bool _lookedAtPlantPot;
         private bool _doorUnlocked = false;
+        private bool _keyPickedUp = false;
 
         public Outside(string name, string description, IGame game) : base(name, description, game)
         {
@@ -95,15 +96,20 @@ namespace Tests.SimpleGame
                     {
                         if (_lookedAtPlantPot)
                         {
-                            if (!Game.Inventory.Exists("Key"))
+                            if (!Game.Inventory.Exists("Key") && !_keyPickedUp)
                             {
                                 Game.Inventory.Add(_key.Name, _key);
                                 Game.IncreaseScore(1);
                                 Game.NumberOfMoves++;
+                                _keyPickedUp = true;
                                 return _key.PickUpMessage;
                             }
 
-                            return Game.ContentManagement.RetrieveContentItem("AlreadyHaveKey");
+                            if (Game.Inventory.Exists("Key"))
+                            {
+                                return Game.ContentManagement.RetrieveContentItem("AlreadyHaveKey");
+                            }
+                            
                         }
 
                         return Game.ContentManagement.RetrieveContentItem("WhatKey");
