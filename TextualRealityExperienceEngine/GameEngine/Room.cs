@@ -90,6 +90,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             Description = description;
             Game = game;
             LightsOn = true;
+            DroppedObjects = new DroppedObjects(Game);
         }
 
         public void AddExit(Direction direction, IRoom room, bool withExit = true)
@@ -249,11 +250,25 @@ namespace TextualRealityExperienceEngine.GameEngine
                 case VerbCodes.NoCommand:
                     break;
                 case VerbCodes.Take:
-                    break;
+                    if (DroppedObjects.PickUpDroppedObject(command.Noun))
+                    {
+                        return "You pick up the " + command.Noun;
+                    }
+                    else
+                    {
+                        return "You can not pick up a " + command.Noun;
+                    }
                 case VerbCodes.Use:
                     break;
                 case VerbCodes.Drop:
-                    break;
+                    if (DroppedObjects.DropObject(command.Noun))
+                    {
+                        return "You drop the " + command.Noun;
+                    }
+                    else
+                    {
+                        return "You do not have a " + command.Noun + " to drop.";
+                    }
                 case VerbCodes.Hint:
                     if (Game.HintSystemEnabled)
                     {
