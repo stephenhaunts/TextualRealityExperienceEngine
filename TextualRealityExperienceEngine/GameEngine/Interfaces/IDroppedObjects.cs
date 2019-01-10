@@ -1,4 +1,4 @@
-﻿/*
+/*
 MIT License
 
 Copyright (c) 2018 
@@ -22,16 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System.Collections.ObjectModel;
+
 namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public interface IContentManagement
+    public interface IDroppedObjects
     {
-        void AddContentItem(string identifier, string content);
-        string RetrieveContentItem(string identifier);
-        int CountContentItems { get; }
-        bool Exists(string identifier);
+        ReadOnlyCollection<IObject> DroppedObjectsList { get; }
+        bool DropObject(string objectName);
+        bool PickUpDroppedObject(string objectName);
     }
 }

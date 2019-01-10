@@ -36,7 +36,8 @@ namespace TextualRealityExperienceEngine.GameEngine
         public string LightsOffDescription { get; set; }
         public IGame Game { get; set; }
         private string _description;
-        private List<IObject> _droppedObjects = new List<IObject>();
+
+        public IDroppedObjects DroppedObjects;
 
         public bool LightsOn { get; set;}
 
@@ -45,7 +46,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             Name = string.Empty;
             Description = string.Empty;
             LightsOn = true;
-            _droppedObjects = new List<IObject>();
+            DroppedObjects = new DroppedObjects(Game);
         }
 
         public Room(IGame game)
@@ -54,7 +55,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             Description = string.Empty;
             Game = game;
             LightsOn = true;
-            _droppedObjects = new List<IObject>();
+            DroppedObjects = new DroppedObjects(Game);
         }
 
         public Room(IRoomExits roomExits, IGame game)
@@ -64,7 +65,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             _roomExits = roomExits;
             Game = game;
             LightsOn = true;
-            _droppedObjects = new List<IObject>();
+            DroppedObjects = new DroppedObjects(Game);
         }
 
         public string Description 
@@ -138,52 +139,6 @@ namespace TextualRealityExperienceEngine.GameEngine
                 default:
                     throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
             }
-        }
-
-        public ReadOnlyCollection<IObject> DroppedObjects => new ReadOnlyCollection<IObject>(_droppedObjects);
-
-        public bool DropObject(string objectName)
-        {
-            if (string.IsNullOrEmpty(objectName))
-            {
-                throw new ArgumentNullException(nameof(objectName));
-            }
-            
-            objectName = objectName.ToLower();
-            
-            if (Game.Inventory.Exists(objectName))
-            {
-                var droppedObject = Game.Inventory.Get(objectName);
-                Game.Inventory.RemoveObject(objectName);
-                _droppedObjects.Add(droppedObject);
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool PickUpDroppedObject(string objectName)
-        {
-            if (string.IsNullOrEmpty(objectName))
-            {
-                throw new ArgumentNullException(nameof(objectName));
-            }
-
-            objectName = objectName.ToLower();
-            
-            foreach (var i in _droppedObjects)
-            {
-                if (i.Name == objectName)
-                {                  
-                    _droppedObjects.Remove(i);
-                    Game.Inventory.Add(i.Name, i);
-            
-                    return true;
-                }
-            }
-            
-            return false;
         }
 
         public void AddExit(DoorWay doorway, IRoom room, bool withExit = true)
