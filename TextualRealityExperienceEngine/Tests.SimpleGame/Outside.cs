@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System.Net;
 using System.Xml.Schema;
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
@@ -53,6 +54,7 @@ namespace Tests.SimpleGame
             game.ContentManagement.AddContentItem("UsefulKey", "That key looks like it might be useful.");
             game.ContentManagement.AddContentItem("IWonderIfKey", "I wonder if the key you picked up will unlock the front door.");
             game.ContentManagement.AddContentItem("NoNeedToBeRudeOutside", "There is no need to be rude.");
+            game.ContentManagement.AddContentItem("GrabKey", "You pick up the key.");
         }
 
         public override string ProcessCommand(ICommand command)
@@ -103,16 +105,13 @@ namespace Tests.SimpleGame
                                 Game.NumberOfMoves++;
                                 _keyPickedUp = true;
                                 return _key.PickUpMessage;
-                            }
+                            }                            
 
                             if (Game.Inventory.Exists("Key"))
                             {
                                 return Game.ContentManagement.RetrieveContentItem("AlreadyHaveKey");
-                            }
-                            
-                        }
-
-                        return Game.ContentManagement.RetrieveContentItem("WhatKey");
+                            }                            
+                        }                    
                     }
                     break;
                 case VerbCodes.Hint:
