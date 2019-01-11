@@ -3,6 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <RootNamespace>TextualRealityExperienceEngine.GameEngine</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>TextualRealityExperienceEngine</PackageId>
+    <PackageVersion>0.0.1</PackageVersion>
+    <Title>Textual Reality Experience Engine</Title>
+    <Authors>Stephen Haunts</Authors>
+    <Description>Modern .NET based Object Oriented Text Adventure engine</Description>
+    <Copyright>(C) Stephen Haunts 2019</Copyright>
+    <PackageProjectUrl>https://github.com/stephenhaunts/TextualRealityExperienceEngine</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/stephenhaunts/TextualRealityExperienceEngine/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/stephenhaunts/TextualRealityExperienceEngine</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
+
 namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
     public interface IObject
@@ -29,5 +31,6 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         string Name { get; set; }
         string Description { get; set; }
         string PickUpMessage { get; set; }
+        DateTime PickedUpDateTime { get; set; }
     }
 }

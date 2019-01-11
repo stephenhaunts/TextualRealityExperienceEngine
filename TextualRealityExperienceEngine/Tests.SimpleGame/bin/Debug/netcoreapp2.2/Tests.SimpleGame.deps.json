@@ -8,13 +8,13 @@
     ".NETCoreApp,Version=v2.2": {
       "Tests.SimpleGame/1.0.0": {
         "dependencies": {
-          "GameEngine": "1.0.0"
+          "TextualRealityExperienceEngine": "0.0.1"
         },
         "runtime": {
           "Tests.SimpleGame.dll": {}
         }
       },
-      "GameEngine/1.0.0": {
+      "TextualRealityExperienceEngine/0.0.1": {
         "runtime": {
           "GameEngine.dll": {}
         }
@@ -27,7 +27,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "GameEngine/1.0.0": {
+    "TextualRealityExperienceEngine/0.0.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

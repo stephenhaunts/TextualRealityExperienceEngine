@@ -45,25 +45,8 @@ namespace TextualRealityExperienceEngine.GameEngine
         
         public bool HintSystemEnabled { get; set; }
 
-        public int HintCost
-        {
-            get
-            {
-                switch (Difficulty)
-                {
-                    case DifficultyEnum.Easy:
-                        return 1;                        
-                    case DifficultyEnum.Medium:
-                        return 3;
-                    case DifficultyEnum.Hard:
-                        return 10;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }  
-            }
-        }
-
         public IInventory Inventory { get; set; }
+        public DateTime GameClock { get; set; }
         
         public DifficultyEnum Difficulty { get; set; }
 
@@ -99,6 +82,24 @@ namespace TextualRealityExperienceEngine.GameEngine
             Difficulty = DifficultyEnum.Easy;
             HintSystemEnabled = false;
             ContentManagement = new ContentManagement();
+        }
+        
+        public int HintCost
+        {
+            get
+            {
+                switch (Difficulty)
+                {
+                    case DifficultyEnum.Easy:
+                        return 1;                        
+                    case DifficultyEnum.Medium:
+                        return 3;
+                    case DifficultyEnum.Hard:
+                        return 10;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }  
+            }
         }
 
         public GameReply ProcessCommand(string command)

@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
 using System.Collections.ObjectModel;
 using System.Dynamic;
 
@@ -41,6 +42,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         bool HintSystemEnabled { get; set; }
         int HintCost { get; }
         IInventory Inventory { get; set; }
+        DateTime GameClock { get; set; }
         void IncreaseScore(int increaseBy);
         void DecreaseScore(int decreaseBy);
         GameReply ProcessCommand(string command);
