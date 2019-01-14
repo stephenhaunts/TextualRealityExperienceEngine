@@ -27,10 +27,18 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine.Synonyms
 {
+    /// <summary>
+    /// The NounSynonyms class handles the mapping of many synonyms to a single verb. This means the parser can map and
+    /// reduce different nouns entered by the player to a series of single nouns that can be used for triggering different
+    /// events in a game.
+    /// </summary>
     public class NounSynonyms : INounSynonyms
     {
         readonly Dictionary<string, string> _synonymsMappings = new Dictionary<string, string>();
 
+        /// <summary>
+        /// Constructor that setus up the default noun encoding for different navigation directions.
+        /// </summary>
         public NounSynonyms()
         {
             _synonymsMappings.Add("n", "north");
@@ -57,11 +65,22 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _synonymsMappings.Add("backward", "south");
             _synonymsMappings.Add("forwards", "north");
             _synonymsMappings.Add("backwards", "south");
-
-            _synonymsMappings.Add("right", "east");
-            _synonymsMappings.Add("left", "west");
+            
+            _synonymsMappings.Add("f", "north");
+            _synonymsMappings.Add("b", "south");
+            _synonymsMappings.Add("right", "east");                        
+            _synonymsMappings.Add("left", "west");            
+            _synonymsMappings.Add("r", "east");
+            _synonymsMappings.Add("l", "west");
         }
 
+        /// <summary>
+        /// Add a new synonym mapping into the dictionary.
+        /// </summary>
+        /// <param name="synonym">The synonym to be mapped.</param>
+        /// <param name="noun">The noun that the synonym maps onto.</param>
+        /// <exception cref="ArgumentNullException">If either the synonym or noun inputs are null of empty, an
+        /// ArgumentNullException is thrown.</exception>
         public void Add(string synonym, string noun)
         {
             if (string.IsNullOrEmpty(synonym))
@@ -77,6 +96,13 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _synonymsMappings.Add(synonym, noun);
         }
 
+        /// <summary>
+        /// Return the base noun by providing one of it's synonyms. This is used by the parser to reduce potential
+        /// synonyms down to the base noun to add into a command
+        /// </summary>
+        /// <param name="synonym">The synonym to return a noun for.</param>
+        /// <returns>The mapped noun</returns>
+        /// <exception cref="ArgumentNullException">If the synonym is null or empty throw an ArgumentNullException.</exception>
         public string GetNounForSynonym(string synonym)
         {
             if (string.IsNullOrEmpty(synonym))
