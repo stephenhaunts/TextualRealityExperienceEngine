@@ -24,9 +24,6 @@ SOFTWARE.
 
 namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public interface IContentManagement
     {
         void AddContentItem(string identifier, string content);
