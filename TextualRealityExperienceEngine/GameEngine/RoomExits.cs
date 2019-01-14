@@ -40,8 +40,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             var doorway = new DoorWay
             {
                 Direction = direction,
-                Locked = false,
-                ObjectToUnlock = string.Empty
+                Locked = false,       
             };
 
             foreach (var entry in _roomMappings)

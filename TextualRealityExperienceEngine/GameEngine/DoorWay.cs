@@ -34,7 +34,6 @@ namespace TextualRealityExperienceEngine.GameEngine
         public DoorWay()
         {
             Locked = false;
-            ObjectToUnlock = string.Empty;
         }
         
         /// <summary>
@@ -48,7 +47,5 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// This flag specifies if the doorway is locked. True means it is locked and false means unlocked.
         /// </summary>
         public bool Locked { get; set; }
-       
-        public string ObjectToUnlock { get; set; }
     }
 }

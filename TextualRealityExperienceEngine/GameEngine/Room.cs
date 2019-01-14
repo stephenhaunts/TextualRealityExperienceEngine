@@ -102,7 +102,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 return;
             }
 
-            var door = new DoorWay {Locked = false, ObjectToUnlock = string.Empty};
+            var door = new DoorWay {Locked = false};
 
             switch (direction)
             {
@@ -151,7 +151,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 return;
             }
 
-            var door = new DoorWay {Locked = false, ObjectToUnlock = string.Empty};
+            var door = new DoorWay {Locked = false};
 
             switch (doorway.Direction)
             {

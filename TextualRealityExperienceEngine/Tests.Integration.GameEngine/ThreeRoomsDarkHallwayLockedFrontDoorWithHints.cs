@@ -230,8 +230,7 @@ namespace Tests.Integration.GameEngine
             var doorway = new DoorWay
             {
                 Direction = Direction.North,
-                Locked = true,
-                ObjectToUnlock = "key"
+                Locked = true,               
             };
 
             _outside.AddExit(doorway, _hallway);
