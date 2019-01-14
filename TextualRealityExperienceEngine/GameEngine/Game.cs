@@ -22,15 +22,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
-
+    /// <summary>
+    /// The main game object that hold together the game state, inventory, score and game rooms.
+    /// </summary>
     public class Game : IGame
     {
+        /// <summary>
+        /// The prologue contains the introductory text that is displayed to the game player before they take control of
+        /// the player. This text should give some short back story and some basic instruction to get the player started.
+        ///
+        /// This text shouldn't be too long so that it puts the player off, but a few paragraphs saying why they are there
+        /// and how to get help. Detailed back story should be revealed as part of the in game narrative as the player
+        /// progresses.
+        /// </summary>
         public string Prologue { get; set; }
         public string HelpText { get; set; }
 

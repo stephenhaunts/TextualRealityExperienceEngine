@@ -29,7 +29,7 @@ namespace TextualRealityExperienceEngine.GameEngine
     public sealed class DoorWay
     {
         /// <summary>
-        /// Constructor that sets a door ways initial state which is unlocked and not requiring an object to unlock it.
+        /// Constructor that sets a door ways initial state which is unlocked.
         /// </summary>
         public DoorWay()
         {
