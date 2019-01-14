@@ -41,10 +41,28 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// progresses.
         /// </summary>
         public string Prologue { get; set; }
+        
+        /// <summary>
+        /// The help text field is somewhere you can put some assistance text for the player. You don't want to make it too
+        /// long, but this is a good place to document some of the commands the player can use, and how to get hints.
+        /// </summary>
         public string HelpText { get; set; }
 
+        /// <summary>
+        /// StartRoom is a reference to the starting room for the game. If you want the player to start in the small dungeon, then
+        /// assign that room to this field.
+        /// </summary>
         public IRoom StartRoom { get; set; }
+        
+        /// <summary>
+        /// As the player navigates around the map, this property contains a reference to the current active room.
+        /// </summary>
         public IRoom CurrentRoom { get; set; }
+        
+        /// <summary>
+        /// The parser is the system that takes the players written input and reduces the synonyms down to command
+        /// instances that the game can interpret.
+        /// </summary>
         public IParser Parser { get; }
         public IGlobalState GlobalState { get; }
         public int NumberOfMoves { get; set; }
