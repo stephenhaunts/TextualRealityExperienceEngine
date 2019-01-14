@@ -26,9 +26,19 @@ using System.Text;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
+    /// <summary>
+    /// ConsoleEx offers the ability to write text to the console but with the added feature of word wrapping so that
+    /// words are not split across multiple lines but instead wrapped correctly.
+    ///
+    /// This code is based on code from https://www.codeproject.com/Articles/51488/Implementing-Word-Wrap-in-C
+    /// </summary>
     public static class ConsoleEx
     {
-        // Based on code from https://www.codeproject.com/Articles/51488/Implementing-Word-Wrap-in-C
+        /// <summary>
+        /// Print a paragraph of text to the console but with word wrapping enabled so that
+        /// words are not split across multiple lines but instead wrapped correctly.
+        /// </summary>
+        /// <param name="paragraph">Text to print to the console.</param>
         public static void WordWrap(string paragraph)
         {
             const string newline = "\r\n";

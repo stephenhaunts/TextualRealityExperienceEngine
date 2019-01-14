@@ -24,6 +24,9 @@ SOFTWARE.
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
+    /// <summary>
+    /// Enumeration representing the supported directions in the game engine.
+    /// </summary>
     public enum Direction
     {
         North = 0,

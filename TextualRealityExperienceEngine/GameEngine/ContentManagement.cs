@@ -28,10 +28,23 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
+    /// <summary>
+    /// The ContentManagement class offers a way to abstract all the game text away from the game and keeps it in one
+    /// place. 
+    /// </summary>
     public class ContentManagement : IContentManagement
     {
         private readonly Dictionary<string, string> _content = new Dictionary<string, string>();
         
+        /// <summary>
+        /// Add a content item to the content management system. The text that you add has to be provided with an
+        /// identifier which is used to call back the text with in the game.
+        /// </summary>
+        /// <param name="identifier">The identifier used to recall text from the content management system.
+        /// This identifier needs to be unique.</param>
+        /// <param name="content">The text to be stored in the content management system.</param>
+        /// <exception cref="ArgumentNullException">If either the identifier or the text is null or empty, then an
+        /// ArgumentNullException is thrown. </exception>
         public void AddContentItem(string identifier, string content)
         {
             if (string.IsNullOrEmpty(identifier))
@@ -47,6 +60,13 @@ namespace TextualRealityExperienceEngine.GameEngine
             _content.Add(identifier, content);
         }
 
+        /// <summary>
+        /// Retrieve a content item by specifying the unique identifier for the content.
+        /// </summary>
+        /// <param name="identifier">The identifier of the content to retrieve.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">If the identifier is null or empty, then throw an
+        /// ArgumentNullException.</exception>
         public string RetrieveContentItem(string identifier)
         {
             if (string.IsNullOrEmpty(identifier))
@@ -62,8 +82,18 @@ namespace TextualRealityExperienceEngine.GameEngine
             return string.Empty;            
         }
 
+        /// <summary>
+        /// Return the number of items in the content management system.
+        /// </summary>
         public int CountContentItems => _content.Count;
 
+        /// <summary>
+        /// Check if an identifier exists in the content management system.
+        /// </summary>
+        /// <param name="identifier">The identifier to search for.</param>
+        /// <returns>True if the identifier exists in the content management system; false otherwise.</returns>
+        /// <exception cref="ArgumentNullException">If the identifier is null or empty, then throw an
+        /// ArgumentNullException.</exception>
         public bool Exists(string identifier)
         {
             if (string.IsNullOrEmpty(identifier))

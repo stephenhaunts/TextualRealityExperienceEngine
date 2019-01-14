@@ -28,7 +28,7 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 namespace TextualRealityExperienceEngine.GameEngine.Synonyms
 {
     /// <summary>
-    /// Enumeration of supported prepositions
+    /// Enumeration of supported prepositions in the parser.
     /// </summary>
     public enum PropositionEnum
     {
@@ -48,10 +48,16 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
         From = 13
     }
 
+    /// <summary>
+    /// Mapping of strings to prepositions used by the parser.
+    /// </summary>
     public class PrepositionMapping : IPrepositionMapping
     {
         readonly Dictionary<string, PropositionEnum> _prepositionMappings = new Dictionary<string, PropositionEnum>();
 
+        /// <summary>
+        /// Constructor that loads in the initial supported prepositions.
+        /// </summary>
         public PrepositionMapping()
         {
             _prepositionMappings.Add("into", PropositionEnum.Into);
@@ -70,6 +76,13 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _prepositionMappings.Add("from", PropositionEnum.From);
         }
 
+        /// <summary>
+        /// Add a preposition mapping.
+        /// </summary>
+        /// <param name="inputProposition">String to map to a preposition.</param>
+        /// <param name="preposition">The preposition being mapped.</param>
+        /// <exception cref="ArgumentNullException">If the preposition being mapped is null or empty, then throw an
+        /// ArgumentNullException.</exception>
         public void Add(string inputProposition, PropositionEnum preposition)
         {
             if (string.IsNullOrEmpty(inputProposition))
@@ -80,6 +93,13 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _prepositionMappings.Add(inputProposition, preposition);
         }
 
+        /// <summary>
+        /// Get a preposition enum based on an input mapping string.
+        /// </summary>
+        /// <param name="preposition">The string to map.</param>
+        /// <returns>The enum entry for the mapped preposition.</returns>
+        /// <exception cref="ArgumentNullException">If the preposition being mapped is null or empty, then throw an
+        /// ArgumentNullException.</exception>
         public PropositionEnum GetPreposition(string preposition)
         {
             if (string.IsNullOrEmpty(preposition))

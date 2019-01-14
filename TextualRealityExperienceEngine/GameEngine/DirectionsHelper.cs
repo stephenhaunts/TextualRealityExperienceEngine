@@ -26,8 +26,16 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
+    /// <summary>
+    /// A helper class that returns a ICommand instance with a valid command for a specified direction.
+    /// </summary>
     public static class DirectionsHelper
     {
+        /// <summary>
+        /// Returns an ICommand instance with a valid command for a specified direction.
+        /// </summary>
+        /// <param name="command">A text representation of a direction to follow, such as north, south, east or west.</param>
+        /// <returns>An instance of an ICommand that is a valid game command for the engine to process.</returns>
         public static ICommand GetDirectionCommand(string command)
         {
             var toReturn = new Command();

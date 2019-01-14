@@ -59,5 +59,15 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
  
             Assert.AreNotEqual(token1, token2);
         }
+        
+        [TestMethod]
+        public void GenerateMetaphoneCodeForGetandFet()
+        {
+            IPhoneticMatch phonetic = new Metaphone();
+            var token1 = phonetic.CreateToken("get");
+            var token2 = phonetic.CreateToken("geht");
+ 
+            Assert.AreEqual(token1, token2);
+        }
     }
 }

@@ -24,6 +24,10 @@ SOFTWARE.
 
 namespace TextualRealityExperienceEngine.GameEngine.Synonyms
 {
+    /// <summary>
+    /// Supported base verbs used by the game engine. You can have many different synonyms mapped to the verbs, but the
+    /// verb synonyms will map to one of these codes from the parser.
+    /// </summary>
     public enum VerbCodes
     {
         NoCommand = 0,

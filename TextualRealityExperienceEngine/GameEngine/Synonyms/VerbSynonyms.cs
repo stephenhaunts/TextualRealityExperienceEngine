@@ -27,10 +27,17 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine.Synonyms
 {
+    /// <summary>
+    /// Mapping of verb synonyms to verb enum codes. This is where the parser will reduce the different input verb
+    /// synonyms to the verbs in the enumeration.
+    /// </summary>
     public class VerbSynonyms : IVerbSynonyms
     {
         readonly Dictionary<string, VerbCodes> _synonymMappings = new Dictionary<string, VerbCodes>();
 
+        /// <summary>
+        /// Constructor that maps the default set of synonyms supported by the game engine.
+        /// </summary>
         public VerbSynonyms()
         {
             _synonymMappings.Add("walk", VerbCodes.Go);
@@ -128,6 +135,13 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _synonymMappings.Add("sos", VerbCodes.Hint);
         }
 
+        /// <summary>
+        /// Add a new verb synonym mapping into the dictionary.
+        /// </summary>
+        /// <param name="synonym">The synonym to be mapped.</param>
+        /// <param name="verb">The verb that the synonym maps onto.</param>
+        /// <exception cref="ArgumentNullException">If either the synonym or verb inputs are null of empty, an
+        /// ArgumentNullException is thrown.</exception>
         public void Add(string synonym, VerbCodes verb)
         {
             if (string.IsNullOrEmpty(synonym))
@@ -138,6 +152,13 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _synonymMappings.Add(synonym, verb);
         }
 
+        /// <summary>
+        /// Return the base verb by providing one of it's synonyms. This is used by the parser to reduce potential
+        /// synonyms down to the base verb to add into a command
+        /// </summary>
+        /// <param name="synonym">The synonym to return a verb for.</param>
+        /// <returns>The mapped verb</returns>
+        /// <exception cref="ArgumentNullException">If the synonym is null or empty throw an ArgumentNullException.</exception>
         public VerbCodes GetVerbForSynonym(string synonym)
         {
             if (string.IsNullOrEmpty(synonym))

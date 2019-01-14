@@ -28,19 +28,37 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
+    /// <summary>
+    /// The CommandQueue object is used to store commands as they are returned from the parser. This means it stores a
+    /// history of commands that the user has typed in post parsing. This command queue then forms the basis of a save
+    /// and load game system.
+    ///
+    /// A load game mechanism works by replaying commands back into the game from the initial start game state.
+    /// </summary>
     public class CommandQueue : ICommandQueue
     {
         private readonly List<ICommand> _commandQueue = new List<ICommand>();
 
+        /// <summary>
+        /// Add a command into the queue.
+        /// </summary>
+        /// <param name="command">A command that has already been processed and returned by the game parser.</param>
         public void AddCommand(ICommand command)
         {
             _commandQueue.Add(command);
         }
 
+        /// <summary>
+        /// Returns the number of commands in the queue.
+        /// </summary>
         public int Count => _commandQueue.Count;
 
+        /// <summary>
+        /// Return a read only collection of commands that have been stored in the queue.
+        /// </summary>
         public ReadOnlyCollection<ICommand> Commands => new ReadOnlyCollection<ICommand>(_commandQueue);
         
+        // Clear all the commands in the queue.
         public void Clear()
         {
             _commandQueue.Clear();

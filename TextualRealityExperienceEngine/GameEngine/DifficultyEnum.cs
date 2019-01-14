@@ -23,6 +23,9 @@ SOFTWARE.
 */
 namespace TextualRealityExperienceEngine.GameEngine
 {
+    /// <summary>
+    /// Enumeration representing the game difficulty.
+    /// </summary>
     public enum DifficultyEnum
     {
         Easy = 0,

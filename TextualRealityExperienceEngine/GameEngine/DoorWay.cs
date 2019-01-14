@@ -23,16 +23,32 @@ SOFTWARE.
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
+    /// <summary>
+    /// DoorWay represents a physical door way between two rooms.
+    /// </summary>
     public sealed class DoorWay
     {
+        /// <summary>
+        /// Constructor that sets a door ways initial state which is unlocked and not requiring an object to unlock it.
+        /// </summary>
         public DoorWay()
         {
             Locked = false;
             ObjectToUnlock = string.Empty;
         }
-
-        public Direction Direction;
-        public bool Locked;
+        
+        /// <summary>
+        /// The Direction property sets the direction of the exit from the room that it is defined; i.e. if the doorway
+        /// is from room1 to room2 then the direction specifies the direction you need to go from room1 to room2, which
+        /// might be north for example.
+        /// </summary>
+        public Direction Direction { get; set; }
+        
+        /// <summary>
+        /// This flag specifies if the doorway is locked. True means it is locked and false means unlocked.
+        /// </summary>
+        public bool Locked { get; set; }
+       
         public string ObjectToUnlock { get; set; }
     }
 }

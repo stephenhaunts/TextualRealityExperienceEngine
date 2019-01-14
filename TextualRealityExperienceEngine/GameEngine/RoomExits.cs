@@ -37,7 +37,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 throw new ArgumentNullException(nameof(room));
             }
 
-            DoorWay doorway = new DoorWay
+            var doorway = new DoorWay
             {
                 Direction = direction,
                 Locked = false,
@@ -51,6 +51,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                     throw new InvalidOperationException("A room mapping already exists for the direction <" + doorway.Direction + ">.");
                 }
             }
+            
             _roomMappings.Add(doorway, room);
         }
 
@@ -86,7 +87,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         public bool IsDoorLocked(Direction direction)
         {
-            foreach (KeyValuePair<DoorWay, IRoom> entry in _roomMappings)
+            foreach (var entry in _roomMappings)
             {
                 if (entry.Key.Direction == direction)
                 {
@@ -99,7 +100,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         public DoorWay GetDoorWay(Direction direction)
         {
-            foreach (KeyValuePair<DoorWay, IRoom> entry in _roomMappings)
+            foreach (var entry in _roomMappings)
             {
                 if (entry.Key.Direction == direction)
                 {
@@ -112,7 +113,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         public void SetDoorLock(bool locked, Direction direction)
         {
-            foreach (KeyValuePair<DoorWay, IRoom> entry in _roomMappings)
+            foreach (var entry in _roomMappings)
             {
                 if (entry.Key.Direction == direction)
                 {
