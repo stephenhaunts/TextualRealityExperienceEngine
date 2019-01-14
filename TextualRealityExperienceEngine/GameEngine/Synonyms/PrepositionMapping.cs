@@ -27,6 +27,9 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine.Synonyms
 {
+    /// <summary>
+    /// Enumeration of supported prepositions
+    /// </summary>
     public enum PropositionEnum
     {
         NotRecognised = 0,
