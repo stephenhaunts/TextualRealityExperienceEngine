@@ -23,6 +23,7 @@ SOFTWARE.
 */
 using System;
 using System.Collections.ObjectModel;
+using System.Threading;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
@@ -62,12 +63,46 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// <summary>
         /// The parser is the system that takes the players written input and reduces the synonyms down to command
         /// instances that the game can interpret.
+        ///
+        /// The parser process tried to split the input down into the following forms.
+        /// verb - noun
+        /// verb - noun - preposition - noun
         /// </summary>
         public IParser Parser { get; }
+        
+        /// <summary>
+        /// The GlobalState property represents a key / value store that you can use to store data or game state that
+        /// needs to be access between rooms. This is a tidier approach than just using global or static variables.
+        ///
+        /// A good example for what you can use this for is storing classic RPG style player stats that can be access
+        /// and modified as the game progresses.
+        /// </summary>
         public IGlobalState GlobalState { get; }
+        
+        /// <summary>
+        /// The NumberOfMoves property counts the number of moves that the player does that effects the game. It is up
+        /// to the implementor how you increase this value, but it should be used as another part of the score for the player.
+        ///
+        /// For example, the player may want a high score, but the might want to complete the game in the least number of moves as possible.
+        /// </summary>
         public int NumberOfMoves { get; set; }
+        
+        /// <summary>
+        /// The score property represents the players overall game score. Increasing this property is the responsibility
+        /// of the game implementor. Based on the difficulty level that has been set, there is a multiplier added to the
+        /// score when it is incremented. The harder the difficulty, the higher the score will be increased.
+        ///
+        /// The multiplier is set as;
+        ///
+        /// Easy x 1
+        /// Medium x 2
+        /// Hard x 3
+        /// </summary>
         public int Score { get; private set; }
         
+        /// <summary>
+        /// 
+        /// </summary>
         public IContentManagement ContentManagement { get; }
         
         public bool HintSystemEnabled { get; set; }
