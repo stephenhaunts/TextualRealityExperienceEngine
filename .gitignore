@@ -60,3 +60,5 @@ TextualRealityExperienceEngine/GameEngine/bin/Debug/
 TextualRealityExperienceEngine/Tests\.Integration\.GameEngine/bin/Debug/netcoreapp2\.2/
 
 TextualRealityExperienceEngine/Tests\.Unit\.GameEngine/bin/Debug/netcoreapp2\.2/
+
+TextualRealityExperienceEngine/Tests\.SimpleGame/bin/Debug/netcoreapp2\.2/
