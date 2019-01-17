@@ -101,19 +101,49 @@ namespace TextualRealityExperienceEngine.GameEngine
         public int Score { get; private set; }
         
         /// <summary>
-        /// 
+        /// The main game object has an instance of the content management service available to allow you to decouple your
+        /// game logic from the text content you display. This makes it easier to manage game text in one place.
+        ///
+        /// The content management systems works as a key value pair store for you to store text.
         /// </summary>
         public IContentManagement ContentManagement { get; }
         
+        /// <summary>
+        /// If you want your player to be able to request hints for the game, then set this flag to True.
+        /// </summary>
         public bool HintSystemEnabled { get; set; }
 
+        /// <summary>
+        /// Ths Inventory object is used to store the objects that the player has collected as they navigate around
+        /// different rooms. When implementing game logic that require the player to possess an object, you need to
+        /// check that the object exists in this Inventory instance.
+        /// </summary>
         public IInventory Inventory { get; set; }
+        
+        /// <summary>
+        /// It is possible to set a game clock so you can use the date and time as part of a game-play mechanic. This
+        /// means if you collected an object for the inventory on Tuesday (in game time) and used a time machine to go back
+        /// to last Saturday, then that object would not be in your inventory if you want it to observe game time.
+        /// </summary>
         public DateTime GameClock { get; set; }
         
+        /// <summary>
+        /// The Difficulty flag let you set whether the game is Easy, Medium or Hard. You can query this flag in game
+        /// to change game-play based on difficulty. This difficulty flag is also used to change the score multipliers
+        /// like the following:
+        ///
+        /// Easy x 1
+        /// Medium x 2
+        /// Hard x 3
+        /// 
+        /// </summary>
         public DifficultyEnum Difficulty { get; set; }
-
+        
         private readonly ICommandQueue _commandQueue = new CommandQueue();
 
+        /// <summary>
+        /// Constructor : Set up the correct default initial game state.
+        /// </summary>
         public Game()
         {
             Prologue = string.Empty;
@@ -127,6 +157,13 @@ namespace TextualRealityExperienceEngine.GameEngine
             ContentManagement = new ContentManagement();
         }
 
+        /// <summary>
+        /// Constructor : Set up the correct default initial game state.
+        /// </summary>
+        /// <param name="prologue">You can inject the game prologue text into this constructor.</param>
+        /// <param name="room">Set the initial starting room.</param>
+        /// <exception cref="ArgumentNullException">If the prologue or initial room is null then throw the 
+        /// ArgumentNullException.</exception>
         public Game(string prologue, IRoom room)
         {
             if (string.IsNullOrEmpty(prologue))
@@ -146,6 +183,13 @@ namespace TextualRealityExperienceEngine.GameEngine
             ContentManagement = new ContentManagement();
         }
         
+        /// <summary>
+        /// You have several options when it comes to offering hints to the player. You could maintain your own counter
+        /// and allow the player 5 hints, for example, or you could deduct from their score and use the score as a hint
+        /// currency. If you choose to do that, then this method will return the cost to deduct off of the score based
+        /// on the selected difficulty level.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">ArgumentOutOfRangeException which should never get thrown.</exception>
         public int HintCost
         {
             get
@@ -164,6 +208,13 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
         }
 
+        /// <summary>
+        /// The ProcessCommand method is the primary way in which the player interacts with the game. When they type a command
+        /// into the game, it is fed into this method which executes the parser to interpret what has been types which
+        /// then results in a GameReply object that contains the broken down command ready for the game logic to use.
+        /// </summary>
+        /// <param name="command">The typed in command from the player.</param>
+        /// <returns>The GameReply object that contains the interpreted command ready for the game to use.</returns>
         public GameReply ProcessCommand(string command)
         {
             var reply = new GameReply();
@@ -201,6 +252,13 @@ namespace TextualRealityExperienceEngine.GameEngine
             return reply;
         }
 
+        /// <summary>
+        /// Increase the players score. The score entered into this method is then multiplied by the modifier which is
+        /// dependent on the game difficulty. For example, if the score passed in is 1, and the difficulty is set to Hard,
+        /// then the score is multiplied by 3.
+        /// </summary>
+        /// <param name="increaseBy">The non-multiplied score to increment by.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void IncreaseScore(int increaseBy)
         {
             int scoreMultiplier;
@@ -223,6 +281,10 @@ namespace TextualRealityExperienceEngine.GameEngine
             Score = Score + increaseBy * scoreMultiplier;
         }
 
+        /// <summary>
+        /// Decrease the players score by a set amount.
+        /// </summary>
+        /// <param name="decreaseBy">The amount to decrease the score by.</param>
         public void DecreaseScore(int decreaseBy)
         {
             Score = Score - decreaseBy;
@@ -293,11 +355,21 @@ namespace TextualRealityExperienceEngine.GameEngine
             return reply;
         }
 
+        /// <summary>
+        /// This method assists in saving the game state by returning a read only collection of game commands.
+        ///
+        /// It is then the implementors responsibility to save the data to a file or database.
+        /// </summary>
+        /// <returns>ReadOnlyCollection of game commands.</returns>
         public ReadOnlyCollection<ICommand> SaveGame()
         {
             return _commandQueue.Commands; 
         }
 
+        /// <summary>
+        /// Load in a list of game commands to restore the game to a known state.
+        /// </summary>
+        /// <param name="commands">ReadOnlyCollection of game commands.</param>
         public void LoadGame(ReadOnlyCollection<ICommand> commands)
         {
             _commandQueue.Clear();

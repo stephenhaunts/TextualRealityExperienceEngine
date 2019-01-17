@@ -27,6 +27,9 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
+    /// <summary>
+    /// Represents a game object that can be picked up and used by the player. An example could be a key, or weapon.
+    /// </summary>
     public class GameObject : IObject
     {
         public string Name { get; set; }
