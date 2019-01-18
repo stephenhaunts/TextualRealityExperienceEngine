@@ -24,9 +24,28 @@ SOFTWARE.
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
+    /// <summary>
+    /// When the parser is executed a textual reply is sent back to the caller to be displayed on the screen. This could
+    /// be the description of the room or any string that represents the current game state to be displayed to the player.
+    /// </summary>
     public class GameReply
     {
+        /// <summary>
+        /// The State of the game.
+        ///
+        /// Playing
+        /// Inventory
+        /// Exit
+        /// Help
+        /// Score
+        /// Clearscreen
+        ///
+        /// </summary>
         public ParserStateEnum State { get; set; }
+        
+        /// <summary>
+        /// The text reply that is sent back to the calling application.
+        /// </summary>
         public string Reply { get; set; }
     }
 }

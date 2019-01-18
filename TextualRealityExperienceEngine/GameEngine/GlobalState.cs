@@ -28,10 +28,25 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
+    /// <summary>
+    /// The GlobalState object is a key/value pair store that you can save data too that needs to be shared across rooms.
+    ///
+    /// This is a neater solution than using C# global variables. Examples for this object could be storing player stats
+    /// like health, luck etc.
+    ///
+    /// Data stored in the GlobalState is passed in as the .NET object base object. This means as the game implementor
+    /// you need to be aware of the types you are passing so you can cast them back to their original types on retrieval.
+    /// </summary>
     public class GlobalState : IGlobalState 
     {
         private readonly Dictionary<string, object> _globalState = new Dictionary<string, object>();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="state"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public void Add(string name, object state)
         {
             if (string.IsNullOrEmpty(name))

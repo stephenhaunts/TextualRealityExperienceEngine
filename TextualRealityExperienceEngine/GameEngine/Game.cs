@@ -23,7 +23,7 @@ SOFTWARE.
 */
 using System;
 using System.Collections.ObjectModel;
-using System.Threading;
+
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine

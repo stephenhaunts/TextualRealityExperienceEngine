@@ -126,7 +126,6 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _synonymMappings.Add("see", VerbCodes.Look);
             _synonymMappings.Add("glance", VerbCodes.Look);
             _synonymMappings.Add("lift", VerbCodes.Look);
-
             
             _synonymMappings.Add("hint", VerbCodes.Hint);
             _synonymMappings.Add("hints", VerbCodes.Hint);

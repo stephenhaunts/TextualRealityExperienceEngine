@@ -32,11 +32,33 @@ namespace TextualRealityExperienceEngine.GameEngine
     /// </summary>
     public class GameObject : IObject
     {
+        /// <summary>
+        /// This is the name of the object. This name could be displayed by the game.
+        /// </summary>
         public string Name { get; set; }
+        
+        /// <summary>
+        /// This is the description of the object that can be displayed in game.
+        /// </summary>
         public string Description { get; set; }
+        
+        /// <summary>
+        /// This is a message that cen be displayed when an object is collected, something like "You put the key in your 
+        /// pocket".
+        /// </summary>
         public string PickUpMessage { get; set; }
+        
+        /// <summary>
+        /// You can set a DateTime of when this object is picked up.
+        /// </summary>
         public DateTime PickedUpDateTime { get; set; }
 
+        /// <summary>
+        /// Constructor that sets an objects initial state.
+        /// </summary>
+        /// <param name="name">The name of the object.</param>
+        /// <param name="description">A description of the object.</param>
+        /// <param name="pickUpMessage">The message that is displayed when an object is picked up.</param>
         public GameObject(string name, string description, string pickUpMessage)
         {
             Name = name;
