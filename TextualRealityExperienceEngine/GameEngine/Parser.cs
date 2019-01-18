@@ -28,18 +28,43 @@ using TextualRealityExperienceEngine.GameEngine.Synonyms;
 namespace TextualRealityExperienceEngine.GameEngine
 {
     /// <summary>
-    /// 
+    /// The parser is the system that takes the players written input and reduces the synonyms down to command
+    /// instances that the game can interpret.
+    ///
+    /// The parser process tries to split the input down into the following forms.
+    /// verb - noun
+    /// verb - noun - preposition - noun
     /// </summary>
     public class Parser : IParser
     {
+        /// <summary>
+        /// Retrieve the verb synonyms being used by the parser.
+        /// </summary>
         public IVerbSynonyms Verbs { get; }
+        
+        /// <summary>
+        /// Retrieve the noun synonyms being used by the parser.
+        /// </summary>
         public INounSynonyms Nouns { get; }
+        
+        /// <summary>
+        /// If this flag is set to True, then the users input passed into the parser will also be scanned for profanity.
+        /// It is not the intention of this engine to perform any censorship, but it can be useful to know if the player
+        /// ius a potty mouthed little so and so. You can even use this fact as part of the narrative.
+        /// </summary>
         public bool EnableProfanityFilter { get; set; }
+        
+        /// <summary>
+        /// Retrieve the prepositions being used by the parser.
+        /// </summary>
         public IPrepositionMapping Prepositions { get; }
         private ParserStatesEnum _parserStates = ParserStatesEnum.Verb;
         private ICommand _command;
         private readonly IProfanityFilter _profanityFilter = new ProfanityFilter();
 
+        /// <summary>
+        /// Default constructor that sets the default initial state of the parser.
+        /// </summary>
         public Parser()
         {
             Verbs = new VerbSynonyms();
@@ -48,6 +73,13 @@ namespace TextualRealityExperienceEngine.GameEngine
             EnableProfanityFilter = true;
         }
 
+        /// <summary>
+        /// Constructor that allows you to custom set the verb, noun and preposition synonyms used by the parser. This
+        /// constructor is mostly used by the unit tests.
+        /// </summary>
+        /// <param name="verbSynonyms">Verb synonyms to be used by the parser.</param>
+        /// <param name="nounSynonyms">Noun synonyms to be used by the parser.</param>
+        /// <param name="prepositionMapping">Prepositions being used by the parser.</param>
         public Parser(IVerbSynonyms verbSynonyms, INounSynonyms nounSynonyms, IPrepositionMapping prepositionMapping)
         {
             Verbs = verbSynonyms;
@@ -56,6 +88,24 @@ namespace TextualRealityExperienceEngine.GameEngine
             EnableProfanityFilter = true;
         }
 
+        /// <summary>
+        /// This is the method that will take a users input and parse it into a game command.
+        ///
+        /// The parser process tries to split the input down into the following forms.
+        /// verb - noun
+        /// verb - noun - preposition - noun
+        ///
+        /// The command that is returned by this method will reduce any verb and noun synonyms down into a basic set of
+        /// default verb and nouns that the game logic can easily react too. This means if the player types any of the following, then
+        /// would be mapped to the same command.
+        ///
+        /// Get Key
+        /// Grab Key
+        /// Pickup key
+        /// 
+        /// </summary>
+        /// <param name="command">A string representing the command types in by the user.</param>
+        /// <returns>An instance of a command that is passed back to the controlling room for processing.</returns>
         public ICommand ParseCommand(string command)
         {
             if (string.IsNullOrEmpty(command))
