@@ -29,10 +29,20 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
+    /// <summary>
+    /// The Inventory object is where the player will store objects they collect from rooms in the game.
+    /// </summary>
     public class Inventory : IInventory 
     {
         private readonly Dictionary<string, IObject> _inventory = new Dictionary<string, IObject>();
 
+        /// <summary>
+        /// Add a game object to the inventory.
+        /// </summary>
+        /// <param name="name">The name of the object.</param>
+        /// <param name="gameObject">The game object that the player has collected.</param>
+        /// <exception cref="ArgumentNullException">If the name or game object are null or empty then throw an 
+        /// ArgumentNullException.</exception>
         public void Add(string name, IObject gameObject)
         {
             if (string.IsNullOrEmpty(name))
@@ -53,11 +63,21 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
         }
 
+        /// <summary>
+        /// Clear all object from the inventory.
+        /// </summary>
         public void Clear()
         {
             _inventory.Clear();
         }
 
+        /// <summary>
+        /// Check if an object exists in the inventory.
+        /// </summary>
+        /// <param name="name">The name of the object to check for.</param>
+        /// <returns>True if the object exists, and False otherwise.</returns>
+        /// <exception cref="ArgumentNullException">If the name of the object is null or empty then throw an 
+        /// ArgumentNullException.</exception>
         public bool Exists(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -68,6 +88,13 @@ namespace TextualRealityExperienceEngine.GameEngine
             return _inventory.ContainsKey(name.ToLower());
         }
 
+        /// <summary>
+        /// Remove an object from the inventory.
+        /// </summary>
+        /// <param name="name">The name of the object to remove from the inventory.</param>
+        /// <returns>True of the object is removed successfully, False otherwise.</returns>
+        /// <exception cref="ArgumentNullException">If the name of the object is null or empty then throw an 
+        /// ArgumentNullException.</exception>
         public bool RemoveObject(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -86,6 +113,12 @@ namespace TextualRealityExperienceEngine.GameEngine
             return false;
         }
 
+        /// <summary>
+        /// Retrieve an object from the Inventory.
+        /// </summary>
+        /// <param name="name">The name of the object to retrieve.</param>
+        /// <returns>A reference to the retrieved object. If the object doesn't exist return null.</returns>
+        /// <exception cref="ArgumentNullException">If the name is null or empty, then throw an ArgumentNullException.</exception>
         public IObject Get(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -103,11 +136,20 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
         }
 
+        /// <summary>
+        /// Return the number of objects in the Inventory.
+        /// </summary>
+        /// <returns>The number of objects in the Inventory.</returns>
         public int Count()
         {
             return _inventory.Count;
         }
 
+        /// <summary>
+        /// Return a read only collection of the object names and descriptions from the Inventory. This is to display
+        /// the inventory details oi game.
+        /// </summary>
+        /// <returns>A read only collection of objects from the inventory.</returns>
         public ReadOnlyCollection<string> GetInventory()
         {
             var inventory = new List<string>();

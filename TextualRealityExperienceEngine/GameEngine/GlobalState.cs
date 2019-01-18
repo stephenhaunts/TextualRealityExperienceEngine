@@ -42,11 +42,12 @@ namespace TextualRealityExperienceEngine.GameEngine
         private readonly Dictionary<string, object> _globalState = new Dictionary<string, object>();
 
         /// <summary>
-        /// 
+        /// Add an entry to the GlobalState store.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="state"></param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <param name="name">Name of the property you want to store.</param>
+        /// <param name="state">The actual object to store in the GlobalState.</param>
+        /// <exception cref="ArgumentNullException">If either the name or the object to store are null, then throw
+        ///  an ArgumentNullException.</exception>
         public void Add(string name, object state)
         {
             if (string.IsNullOrEmpty(name))
@@ -65,11 +66,21 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
         }
 
+        /// <summary>
+        /// Clear all entries from the GlobalState.
+        /// </summary>
         public void Clear()
         {
             _globalState.Clear();
         }
 
+        /// <summary>
+        /// Check if an entry exists in the GlobalState.
+        /// </summary>
+        /// <param name="name">The name of the object to check for.</param>
+        /// <returns>True if the object exists, False otherwise.</returns>
+        /// <exception cref="ArgumentNullException">If the name to check is either null or empty then throw an 
+        /// ArgumentNullException.</exception>
         public bool Exists(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -80,6 +91,12 @@ namespace TextualRealityExperienceEngine.GameEngine
             return _globalState.ContainsKey(name);
         }
 
+        /// <summary>
+        /// Retrieve an object from the global store.
+        /// </summary>
+        /// <param name="name">The name of the object to retrieve.</param>
+        /// <returns>The desired object from the store.</returns>
+        /// <exception cref="ArgumentNullException">If the object name is null or empty then throw an ArgumentNullException.</exception>
         public object Get(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -97,6 +114,10 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
         }
 
+        /// <summary>
+        /// Return the number of objects in the GlobalStore.
+        /// </summary>
+        /// <returns>The number of objects in the GlobalStore.</returns>
         public int Count()
         {
             return _globalState.Count;

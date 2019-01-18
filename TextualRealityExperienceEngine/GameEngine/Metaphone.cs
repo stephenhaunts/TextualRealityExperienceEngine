@@ -28,6 +28,10 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
+    /// <summary>
+    /// The metaphone class is used to generate a phonetic token for an input string. This will be used to try and detect
+    /// spelling mistakes.
+    /// </summary>
     public class Metaphone : IPhoneticMatch
     {
         private static readonly Regex NonLetters = new Regex("[^A-Z]", RegexOptions.Compiled);
@@ -35,6 +39,11 @@ namespace TextualRealityExperienceEngine.GameEngine
         private static readonly Regex Frontv = new Regex("[EIY]", RegexOptions.Compiled);
         private static readonly Regex Varson = new Regex("[CSPTG]", RegexOptions.Compiled);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
         public string CreateToken(string word)
         {
             var strippedNonLetters = new StringBuilder(NonLetters.Replace(word.ToUpper(), ""));
