@@ -127,7 +127,7 @@ namespace Tests.SimpleGame
 
                 switch (reply.State)
                 {
-                    case ParserStateEnum.Playing:
+                    case GameStateEnum.Playing:
                         if (!string.IsNullOrEmpty(reply.Reply))
                         {
                             Console.WriteLine();                            
@@ -135,11 +135,11 @@ namespace Tests.SimpleGame
                         }
                         continue;
 
-                    case ParserStateEnum.Clearscreen:
+                    case GameStateEnum.Clearscreen:
                         Console.Clear();
                         continue;
 
-                    case ParserStateEnum.Exit:
+                    case GameStateEnum.Exit:
                         Console.WriteLine();
                         Console.Write(_game.ContentManagement.RetrieveContentItem("AreYouSure"));
                         var response = Console.ReadLine();
@@ -153,14 +153,14 @@ namespace Tests.SimpleGame
                         }
                         continue;
 
-                    case ParserStateEnum.Score:
+                    case GameStateEnum.Score:
                         Console.WriteLine();
                         Console.WriteLine("You have made " + _game.NumberOfMoves + " so far.");
                         Console.WriteLine("You score is " + _game.Score);
                         Console.WriteLine();
                         continue;
 
-                    case ParserStateEnum.Inventory:
+                    case GameStateEnum.Inventory:
                         if (_game.Inventory.Count() == 0)
                         {
                             Console.WriteLine();
@@ -181,7 +181,7 @@ namespace Tests.SimpleGame
                             Console.WriteLine();
                         }
                         continue;
-                    case ParserStateEnum.Help:
+                    case GameStateEnum.Help:
                         Console.WriteLine();
                         Console.WriteLine("Game Manual");
                         Console.WriteLine("-----------");

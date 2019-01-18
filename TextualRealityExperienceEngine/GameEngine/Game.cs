@@ -232,7 +232,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 return reply;
             }
 
-            reply.State = ParserStateEnum.Playing;
+            reply.State = GameStateEnum.Playing;
             reply.Reply = string.Empty;
             
             return reply;
@@ -246,7 +246,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             var parsedCommand = Parser.ParseCommand(command);
             _commandQueue.AddCommand(parsedCommand);
 
-            reply.State = ParserStateEnum.Playing;
+            reply.State = GameStateEnum.Playing;
             reply.Reply = CurrentRoom.ProcessCommand(parsedCommand);
 
             return reply;
@@ -304,7 +304,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 case "clear screen":
     
                 {
-                    reply.State = ParserStateEnum.Clearscreen;
+                    reply.State = GameStateEnum.Clearscreen;
                     reply.Reply = lowerCase;
                     return reply;
                 }
@@ -314,7 +314,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 case "kill yourself":
                 case "kill your self":
                 {
-                    reply.State = ParserStateEnum.Exit;
+                    reply.State = GameStateEnum.Exit;
                     reply.Reply = lowerCase;
                     return reply;
                 }
@@ -324,14 +324,14 @@ namespace TextualRealityExperienceEngine.GameEngine
                 case "see score":
                 case "what is my score":
                 {
-                    reply.State = ParserStateEnum.Score;
+                    reply.State = GameStateEnum.Score;
                     reply.Reply = lowerCase;
                     return reply;
                 }
                 case "inventory":
                 case "view inventory":
                 {
-                    reply.State = ParserStateEnum.Inventory;
+                    reply.State = GameStateEnum.Inventory;
                     reply.Reply = lowerCase;
                     return reply;
                 }
@@ -343,13 +343,13 @@ namespace TextualRealityExperienceEngine.GameEngine
                 case "manual":
                 case "man":
                 {
-                    reply.State = ParserStateEnum.Help;
+                    reply.State = GameStateEnum.Help;
                     reply.Reply = lowerCase;
                     return reply;
                 }
             }
 
-            reply.State = ParserStateEnum.Playing;
+            reply.State = GameStateEnum.Playing;
             reply.Reply = "";
 
             return reply;

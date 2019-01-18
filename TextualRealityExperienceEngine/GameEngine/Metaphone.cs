@@ -40,10 +40,11 @@ namespace TextualRealityExperienceEngine.GameEngine
         private static readonly Regex Varson = new Regex("[CSPTG]", RegexOptions.Compiled);
 
         /// <summary>
-        /// 
+        /// This method will create a phonetic token based on an input string. You can compare the tokens for different words.
+        /// If they match then the words sound phonetically the same even if they are spelt differently.
         /// </summary>
-        /// <param name="word"></param>
-        /// <returns></returns>
+        /// <param name="word">A word to create a phonetic token for.</param>
+        /// <returns>The phonetic token for the given input word.</returns>
         public string CreateToken(string word)
         {
             var strippedNonLetters = new StringBuilder(NonLetters.Replace(word.ToUpper(), ""));
@@ -164,15 +165,13 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
         }
 
-        private static void ProcessIfCharacterIsY(char c, int i, int length, StringBuilder strippedNonLetters,
-            StringBuilder metaphoneKey)
+        private static void ProcessIfCharacterIsY(char c, int i, int length, StringBuilder strippedNonLetters, StringBuilder metaphoneKey)
         {
             if (i + 1 < length && Vowels.IsMatch(strippedNonLetters[i + 1].ToString(CultureInfo.InvariantCulture)))
                 metaphoneKey.Append(c);
         }
 
-        private static void ProcessIfCharacterIsT(int i, int length, StringBuilder strippedNonLetters,
-            StringBuilder metaphoneKey)
+        private static void ProcessIfCharacterIsT(int i, int length, StringBuilder strippedNonLetters, StringBuilder metaphoneKey)
         {
             if (i > 0 && i + 2 < length && strippedNonLetters[i + 1] == 'I' && strippedNonLetters[i + 2] == 'O' &&
                 strippedNonLetters[i + 2] == 'A')
@@ -192,8 +191,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
         }
 
-        private static void ProcessIfCharacterIsS(int i, int length, StringBuilder strippedNonLetters,
-            StringBuilder metaphoneKey)
+        private static void ProcessIfCharacterIsS(int i, int length, StringBuilder strippedNonLetters, StringBuilder metaphoneKey)
         {
             if (i > 0 && i + 2 < length && strippedNonLetters[i + 1] == 'I' &&
                 (strippedNonLetters[i + 2] == 'O' || strippedNonLetters[i + 2] == 'A'))
@@ -204,8 +202,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 metaphoneKey.Append("S");
         }
 
-        private static void ProcessIfCharacterIsPH(int i, int length, StringBuilder strippedNonLetters,
-            StringBuilder metaphoneKey)
+        private static void ProcessIfCharacterIsPH(int i, int length, StringBuilder strippedNonLetters, StringBuilder metaphoneKey)
         {
             if (i + 1 < length && strippedNonLetters[i + 1] == 'H')
                 metaphoneKey.Append("F");
@@ -216,87 +213,119 @@ namespace TextualRealityExperienceEngine.GameEngine
         private static void ProcessIfCharacterIsK(int i, StringBuilder strippedNonLetters, StringBuilder metaphoneKey)
         {
             if (i > 0 && strippedNonLetters[i - 1] != 'C')
+            {
                 metaphoneKey.Append("K");
-            else if (i == 0) metaphoneKey.Append("K");
+            }
+            else if (i == 0)
+            {
+                metaphoneKey.Append("K");
+            }
         }
 
-        private static void ProcessIfCharacterIsH(int i, int length, StringBuilder strippedNonLetters,
-            StringBuilder metaphoneKey)
+        private static void ProcessIfCharacterIsH(int i, int length, StringBuilder strippedNonLetters, StringBuilder metaphoneKey)
         {
-            if (i + 1 == length ||
-                i > 0 && Varson.IsMatch(strippedNonLetters[i - 1].ToString(CultureInfo.InvariantCulture))) return;
+            if (i + 1 == length || i > 0 && Varson.IsMatch(strippedNonLetters[i - 1].ToString(CultureInfo.InvariantCulture))) return;
+
             if (Vowels.IsMatch(strippedNonLetters[i + 1].ToString(CultureInfo.InvariantCulture)))
+            {
                 metaphoneKey.Append("H");
+            }
         }
 
-        private static void ProcessIfCharacterIsG(int i, int length, StringBuilder strippedNonLetters,
-            StringBuilder metaphoneKey)
+        private static void ProcessIfCharacterIsG(int i, int length, StringBuilder strippedNonLetters, StringBuilder metaphoneKey)
         {
             if (i + 2 < length && strippedNonLetters[i + 1] == 'H' &&
                 !Vowels.IsMatch(strippedNonLetters[i + 2].ToString(CultureInfo.InvariantCulture)))
+            {
                 return;
+            }
+
             if (i + 1 < length && strippedNonLetters[i + 1] == 'N' ||
                 i + 3 < length && strippedNonLetters[i + 1] == 'N' && strippedNonLetters[i + 2] == 'E' &&
                 strippedNonLetters[i + 3] == 'D')
+            {
                 return;
+            }
+
             if (i > 0 && i + 1 < length && strippedNonLetters[i - 1] == 'D' &&
-                Frontv.IsMatch(strippedNonLetters[i + 1].ToString(CultureInfo.InvariantCulture))) return;
-            if (i > 0 && strippedNonLetters[i - 1] == 'G') return;
+                Frontv.IsMatch(strippedNonLetters[i + 1].ToString(CultureInfo.InvariantCulture)))
+            {
+                return;
+            }
+
+            if (i > 0 && strippedNonLetters[i - 1] == 'G')
+            {
+                return;
+            }
 
             if (i + 1 < length && Frontv.IsMatch(strippedNonLetters[i + 1].ToString()))
+            {
                 metaphoneKey.Append("J");
-
+            }
             else
+            {
                 metaphoneKey.Append("K");
+            }
         }
 
-        private static void ProcessIfCharacterIsD(int i, int length, StringBuilder strippedNonLetters,
-            StringBuilder MetaphoneKey)
+        private static void ProcessIfCharacterIsD(int i, int length, StringBuilder strippedNonLetters, StringBuilder metaphoneKey)
         {
             if (i + 2 < length && strippedNonLetters[i + 1] == 'G' &&
                 Frontv.IsMatch(strippedNonLetters[i + 2].ToString(CultureInfo.InvariantCulture)))
-                MetaphoneKey.Append("J");
+            {
+                metaphoneKey.Append("J");
+            }
             else
-                MetaphoneKey.Append("T");
+            {
+                metaphoneKey.Append("T");
+            }
         }
 
-        private static void ProcessIfCharacterIsC(int i, StringBuilder strippedNonLetters, int length,
-            StringBuilder MetaphoneKey)
+        private static void ProcessIfCharacterIsC(int i, StringBuilder strippedNonLetters, int length, StringBuilder metaphoneKey)
         {
-            if (i > 0 && strippedNonLetters[i - 1] == 'S' && i + 1 < length &&
-                Frontv.IsMatch(strippedNonLetters[i + 1].ToString(CultureInfo.InvariantCulture))) return;
+            if (i > 0 && strippedNonLetters[i - 1] == 'S' && i + 1 < length && Frontv.IsMatch(strippedNonLetters[i + 1].ToString(CultureInfo.InvariantCulture)))
+            {
+                return;
+            }
+            
             if (i + 2 < length && strippedNonLetters.ToString().Substring(i, 3) == "CIA")
             {
-                MetaphoneKey.Append("X");
+                metaphoneKey.Append("X");
             }
 
             else if (i + 1 < length && Frontv.IsMatch(strippedNonLetters[i + 1].ToString(CultureInfo.InvariantCulture)))
             {
-                MetaphoneKey.Append("S");
+                metaphoneKey.Append("S");
             }
             else if (i > 0 && i + 1 < length && strippedNonLetters[i - 1] == 'S' && strippedNonLetters[i + 1] == 'H')
             {
-                MetaphoneKey.Append("K");
+                metaphoneKey.Append("K");
             }
 
             else if (i + 1 < length && strippedNonLetters[i + 1] == 'H')
             {
-                if (i == 0 && i + 2 < length &&
-                    !Vowels.IsMatch(strippedNonLetters[i + 2].ToString(CultureInfo.InvariantCulture)))
-                    MetaphoneKey.Append("K");
+                if (i == 0 && i + 2 < length && !Vowels.IsMatch(strippedNonLetters[i + 2].ToString(CultureInfo.InvariantCulture)))
+                {
+                    metaphoneKey.Append("K");
+                }
                 else
-                    MetaphoneKey.Append("X");
+                {
+                    metaphoneKey.Append("X");
+                }
             }
             else
             {
-                MetaphoneKey.Append("K");
+                metaphoneKey.Append("K");
             }
         }
 
-        private static void ProcessIfCharacterIsB(int i, int length, StringBuilder strippedNonLetters,
-            StringBuilder metaphoneKey, char c)
+        private static void ProcessIfCharacterIsB(int i, int length, StringBuilder strippedNonLetters, StringBuilder metaphoneKey, char c)
         {
-            if (i == length - 1 && strippedNonLetters[length - 2] == 'M') return;
+            if (i == length - 1 && strippedNonLetters[length - 2] == 'M')
+            {
+                return;
+            }
+            
             metaphoneKey.Append(c);
         }
     }

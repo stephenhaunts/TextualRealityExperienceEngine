@@ -27,14 +27,9 @@ using TextualRealityExperienceEngine.GameEngine.Synonyms;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
-    public enum ParserStatesEnum
-    {
-        Verb = 0,
-        Noun = 2,
-        Preposition = 3,
-        Noun2 = 4
-    }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class Parser : IParser
     {
         public IVerbSynonyms Verbs { get; }

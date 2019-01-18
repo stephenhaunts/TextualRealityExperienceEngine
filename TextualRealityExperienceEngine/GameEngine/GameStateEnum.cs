@@ -24,7 +24,10 @@ SOFTWARE.
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
-    public enum ParserStateEnum
+    /// <summary>
+    /// Represents the state the game is in.
+    /// </summary>
+    public enum GameStateEnum
     {
         Playing = 0,
         Inventory,

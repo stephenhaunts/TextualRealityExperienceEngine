@@ -41,7 +41,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// Clearscreen
         ///
         /// </summary>
-        public ParserStateEnum State { get; set; }
+        public GameStateEnum State { get; set; }
         
         /// <summary>
         /// The text reply that is sent back to the calling application.
