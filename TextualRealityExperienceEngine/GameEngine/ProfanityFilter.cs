@@ -1674,11 +1674,21 @@ namespace TextualRealityExperienceEngine.GameEngine
              "zubb",
         };
 
+        /// <summary>
+        /// Check whether a specific word is in the profanity list.
+        /// </summary>
+        /// <param name="word">The word to check in the profanity list.</param>
+        /// <returns>True ic the word is considered a profanity, False otherwise.</returns>
         public bool IsProfanity(string word)
         {
             return !string.IsNullOrEmpty(word) && _wordList.Contains(word.ToLower());
         }
 
+        /// <summary>
+        /// For a given sentence, report the first profanity detected in the sentence.
+        /// </summary>
+        /// <param name="sentence">The sentence to check for profanities.</param>
+        /// <returns>The profanity that has been detected.</returns>
         public string StringContainsFirstProfanity(string sentence)
         {
             if (string.IsNullOrEmpty(sentence))
@@ -1713,6 +1723,11 @@ namespace TextualRealityExperienceEngine.GameEngine
             return string.Empty;
         }
 
+        /// <summary>
+        /// For a given sentence, return a list of all the detected profanities.
+        /// </summary>
+        /// <param name="sentence">The sentence to check for profanities.</param>
+        /// <returns>A read only list of detected profanities.</returns>
         public ReadOnlyCollection<string> DetectAllProfanities(string sentence)
         {
             if (string.IsNullOrEmpty(sentence))

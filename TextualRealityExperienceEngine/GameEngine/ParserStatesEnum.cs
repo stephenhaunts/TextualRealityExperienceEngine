@@ -23,7 +23,10 @@ SOFTWARE.
 */
 namespace TextualRealityExperienceEngine.GameEngine
 {
-    public enum ParserStatesEnum
+    /// <summary>
+    /// This enumeration helps to control the state machine for the parser.
+    /// </summary>
+    internal enum ParserStatesEnum
     {
         Verb = 0,
         Noun = 2,

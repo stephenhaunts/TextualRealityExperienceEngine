@@ -29,18 +29,45 @@ using TextualRealityExperienceEngine.GameEngine.Synonyms;
 
 namespace TextualRealityExperienceEngine.GameEngine 
 {
+    /// <summary>
+    /// An adventure game is comprised of multiple rooms that are linked together that the player can navigate around.
+    /// This class represents one of those rooms and the exits that link to other rooms.
+    /// </summary>
     public class Room : IRoom
     {
         private readonly IRoomExits _roomExits = new RoomExits();
+        
+        /// <summary>
+        /// The name of the room.
+        /// </summary>
         public string Name { get; set; }
+        
+        /// <summary>
+        /// The description that is returned when the LightsOn flag us set to False.
+        /// </summary>
         public string LightsOffDescription { get; set; }
+        
+        /// <summary>
+        /// An internal reference to the main Game object.
+        /// </summary>
         public IGame Game { get; set; }
-        private string _description;
-
+        
+        /// <summary>
+        /// A list of objects that have been dropped in a room.
+        /// </summary>
         public IDroppedObjects DroppedObjects;
 
+        /// <summary>
+        /// This flag indicates if the lights are on in the room. You can use this as a game play mechanic so metaphorically
+        /// dim the lights.
+        /// </summary>
         public bool LightsOn { get; set;}
+        
+        private string _description;
 
+        /// <summary>
+        /// Default Constructor to setup the initial room state.
+        /// </summary>
         public Room()
         {
             Name = string.Empty;
@@ -49,6 +76,10 @@ namespace TextualRealityExperienceEngine.GameEngine
             DroppedObjects = new DroppedObjects(Game);
         }
 
+        /// <summary>
+        /// Constructor to setup the initial room state.
+        /// </summary>
+        /// <param name="game">An instance of the main Game object.</param>
         public Room(IGame game)
         {
             Name = string.Empty;
@@ -58,6 +89,12 @@ namespace TextualRealityExperienceEngine.GameEngine
             DroppedObjects = new DroppedObjects(Game);
         }
 
+        /// <summary>
+        /// Constructor to setup the initial room state.
+        /// </summary>
+        /// <param name="roomExits">This object contains the references to the exits for the room which define what
+        /// rooms the exits point too.</param>
+        /// <param name="game">An instance of the main Game object.</param>
         public Room(IRoomExits roomExits, IGame game)
         {
             Name = string.Empty;
@@ -68,12 +105,14 @@ namespace TextualRealityExperienceEngine.GameEngine
             DroppedObjects = new DroppedObjects(Game);
         }
 
-        public string Description 
-        {
-            get => !LightsOn ? LightsOffDescription : _description;
-            set => _description = value;
-        }
-
+        /// <summary>
+        /// Constructor to setup the initial room state.
+        /// </summary>
+        /// <param name="name">Name of the room.</param>
+        /// <param name="description">Description of the room.</param>
+        /// <param name="game">Reference to the game object.</param>
+        /// <exception cref="ArgumentNullException">If the name or description are null or empty then throw
+        /// an ArgumentNullException.</exception>
         public Room(string name, string description, IGame game)
         {
             if (string.IsNullOrEmpty(name))
@@ -92,7 +131,24 @@ namespace TextualRealityExperienceEngine.GameEngine
             LightsOn = true;
             DroppedObjects = new DroppedObjects(Game);
         }
+        
+        /// <summary>
+        /// Get and Set the description for the room. The Getter will return a descriptin based on whether the lightsOn 
+        /// flag is set.
+        /// </summary>
+        public string Description 
+        {
+            get => !LightsOn ? LightsOffDescription : _description;
+            set => _description = value;
+        }
 
+        /// <summary>
+        /// Add an exit to the the room by specifying the direction and the room to exit too.
+        /// </summary>
+        /// <param name="direction">The direction that the exit is linked too.</param>
+        /// <param name="room">The room that the exit leads too.</param>
+        /// <param name="withExit">If this is set to True, then the room you specify will have an exit back to this current 
+        /// room.</param>
         public void AddExit(Direction direction, IRoom room, bool withExit = true)
         {
             _roomExits.AddExit(direction, room);
@@ -142,6 +198,13 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
         }
 
+        /// <summary>
+        /// Add an exit by specifying a DoorWay object.
+        /// </summary>
+        /// <param name="doorway">A doorway definition object.</param>
+        /// <param name="room">The room that the exit leads too.</param>
+        /// <param name="withExit">If this is set to True, then the room you specify will have an exit back to this current 
+        /// room.</param>
         public void AddExit(DoorWay doorway, IRoom room, bool withExit = true)
         {
             _roomExits.AddExit(doorway, room);
@@ -199,16 +262,32 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
         }
 
+        /// <summary>
+        /// Return a door way assigned to this room for a specific direction.
+        /// </summary>
+        /// <param name="direction">The direction to get the door way for.</param>
+        /// <returns>The doorway assigned to the room for the specified direction.</returns>
         public DoorWay GetDoorWay(Direction direction)
         {
             return _roomExits.GetDoorWay(direction);
         }
 
+        /// <summary>
+        /// Set whether you want the door locked for a specific direction.
+        /// </summary>
+        /// <param name="locked">True if you want to door locked, or False otherwise.</param>
+        /// <param name="direction">The direction you want to set the door lock for.</param>
         public void SetDoorLock(bool locked, Direction direction)
         {
             _roomExits.SetDoorLock(locked, direction);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public virtual string ProcessCommand(ICommand command)
         {
             switch (command.Verb)
