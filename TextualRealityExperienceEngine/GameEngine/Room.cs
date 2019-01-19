@@ -283,20 +283,29 @@ namespace TextualRealityExperienceEngine.GameEngine
         }
 
         /// <summary>
+        /// The ProcessCommand method is called by the main game once the parser has run. This method will handle the following
+        /// functions:
+        ///   - Navigation between rooms.
+        ///   - Examining the room.
+        ///   - Taking an object.
+        ///   - Dropping an object.
+        ///   - Giving hints.
+        ///
+        /// If you want to add custom logic for a room you should create a superclass of Room and the override ProcessCommand 
+        /// to add in customer handlers.
         /// 
         /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <param name="command">The command object that was created by the parser.</param>
+        /// <returns>A text string to return to main caller.</returns>
         public virtual string ProcessCommand(ICommand command)
         {
             switch (command.Verb)
             {
-                case Synonyms.VerbCodes.Go:
+                case VerbCodes.Go:
                 {
                     try
                     {
-                        Direction direction = (Direction)Enum.Parse(typeof(Direction), command.Noun, true);
+                        var direction = (Direction)Enum.Parse(typeof(Direction), command.Noun, true);
                         var room = _roomExits.GetRoomForExit(direction);
 
                         if (room == null)

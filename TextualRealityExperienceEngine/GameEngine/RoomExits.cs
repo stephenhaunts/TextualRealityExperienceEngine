@@ -26,10 +26,21 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
+    /// <summary>
+    /// The RoomExits class contains a list of the exits assigned to a room for a given direction.
+    /// </summary>
     public sealed class RoomExits : IRoomExits
     {
         private readonly Dictionary<DoorWay, IRoom> _roomMappings = new Dictionary<DoorWay, IRoom>();
 
+        /// <summary>
+        /// Add an exit to the list for a specified direction that leads to the room that is passed in.
+        /// </summary>
+        /// <param name="direction">The direction to assign the exit too.</param>
+        /// <param name="room">The room that the exit leads too.</param>
+        /// <exception cref="ArgumentNullException">If the room is null, throw an ArgumentNullException.</exception>
+        /// <exception cref="InvalidOperationException">If you try to map a room to the same direction twice an
+        /// InvalidOperationException will be thrown.</exception>
         public void AddExit(Direction direction, IRoom room)
         {
             if (room == null)
@@ -54,6 +65,16 @@ namespace TextualRealityExperienceEngine.GameEngine
             _roomMappings.Add(doorway, room);
         }
 
+        /// <summary>
+        /// Add an exit to the list for a specified direction that leads to the room that is passed in.
+        /// </summary>
+        /// <param name="doorway">Doorway object that encapsulates the direction.</param>
+        /// <param name="room">The room that the exit leads too.</param>
+        /// <param name="locked">Specify if this exit is locked.</param>
+        /// <param name="objectToUnlock">The name of the object that can unlock this exit.</param>
+        /// <exception cref="ArgumentNullException">If the room is null, throw an ArgumentNullException.</exception>
+        /// <exception cref="InvalidOperationException">If you try to map a room to the same direction twice an
+        /// InvalidOperationException will be thrown.</exception>
         public void AddExit(DoorWay doorway, IRoom room, bool locked = false, string objectToUnlock = "")
         {
             if (room == null)
@@ -71,6 +92,11 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
         }
 
+        /// <summary>
+        /// Return the room assigned for a specific direction.
+        /// </summary>
+        /// <param name="direction">The direction to return the exist for.</param>
+        /// <returns>The room that is assigned to this exit direction.</returns>
         public IRoom GetRoomForExit(Direction direction)
         {
             foreach (var entry in _roomMappings)
@@ -84,6 +110,11 @@ namespace TextualRealityExperienceEngine.GameEngine
             return null;
         }
 
+        /// <summary>
+        /// For a given exit, is that exit locked.
+        /// </summary>
+        /// <param name="direction">The direction to check the lock status for.</param>
+        /// <returns>True if the exit is locked, False otherwise.</returns>
         public bool IsDoorLocked(Direction direction)
         {
             foreach (var entry in _roomMappings)
@@ -97,6 +128,11 @@ namespace TextualRealityExperienceEngine.GameEngine
             return false;
         }
 
+        /// <summary>
+        /// Return the door way object for the given direction.
+        /// </summary>
+        /// <param name="direction">The direction to get the door way object.</param>
+        /// <returns>The retrieved door way.</returns>
         public DoorWay GetDoorWay(Direction direction)
         {
             foreach (var entry in _roomMappings)
@@ -110,6 +146,11 @@ namespace TextualRealityExperienceEngine.GameEngine
             return null;
         }
 
+        /// <summary>
+        /// Set the door lock status for the given direction.
+        /// </summary>
+        /// <param name="locked">True if you want the door locked, False otherwise.</param>
+        /// <param name="direction">The direction of the exit that you want to set the lock status of.</param>
         public void SetDoorLock(bool locked, Direction direction)
         {
             foreach (var entry in _roomMappings)
