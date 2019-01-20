@@ -149,7 +149,11 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         private void SingleWordCommand(string command)
         {
-            _command = DirectionsHelper.GetDirectionCommand(command);
+            var direction = DirectionsHelper.GetDirectionCommand(command);
+
+            _command.Verb = direction.Verb;
+            _command.Noun = direction.Noun;
+            _command.FullTextCommand = direction.FullTextCommand;
 
             if (_command.Verb == VerbCodes.NoCommand)
             {
