@@ -21,7 +21,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
@@ -284,6 +283,16 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var command = parser.ParseCommand("flappy cunt bananna");
             Assert.IsFalse(command.ProfanityDetected);
             Assert.AreEqual(string.Empty, command.Profanity);
+        }
+        
+        [TestMethod]
+        public void ProfanityFilterDetectsSingleWordCussWord()
+        {
+            IParser parser = new Parser();
+            var command = parser.ParseCommand("fuck");
+
+            Assert.IsTrue(command.ProfanityDetected);
+            Assert.AreEqual("fuck", command.Profanity);
         }
     }
 }
