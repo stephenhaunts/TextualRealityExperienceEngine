@@ -8,9 +8,12 @@ The Textual Reality Experience Engine is an easy to use, object-oriented game fr
 
 Some of the features of Textual Reality include:
 
+- Object Oriented Design that puts you in control of building and extending a game.
 - Navigation around rooms that are linked together.
 - A flexible parser that breaks text commands down into Verb, noun, preposition, noun groups.
 - An extensible system for adding a verb and noun synonyms, so the player doesn't have to hunt to the correct specific word.
 - Profanity filtering, so the use of profane words are highlighted by the parser. The game engine doesn't perform any censoring, but profanity detection can make a fun way to react back to the player.
 - In build content management system so that text can be abstracted away from the game logic.
 - Save / load game system.
+- Inventory system for collection objects in the game.
+- Ability to drop any collected objects into any room.
