@@ -1,3 +1,6 @@
+![alt text](https://travis-ci.org/stephenhaunts/TextualRealityExperienceEngine.svg?branch=master "Current Build Status")
+
+
 # Textual Reality Experience Engine
 
 Today we are spoilt for choices when it comes to computer entertainment. We have games consoles like the XBOX and Playstation offering up 4k hyper-real graphics with immersive sound sitting under our TV sets. We also have virtual reality experiences that immerse us entirely in graphics and sound with headsets, augmented reality where we overlay graphics onto the real world, and we have mixed reality with headsets likes the Hololens. These are all well and good, but we can go even higher resolution using the most powerful graphics engine ever invented; your imagination!
