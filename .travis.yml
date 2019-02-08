@@ -1,7 +1,10 @@
 language: csharp
 mono: none
-dotnet: 2.2.101
+sudo: required
+dist: xenial
+dotnet: 2.2
 solution: "./TextualRealityExperienceEngine/TextualRealityExperienceEngine.sln"
 script:
   - dotnet restore
+  - dotnet build
   - dotnet test
