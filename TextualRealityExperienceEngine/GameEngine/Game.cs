@@ -148,7 +148,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         {
             Prologue = string.Empty;
             HelpText = string.Empty;
-            Star tRoom = null;
+            StartRoom = null;
             Parser = new Parser();
             GlobalState = new GlobalState();
             Inventory = new Inventory();
