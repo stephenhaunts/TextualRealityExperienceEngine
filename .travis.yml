@@ -3,8 +3,9 @@ mono: none
 sudo: required
 dist: xenial
 dotnet: 2.2
-solution: "./TextualRealityExperienceEngine/TextualRealityExperienceEngine.sln"
+solution: TextualRealityExperienceEngine.sln
 script:
+  - cd TextualRealityExperienceEngine
   - dotnet restore
   - dotnet build
   - dotnet test
