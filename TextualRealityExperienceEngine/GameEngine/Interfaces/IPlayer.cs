@@ -22,20 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
-namespace TextualRealityExperienceEngine.GameEngine
+namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
-    /// <summary>
-    /// The Player class represents a player character in a game. 
-    /// </summary>
-    public class Player : IPlayer
+    public interface IPlayer
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:TextualRealityExperienceEngine.GameEngine.Player"/> class.
-        /// </summary>
-        public Player()
-        {
-        }
     }
 }
