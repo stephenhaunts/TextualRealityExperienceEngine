@@ -29,7 +29,7 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 namespace TextualRealityExperienceEngine.GameEngine
 {
     /// <summary>
-    /// The main game object that hold together the game state, inventory, score and game rooms.
+    /// The main game object that hold together the game state, player, score and game rooms.
     /// </summary>
     public class Game : IGame
     {
@@ -112,13 +112,6 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// If you want your player to be able to request hints for the game, then set this flag to True.
         /// </summary>
         public bool HintSystemEnabled { get; set; }
-
-        /// <summary>
-        /// Ths Inventory object is used to store the objects that the player has collected as they navigate around
-        /// different rooms. When implementing game logic that require the player to possess an object, you need to
-        /// check that the object exists in this Inventory instance.
-        /// </summary>
-       //public IInventory Inventory { get; set; }
 
         /// <summary>
         /// Gets or sets the player object for this game. The player will contain game stats, player attributes and health.
