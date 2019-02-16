@@ -64,11 +64,11 @@ namespace Tests.SimpleGame
                 case VerbCodes.Use:
                     switch (command.Noun)
                     {
-                        case "key" when (command.Noun2 == "door") && Game.Inventory.Exists("Key"):
+                        case "key" when (command.Noun2 == "door") && Game.Player.Inventory.Exists("Key"):
                             SetDoorLock(false, Direction.North);
                             _doorUnlocked = true;
                             return Game.ContentManagement.RetrieveContentItem("TurnKey");
-                        case "door" when Game.Inventory.Exists("Key"):
+                        case "door" when Game.Player.Inventory.Exists("Key"):
                             _doorUnlocked = true;
                             SetDoorLock(false, Direction.North);
                             return Game.ContentManagement.RetrieveContentItem("TurnKey");
@@ -82,7 +82,7 @@ namespace Tests.SimpleGame
                         case "plantpot":
                         {
                             _lookedAtPlantPot = true;
-                            if (Game.Inventory.Exists("Key")) return Game.ContentManagement.RetrieveContentItem("ItsAPlantPot");
+                            if (Game.Player.Inventory.Exists("Key")) return Game.ContentManagement.RetrieveContentItem("ItsAPlantPot");
                             
                             Game.NumberOfMoves++;
                             return Game.ContentManagement.RetrieveContentItem("MovePlantPot");
@@ -98,16 +98,16 @@ namespace Tests.SimpleGame
                     {
                         if (_lookedAtPlantPot)
                         {
-                            if (!Game.Inventory.Exists("Key") && !_keyPickedUp)
+                            if (!Game.Player.Inventory.Exists("Key") && !_keyPickedUp)
                             {
-                                Game.Inventory.Add(_key.Name, _key);
+                                Game.Player.Inventory.Add(_key.Name, _key);
                                 Game.IncreaseScore(1);
                                 Game.NumberOfMoves++;
                                 _keyPickedUp = true;
                                 return _key.PickUpMessage;
                             }                            
 
-                            if (Game.Inventory.Exists("Key"))
+                            if (Game.Player.Inventory.Exists("Key"))
                             {
                                 return Game.ContentManagement.RetrieveContentItem("AlreadyHaveKey");
                             }                            
@@ -126,7 +126,7 @@ namespace Tests.SimpleGame
                         return Game.ContentManagement.RetrieveContentItem("InterestingPlantPot");
                     }
 
-                    if (_lookedAtPlantPot && !Game.Inventory.Exists("Key"))
+                    if (_lookedAtPlantPot && !Game.Player.Inventory.Exists("Key"))
                     {
                         Game.DecreaseScore(Game.HintCost);
                         return Game.ContentManagement.RetrieveContentItem("UsefulKey");

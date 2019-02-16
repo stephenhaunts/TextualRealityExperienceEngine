@@ -27,5 +27,6 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
     public interface IPlayer
     {
+        IInventory Inventory { get; set; }
     }
 }

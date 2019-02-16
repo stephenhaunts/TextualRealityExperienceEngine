@@ -277,13 +277,13 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             game.StartRoom = room;
 
             // Initial state where they key is in the inventory.
-            Assert.AreEqual(0, game.Inventory.Count());
+            Assert.AreEqual(0, game.Player.Inventory.Count());
             Assert.AreEqual(0, room.DroppedObjects.DroppedObjectsList.Count);
             
             Assert.IsFalse(room.DroppedObjects.DropObject(key.Name));
             
             // Key is removed from the inventory and dropped on the floor.
-            Assert.AreEqual(0, game.Inventory.Count());
+            Assert.AreEqual(0, game.Player.Inventory.Count());
             Assert.AreEqual(0, room.DroppedObjects.DroppedObjectsList.Count);
         }
         
@@ -294,19 +294,19 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var room = new Room(game);
 
             IObject key = new GameObject("key", "A rusty key", "You picked up the key.");
-            game.Inventory.Add("key", key);
+            game.Player.Inventory.Add("key", key);
 
             game.CurrentRoom = room;
             game.StartRoom = room;
 
             // Initial state where they key is in the inventory.
-            Assert.AreEqual(1, game.Inventory.Count());
+            Assert.AreEqual(1, game.Player.Inventory.Count());
             Assert.AreEqual(0, room.DroppedObjects.DroppedObjectsList.Count);
             
             Assert.IsTrue(room.DroppedObjects.DropObject(key.Name));
             
             // Key is removed from the inventory and dropped on the floor.
-            Assert.AreEqual(0, game.Inventory.Count());
+            Assert.AreEqual(0, game.Player.Inventory.Count());
             Assert.AreEqual(1, room.DroppedObjects.DroppedObjectsList.Count);
         }
         
@@ -317,25 +317,25 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var room = new Room(game);
 
             IObject key = new GameObject("key", "A rusty key", "You picked up the key.");
-            game.Inventory.Add("key", key);
+            game.Player.Inventory.Add("key", key);
 
             game.CurrentRoom = room;
             game.StartRoom = room;
 
             // Initial state where they key is in the inventory.
-            Assert.AreEqual(1, game.Inventory.Count());
+            Assert.AreEqual(1, game.Player.Inventory.Count());
             Assert.AreEqual(0, room.DroppedObjects.DroppedObjectsList.Count);
             
             Assert.IsTrue(room.DroppedObjects.DropObject(key.Name));
             
             // Key is removed from the inventory and dropped on the floor.
-            Assert.AreEqual(0, game.Inventory.Count());
+            Assert.AreEqual(0, game.Player.Inventory.Count());
             Assert.AreEqual(1, room.DroppedObjects.DroppedObjectsList.Count);
             
             Assert.IsTrue(room.DroppedObjects.PickUpDroppedObject(key.Name));
             
             // Key is picked up and placed in the inventory
-            Assert.AreEqual(1, game.Inventory.Count());
+            Assert.AreEqual(1, game.Player.Inventory.Count());
             Assert.AreEqual(0, room.DroppedObjects.DroppedObjectsList.Count);
         }
     }

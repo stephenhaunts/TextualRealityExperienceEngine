@@ -68,14 +68,14 @@ namespace Tests.Integration.GameEngine
                     case VerbCodes.Use:
                         switch (command.Noun)
                         {
-                            case "key" when (command.Noun2 == "door") && Game.Inventory.Exists("Key"):
+                            case "key" when (command.Noun2 == "door") && Game.Player.Inventory.Exists("Key"):
                                 SetDoorLock(false, Direction.North);
                                 
                                 Game.IncreaseScore(1);
                                 Game.NumberOfMoves++;
                                 
                                 return "You turn the key in the lock and you hear a THUNK of the door unlocking.";
-                            case "door" when Game.Inventory.Exists("Key"):
+                            case "door" when Game.Player.Inventory.Exists("Key"):
                                 SetDoorLock(false, Direction.North);
                                 
                                 Game.IncreaseScore(1);
@@ -92,7 +92,7 @@ namespace Tests.Integration.GameEngine
                             case "plantpot":
                             {
                                 _lookedAtPlantPot = true;
-                                if (Game.Inventory.Exists("Key")) return "It's a plant pot. Quite unremarkable.";
+                                if (Game.Player.Inventory.Exists("Key")) return "It's a plant pot. Quite unremarkable.";
                                 
                                 Game.NumberOfMoves++;
                                 return "You move the plant pot and find a key sitting under it.";
@@ -107,9 +107,9 @@ namespace Tests.Integration.GameEngine
                         if (command.Noun == "key")
                         {
                             if (!_lookedAtPlantPot) return "What key?";
-                            if (Game.Inventory.Exists("Key")) return "You already have the key.";
+                            if (Game.Player.Inventory.Exists("Key")) return "You already have the key.";
                             
-                            Game.Inventory.Add(_key.Name, _key);
+                            Game.Player.Inventory.Add(_key.Name, _key);
                             Game.IncreaseScore(1);
                             Game.NumberOfMoves++;
                             
@@ -244,8 +244,8 @@ namespace Tests.Integration.GameEngine
 
             reply = _game.ProcessCommand("pick up key");
             Assert.AreEqual("You pick up the key.", reply.Reply);
-            Assert.AreEqual(1, _game.Inventory.Count());
-            Assert.IsTrue(_game.Inventory.Exists("Key"));
+            Assert.AreEqual(1, _game.Player.Inventory.Count());
+            Assert.IsTrue(_game.Player.Inventory.Exists("Key"));
 
             reply = _game.ProcessCommand("look at plant pot");
             Assert.AreEqual("It's a plant pot. Quite unremarkable.", reply.Reply);
@@ -270,8 +270,8 @@ namespace Tests.Integration.GameEngine
 
             reply = _game.ProcessCommand("pick up key");
             Assert.AreEqual("You pick up the key.", reply.Reply);
-            Assert.AreEqual(1, _game.Inventory.Count());
-            Assert.IsTrue(_game.Inventory.Exists("Key"));
+            Assert.AreEqual(1, _game.Player.Inventory.Count());
+            Assert.IsTrue(_game.Player.Inventory.Exists("Key"));
 
             reply = _game.ProcessCommand("look at doormat");
             Assert.IsTrue(reply.Reply.StartsWith("It's a doormat where people wipe their feet.", StringComparison.Ordinal));
@@ -317,8 +317,8 @@ namespace Tests.Integration.GameEngine
 
             reply = _game.ProcessCommand("pick up key");
             Assert.AreEqual("You pick up the key.", reply.Reply);
-            Assert.AreEqual(1, _game.Inventory.Count());
-            Assert.IsTrue(_game.Inventory.Exists("Key"));
+            Assert.AreEqual(1, _game.Player.Inventory.Count());
+            Assert.IsTrue(_game.Player.Inventory.Exists("Key"));
 
             reply = _game.ProcessCommand("look at doormat");
             Assert.IsTrue(reply.Reply.StartsWith("It's a doormat where people wipe their feet.", StringComparison.Ordinal));

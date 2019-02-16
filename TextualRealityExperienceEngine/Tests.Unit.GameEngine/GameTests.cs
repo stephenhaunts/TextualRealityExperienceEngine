@@ -159,8 +159,8 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         {
             var game = new Game();
 
-            Assert.IsNotNull(game.Inventory);
-            Assert.AreEqual(0, game.Inventory.Count());
+            Assert.IsNotNull(game.Player.Inventory);
+            Assert.AreEqual(0, game.Player.Inventory.Count());
         }
         
         [TestMethod]

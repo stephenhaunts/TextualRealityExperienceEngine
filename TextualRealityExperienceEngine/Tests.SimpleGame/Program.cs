@@ -161,7 +161,7 @@ namespace Tests.SimpleGame
                         continue;
 
                     case GameStateEnum.Inventory:
-                        if (_game.Inventory.Count() == 0)
+                        if (_game.Player.Inventory.Count() == 0)
                         {
                             Console.WriteLine();
                             Console.WriteLine("Your inventory is empty.");
@@ -173,7 +173,7 @@ namespace Tests.SimpleGame
                             Console.WriteLine("Inventory");
                             Console.WriteLine("---------");
 
-                            foreach (var i in _game.Inventory.GetInventory())
+                            foreach (var i in _game.Player.Inventory.GetInventory())
                             {
                                 Console.WriteLine("   " + i);
                             }

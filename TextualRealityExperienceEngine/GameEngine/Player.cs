@@ -31,11 +31,14 @@ namespace TextualRealityExperienceEngine.GameEngine
     /// </summary>
     public class Player : IPlayer
     {
+        public IInventory Inventory { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="T:TextualRealityExperienceEngine.GameEngine.Player"/> class.
         /// </summary>
         public Player()
         {
+            Inventory = new Inventory();
         }
     }
 }

@@ -41,7 +41,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         int Score { get; }
         bool HintSystemEnabled { get; set; }
         int HintCost { get; }
-        IInventory Inventory { get; set; }
+        IPlayer Player { get; set; }
         DateTime GameClock { get; set; }
         void IncreaseScore(int increaseBy);
         void DecreaseScore(int decreaseBy);

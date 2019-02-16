@@ -118,8 +118,14 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// different rooms. When implementing game logic that require the player to possess an object, you need to
         /// check that the object exists in this Inventory instance.
         /// </summary>
-        public IInventory Inventory { get; set; }
-        
+       //public IInventory Inventory { get; set; }
+
+        /// <summary>
+        /// Gets or sets the player object for this game. The player will contain game stats, player attributes and health.
+        /// </summary>
+        /// <value>The player.</value>
+        public IPlayer Player { get; set; }
+
         /// <summary>
         /// It is possible to set a game clock so you can use the date and time as part of a game-play mechanic. This
         /// means if you collected an object for the inventory on Tuesday (in game time) and used a time machine to go back
@@ -151,10 +157,11 @@ namespace TextualRealityExperienceEngine.GameEngine
             StartRoom = null;
             Parser = new Parser();
             GlobalState = new GlobalState();
-            Inventory = new Inventory();
+            //Inventory = new Inventory();
             Difficulty = DifficultyEnum.Easy;
             HintSystemEnabled = false;
             ContentManagement = new ContentManagement();
+            Player = new Player();
         }
 
         /// <summary>
@@ -177,10 +184,10 @@ namespace TextualRealityExperienceEngine.GameEngine
             HelpText = string.Empty;
             Parser = new Parser();
             GlobalState = new GlobalState();
-            Inventory = new Inventory();
             Difficulty = DifficultyEnum.Easy;
             HintSystemEnabled = false;
             ContentManagement = new ContentManagement();
+            Player = new Player();
         }
         
         /// <summary>

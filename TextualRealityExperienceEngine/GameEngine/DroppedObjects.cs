@@ -63,13 +63,13 @@ namespace TextualRealityExperienceEngine.GameEngine
             {
                 throw new ArgumentNullException(nameof(objectName));
             }
-            
+
             objectName = objectName.ToLower();
-            
-            if (_game.Inventory.Exists(objectName))
+
+            if (_game.Player.Inventory.Exists(objectName))
             {
-                var droppedObject = _game.Inventory.Get(objectName);
-                _game.Inventory.RemoveObject(objectName);
+                var droppedObject = _game.Player.Inventory.Get(objectName);
+                _game.Player.Inventory.RemoveObject(objectName);
                 _droppedObjects.Add(droppedObject);
 
                 return true;
@@ -100,7 +100,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 if (i.Name.ToLower() == objectName)
                 {                  
                     _droppedObjects.Remove(i);
-                    _game.Inventory.Add(i.Name, i);
+                    _game.Player.Inventory.Add(i.Name, i);
             
                     return true;
                 }
