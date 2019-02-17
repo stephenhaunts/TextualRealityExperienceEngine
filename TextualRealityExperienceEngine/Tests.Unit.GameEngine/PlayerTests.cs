@@ -37,5 +37,33 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var player = new Player();
             Assert.IsNotNull(player.Inventory);
         }
+
+        [TestMethod]
+        public void DefaultConstructorCreatesEmptyName()
+        {
+            var player = new Player();
+            Assert.IsNull(player.Name);
+        }
+
+        [TestMethod]
+        public void ConstructorCreatesSetsName()
+        {
+            var player = new Player("Geoff");
+            Assert.AreEqual("Geoff", player.Name);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException), "Name of player can not be null.")]
+        public void ConstructorCreatesThrowsArgumentNullExceptionIfNameIsNull()
+        {
+            var player = new Player(null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException), "Name of player can not be null.")]
+        public void ConstructorCreatesThrowsArgumentNullExceptionIfNameIsEmptyString()
+        {
+            var player = new Player(string.Empty);
+        }
     }
 }

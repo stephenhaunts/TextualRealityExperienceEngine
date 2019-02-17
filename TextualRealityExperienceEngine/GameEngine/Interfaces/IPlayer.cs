@@ -28,6 +28,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
     public interface IPlayer
     {
         IInventory Inventory { get; set; }
+        string Name { get; set; }
 
         // Player name
         // Gender identity

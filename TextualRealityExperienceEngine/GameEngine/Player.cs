@@ -32,6 +32,7 @@ namespace TextualRealityExperienceEngine.GameEngine
     public class Player : IPlayer
     {
         public IInventory Inventory { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:TextualRealityExperienceEngine.GameEngine.Player"/> class.
@@ -39,6 +40,20 @@ namespace TextualRealityExperienceEngine.GameEngine
         public Player()
         {
             Inventory = new Inventory();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:TextualRealityExperienceEngine.GameEngine.Player"/> class.
+        /// </summary>
+        public Player(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            Inventory = new Inventory();
+            Name = name;
         }
     }
 }
