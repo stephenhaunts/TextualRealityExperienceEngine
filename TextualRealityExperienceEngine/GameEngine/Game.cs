@@ -150,7 +150,6 @@ namespace TextualRealityExperienceEngine.GameEngine
             StartRoom = null;
             Parser = new Parser();
             GlobalState = new GlobalState();
-            //Inventory = new Inventory();
             Difficulty = DifficultyEnum.Easy;
             HintSystemEnabled = false;
             ContentManagement = new ContentManagement();
