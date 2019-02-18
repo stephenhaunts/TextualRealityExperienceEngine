@@ -126,6 +126,43 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             stats.Clear();
 
             Assert.AreEqual(0, stats.Count());
-        } 
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException), "name")]
+        public void AddToThrowsArgumentNullExceptionIfNameIsNullOrEmpty()
+        {
+            IPlayerStats stats = new PlayerStats();
+            stats.AddTo("", 0);
+        }
+
+        [TestMethod]
+        public void AddToAdds10ToHealthOf100()
+        {
+            IPlayerStats stats = new PlayerStats();
+            stats.Add("health", 100);
+
+            int returned = stats.AddTo("health", 10);
+            Assert.AreEqual(110, returned);
+            Assert.AreEqual(110, stats.Get("health"));
+        }
+
+        [ExpectedException(typeof(ArgumentNullException), "name")]
+        public void SubtractToThrowsArgumentNullExceptionIfNameIsNullOrEmpty()
+        {
+            IPlayerStats stats = new PlayerStats();
+            stats.SubtractFrom("", 0);
+        }
+
+        [TestMethod]
+        public void SubtractFromSubtracts10ToHealthOf100()
+        {
+            IPlayerStats stats = new PlayerStats();
+            stats.Add("health", 100);
+
+            int returned = stats.SubtractFrom ("health", 10);
+            Assert.AreEqual(90, returned);
+            Assert.AreEqual(90, stats.Get("health"));
+        }
     }
 }

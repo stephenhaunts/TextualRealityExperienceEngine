@@ -31,5 +31,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         int Get(string name);
         void Clear();
         int Count();
+        int AddTo(string name, int addTo);
+        int SubtractFrom(string name, int subtractFrom);
     }
 }

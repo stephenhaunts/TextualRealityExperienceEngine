@@ -104,5 +104,29 @@ namespace TextualRealityExperienceEngine.GameEngine
         {
             return _playerStats.Count;
         }
+
+        public int AddTo(string name, int addTo)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            _playerStats[name] = _playerStats[name] + addTo;
+
+            return _playerStats[name];
+        }
+
+        public int SubtractFrom(string name, int subtractFrom)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            _playerStats[name] = _playerStats[name] - subtractFrom;
+
+            return _playerStats[name];
+        }
     }
 }
