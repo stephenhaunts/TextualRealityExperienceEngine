@@ -46,10 +46,24 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
 
         [TestMethod]
+        public void DefaultConstructorSetGenderIdentityToOther()
+        {
+            var player = new Player();
+            Assert.AreEqual(GenderIdentityEnum.Other, player.GenderIdentity);
+        }
+
+        [TestMethod]
         public void ConstructorCreatesSetsName()
         {
             var player = new Player("Geoff");
             Assert.AreEqual("Geoff", player.Name);
+        }
+
+        [TestMethod]
+        public void ConstructorSetsGenderToOtherByDefault()
+        {
+            var player = new Player("Geoff");
+            Assert.AreEqual(GenderIdentityEnum.Other, player.GenderIdentity);
         }
 
         [TestMethod]
@@ -64,6 +78,28 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         public void ConstructorCreatesThrowsArgumentNullExceptionIfNameIsEmptyString()
         {
             var player = new Player(string.Empty);
+        }
+
+        [TestMethod]
+        public void ConstructorSetsGenderToMaleAndNameToArther()
+        {
+            var player = new Player("Arther", GenderIdentityEnum.Male);
+            Assert.AreEqual("Arther", player.Name);
+            Assert.AreEqual(GenderIdentityEnum.Male, player.GenderIdentity);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException), "Name of player can not be null.")]
+        public void ConstructorCreatesThrowsArgumentNullExceptionIfNameIsNullWithGenderSetToOther()
+        {
+            var player = new Player(null, GenderIdentityEnum.Other);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException), "Name of player can not be null.")]
+        public void ConstructorCreatesThrowsArgumentNullExceptionIfNameIsEmptyStringWithGenderSetToOther()
+        {
+            var player = new Player(string.Empty, GenderIdentityEnum.Other);
         }
     }
 }

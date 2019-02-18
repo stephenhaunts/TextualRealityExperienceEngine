@@ -23,17 +23,12 @@ SOFTWARE.
 */
 using System;
 
-namespace TextualRealityExperienceEngine.GameEngine.Interfaces
+namespace TextualRealityExperienceEngine.GameEngine
 {
-    public interface IPlayer
+    public enum GenderIdentityEnum
     {
-        IInventory Inventory { get; set; }
-        string Name { get; set; }
-        GenderIdentityEnum GenderIdentity { get; set; }
-
-
-        // Player stats (like luck, speed etc)
-        // Health
-        // Genome
+        Male = 0,
+        Female = 1,
+        Other = 3
     }
 }

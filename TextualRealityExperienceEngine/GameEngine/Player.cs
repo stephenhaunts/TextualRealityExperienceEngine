@@ -33,6 +33,7 @@ namespace TextualRealityExperienceEngine.GameEngine
     {
         public IInventory Inventory { get; set; }
         public string Name { get; set; }
+        public GenderIdentityEnum GenderIdentity { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:TextualRealityExperienceEngine.GameEngine.Player"/> class.
@@ -40,6 +41,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         public Player()
         {
             Inventory = new Inventory();
+            GenderIdentity = GenderIdentityEnum.Other;
         }
 
         /// <summary>
@@ -54,6 +56,22 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             Inventory = new Inventory();
             Name = name;
+            GenderIdentity = GenderIdentityEnum.Other;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:TextualRealityExperienceEngine.GameEngine.Player"/> class.
+        /// </summary>
+        public Player(string name, GenderIdentityEnum genderIdentity)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            Inventory = new Inventory();
+            Name = name;
+            GenderIdentity = genderIdentity;
         }
     }
 }
