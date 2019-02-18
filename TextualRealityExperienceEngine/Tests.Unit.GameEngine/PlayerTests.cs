@@ -39,6 +39,13 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
 
         [TestMethod]
+        public void ConstructorCreatesPlayerStatsObject()
+        {
+            var player = new Player();
+            Assert.IsNotNull(player.PlayerStats);
+        }
+
+        [TestMethod]
         public void DefaultConstructorCreatesEmptyName()
         {
             var player = new Player();
@@ -100,6 +107,34 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         public void ConstructorCreatesThrowsArgumentNullExceptionIfNameIsEmptyStringWithGenderSetToOther()
         {
             var player = new Player(string.Empty, GenderIdentityEnum.Other);
+        }
+
+        [TestMethod]
+        public void ConstructorForGenderAndNameSetsInventory()
+        {
+            var player = new Player("Arther", GenderIdentityEnum.Male);
+            Assert.IsNotNull(player.Inventory);
+        }
+
+        [TestMethod]
+        public void ConstructorForGenderAndNameSetsPlayerStatsy()
+        {
+            var player = new Player("Arther", GenderIdentityEnum.Male);
+            Assert.IsNotNull(player.PlayerStats);
+        }
+
+        [TestMethod]
+        public void ConstructorForNameSetsInventory()
+        {
+            var player = new Player("Arther");
+            Assert.IsNotNull(player.Inventory);
+        }
+
+        [TestMethod]
+        public void ConstructorForNameSetsPlayerStatsy()
+        {
+            var player = new Player("Arther");
+            Assert.IsNotNull(player.PlayerStats);
         }
     }
 }

@@ -30,6 +30,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         IInventory Inventory { get; set; }
         string Name { get; set; }
         GenderIdentityEnum GenderIdentity { get; set; }
+        IPlayerStats PlayerStats { get; set; }
 
 
         // Player stats (like luck, speed etc)
