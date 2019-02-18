@@ -35,105 +35,97 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         [ExpectedException(typeof(ArgumentNullException), "name")]
         public void AddThrowsArgumentNullExceptionIfNameIsNullOrEmpty()
         {
-            IGlobalState state = new GlobalState();
-            state.Add("", null);
-        }
-
-    /*   [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException), "name")]
-        public void AddThrowsArgumentNullExceptionIfObjectIsNull()
-        {
-            IGlobalState state = new GlobalState();
-            state.Add("pizza", null);
+            IPlayerStats stats = new PlayerStats();
+            stats.Add("", 0);
         }
 
         [TestMethod]
         public void AddInsertsObjectInGameState()
         {
-            IGlobalState state = new GlobalState();
+            IPlayerStats stats = new PlayerStats();
 
             int testNumber = 8;
-            state.Add("test", testNumber);
+            stats.Add("test", testNumber);
 
-            Assert.AreEqual(1, state.Count());
-            Assert.AreEqual(testNumber, (int)state.Get("test"));
+            Assert.AreEqual(1, stats.Count());
+            Assert.AreEqual(testNumber, (int)stats.Get("test"));
         }
 
         [TestMethod]
         public void ExistsReturnsTrueForObjectThatExists()
         {
-            IGlobalState state = new GlobalState();
+            IPlayerStats stats = new PlayerStats();
 
             int testNumber = 8;
-            state.Add("test", testNumber);
+            stats.Add("test", testNumber);
 
-            Assert.AreEqual(true, state.Exists("test"));
+            Assert.AreEqual(true, stats.Exists("test"));
         }
 
         [TestMethod]
         public void ExistsReturnsFalseForObjectThatDoesntExists()
         {
-            IGlobalState state = new GlobalState();
+            IPlayerStats stats = new PlayerStats();
 
-            Assert.AreEqual(false, state.Exists("pizza"));
+            Assert.AreEqual(false, stats.Exists("pizza"));
         }
 
         [TestMethod]
         public void GetReturnsObjectFromGlobalState()
         {
-            IGlobalState state = new GlobalState();
+            IPlayerStats stats = new PlayerStats();
 
             int testNumber = 8;
-            state.Add("test", testNumber);
+            stats.Add("test", testNumber);
 
-            Assert.AreEqual(testNumber, (int)state.Get("test"));
-            Assert.AreEqual(8, (int)state.Get("test"));
+            Assert.AreEqual(testNumber, (int)stats.Get("test"));
+            Assert.AreEqual(8, (int)stats.Get("test"));
         }
 
-        [TestMethod]
+       [TestMethod]
         public void CountReturnsZeroForNewGlobalState()
         {
-            IGlobalState state = new GlobalState();
+            IPlayerStats stats = new PlayerStats();
 
-            Assert.AreEqual(0, state.Count());
+            Assert.AreEqual(0, stats.Count());
         }
 
         [TestMethod]
         public void CountReturnsCorrectNumberOfObjects()
         {
-            IGlobalState state = new GlobalState();
+            IPlayerStats stats = new PlayerStats();
 
-            state.Add("test", 8);
-            state.Add("test2", "Steve");
+            stats.Add("test", 8);
+            stats.Add("test2", 3);
 
-            Assert.AreEqual(2, state.Count());
+            Assert.AreEqual(2, stats.Count());
         }
 
         [TestMethod]
         public void GetReturnsObjectFromGlobalStateForDifferentTypes()
         {
-            IGlobalState state = new GlobalState();
+            IPlayerStats stats = new PlayerStats();
 
-            state.Add("test", 8);
-            state.Add("test2", "Steve");
+            stats.Add("test", 8);
+            stats.Add("test2", 2);
 
-            Assert.AreEqual(8, (int)state.Get("test"));
-            Assert.AreEqual("Steve", (string)state.Get("test2"));
+            Assert.AreEqual(8, stats.Get("test"));
+            Assert.AreEqual(2, stats.Get("test2"));
         }
 
         [TestMethod]
         public void ClearEmptiesInventory()
         {
-            IGlobalState state = new GlobalState();
+            IPlayerStats stats = new PlayerStats();
 
-            state.Add("test", 8);
-            state.Add("test2", "Steve");
+            stats.Add("test", 8);
+            stats.Add("test2", 2);
 
-            Assert.AreEqual(2, state.Count());
+            Assert.AreEqual(2, stats.Count());
 
-            state.Clear();
+            stats.Clear();
 
-            Assert.AreEqual(0, state.Count());
-        } */
+            Assert.AreEqual(0, stats.Count());
+        } 
     }
 }
