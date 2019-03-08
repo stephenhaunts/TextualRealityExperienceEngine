@@ -35,7 +35,24 @@ namespace TextualRealityExperienceEngine.GameEngine
     public class ContentManagement : IContentManagement
     {
         private readonly Dictionary<string, string> _content = new Dictionary<string, string>();
-        
+
+        /// <summary>
+        /// Gets a value indicating whether this
+        /// <see cref="T:TextualRealityExperienceEngine.GameEngine.ContentManagement"/> text compressed.
+        /// </summary>
+        /// <value><c>true</c> if text compressed; otherwise, <c>false</c>.</value>
+        public bool TextCompressed{ get; private set; }
+
+        public ContentManagement()
+        {
+            TextCompressed = false;
+        }
+
+        public ContentManagement(bool textCompressed)
+        {
+            TextCompressed = textCompressed;
+        }
+
         /// <summary>
         /// Add a content item to the content management system. The text that you add has to be provided with an
         /// identifier which is used to call back the text with in the game.

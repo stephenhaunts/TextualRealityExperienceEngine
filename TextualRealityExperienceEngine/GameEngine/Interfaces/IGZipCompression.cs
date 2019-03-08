@@ -25,11 +25,11 @@ using System;
 
 namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
-    public interface IPlayer
+    public interface IGZipCompression
     {
-        IInventory Inventory { get; set; }
-        string Name { get; set; }
-        GenderIdentityEnum GenderIdentity { get; set; }
-        IPlayerStats PlayerStats { get; set; }
+        string Compress(string inputString);
+        string Decompress(string inputString);
+        byte[] DecompressBytes(byte[] input);
+        byte[] CompressBytes(byte[] input);
     }
 }

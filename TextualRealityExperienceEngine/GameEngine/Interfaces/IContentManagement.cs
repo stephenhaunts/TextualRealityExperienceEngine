@@ -30,5 +30,6 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         string RetrieveContentItem(string identifier);
         int CountContentItems { get; }
         bool Exists(string identifier);
+        bool TextCompressed { get; }
     }
 }
