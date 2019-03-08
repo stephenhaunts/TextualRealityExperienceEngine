@@ -115,5 +115,87 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             Assert.IsFalse(content.Exists("not exist 2"));            
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void AddCompressedContentItemThrowsArgumentNullExceptionIfIdentifierNull()
+        {
+            var content = new ContentManagement(true);
+            content.AddContentItem("", "");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void AddCompressedContentItemThrowsArgumentNullExceptionIfContentNull()
+        {
+            var content = new ContentManagement(true);
+            content.AddContentItem("MyId", "");
+        }
+
+        [TestMethod]
+        public void AddCompressedContentItemAddsContentToCms()
+        {
+            var content = new ContentManagement(true);
+            content.AddContentItem("MyId", "This is a string");
+
+            Assert.AreEqual(1, content.CountContentItems);
+            Assert.AreEqual("This is a string", content.RetrieveContentItem("MyId"));
+        }
+
+        [TestMethod]
+        public void AddCompressedContentItemAddsMultipleContentItemsToCms()
+        {
+            var content = new ContentManagement(true);
+            content.AddContentItem("MyId", "This is a string");
+            content.AddContentItem("MyId2", "This is a string2");
+
+            Assert.AreEqual(2, content.CountContentItems);
+            Assert.AreEqual("This is a string", content.RetrieveContentItem("MyId"));
+            Assert.AreEqual("This is a string2", content.RetrieveContentItem("MyId2"));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void AddCompressedContentItemAddsMultipleWithSameContentId()
+        {
+            var content = new ContentManagement(true);
+            content.AddContentItem("MyId", "This is a string");
+            content.AddContentItem("MyId", "This is a string2");
+        }
+
+        [TestMethod]
+        public void RetrieveCompressedContentItemGetsItemsFromCms()
+        {
+            var content = new ContentManagement(true);
+            content.AddContentItem("MyId", "This is a string");
+            content.AddContentItem("MyId2", "This is a string2");
+
+            Assert.AreEqual(2, content.CountContentItems);
+            Assert.AreEqual("This is a string", content.RetrieveContentItem("MyId"));
+            Assert.AreEqual("This is a string2", content.RetrieveContentItem("MyId2"));
+        }
+
+        [TestMethod]
+        public void ExistsCompressedReturnsTrueForItemsThatExist()
+        {
+            var content = new ContentManagement(true);
+            content.AddContentItem("MyId", "This is a string");
+            content.AddContentItem("MyId2", "This is a string2");
+
+            Assert.AreEqual(2, content.CountContentItems);
+            Assert.IsTrue(content.Exists("MyId"));
+            Assert.IsTrue(content.Exists("MyId2"));
+        }
+
+        [TestMethod]
+        public void ExistsCompressedReturnsFalseForItemsThatDoNotExist()
+        {
+            var content = new ContentManagement(true);
+            content.AddContentItem("MyId", "This is a string");
+            content.AddContentItem("MyId2", "This is a string2");
+
+            Assert.AreEqual(2, content.CountContentItems);
+            Assert.IsFalse(content.Exists("not exist"));
+            Assert.IsFalse(content.Exists("not exist 2"));
+        }
     }
 }

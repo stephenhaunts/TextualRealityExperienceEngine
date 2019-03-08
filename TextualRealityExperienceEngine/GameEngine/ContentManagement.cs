@@ -34,6 +34,7 @@ namespace TextualRealityExperienceEngine.GameEngine
     /// </summary>
     public class ContentManagement : IContentManagement
     {
+        private readonly IGZipCompression _compressor = new GZipCompression();
         private readonly Dictionary<string, string> _content = new Dictionary<string, string>();
 
         /// <summary>
@@ -73,8 +74,15 @@ namespace TextualRealityExperienceEngine.GameEngine
             {
                 throw new ArgumentNullException(nameof(content));    
             }
-            
-            _content.Add(identifier, content);
+
+            if (TextCompressed)
+            {
+                _content.Add(identifier, _compressor.Compress(content));
+            }
+            else
+            {
+                _content.Add(identifier, content);
+            }
         }
 
         /// <summary>
@@ -93,7 +101,14 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             if (_content.ContainsKey(identifier))
             {
-                return _content[identifier];
+                if (TextCompressed)
+                {
+                    return _compressor.Decompress(_content[identifier]); 
+                }
+                else
+                {
+                    return _content[identifier];
+                }
             }
                         
             return string.Empty;            
@@ -119,6 +134,6 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
             
             return _content.ContainsKey(identifier);
-        }
+        }        
     }
 }
