@@ -122,7 +122,7 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
 
         [TestMethod]
-        public void ClearEmptiesInventory()
+        public void ClearEmptiesGlobalState()
         {
             IGlobalState state = new GlobalState();
 
@@ -134,6 +134,46 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             state.Clear();
 
             Assert.AreEqual(0, state.Count());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException), "name")]
+        public void UpdateThrowsArgumentNullExceptionIfNameIsNullOrEmpty()
+        {
+            IGlobalState state = new GlobalState();
+            state.Update("", null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException), "name")]
+        public void UpdateThrowsArgumentNullExceptionIfObjectIsNull()
+        {
+            IGlobalState state = new GlobalState();
+            state.Update("pizza", null);
+        }
+
+        [TestMethod]
+        public void UpdateValueInStateObject()
+        {
+            IGlobalState state = new GlobalState();
+
+            state.Add("counter", 0);
+
+            Assert.AreEqual(0, (int)state.Get("counter"));
+
+            var counter = (int)state.Get("counter");
+            counter++;
+            state.Update("counter", counter);
+
+            Assert.AreEqual(1, (int)state.Get("counter"));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void UpdateThrowsInvalidOperationExceptionIfStateObjectDoesntExist()
+        {
+            IGlobalState state = new GlobalState();
+            state.Update("counter", 0);
         }
     }
 }

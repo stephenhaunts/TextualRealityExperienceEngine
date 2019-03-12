@@ -67,6 +67,33 @@ namespace TextualRealityExperienceEngine.GameEngine
         }
 
         /// <summary>
+        /// Update a value in a state object.
+        /// </summary>
+        /// <param name="name">Name of the state object to update.</param>
+        /// <param name="state">The value to update too.</param>
+        public void Update(string name, object state)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            if (state == null)
+            {
+                throw new ArgumentNullException(nameof(state));
+            }
+
+            if (Exists(name))
+            { 
+                _globalState[name] = state;
+            }
+            else
+            {
+                throw new InvalidOperationException("The state object <" + name + "> doesn't exist.");
+            }
+        }
+
+        /// <summary>
         /// Clear all entries from the GlobalState.
         /// </summary>
         public void Clear()

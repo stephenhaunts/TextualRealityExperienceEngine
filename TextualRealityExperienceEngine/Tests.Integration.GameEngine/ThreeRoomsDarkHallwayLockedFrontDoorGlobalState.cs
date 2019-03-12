@@ -59,10 +59,13 @@ namespace Tests.Integration.GameEngine
             public Outside(string name, string description, IGame game) : base(name, description, game)
             {
                 _lookedAtPlantPot = false;
+                Game.GlobalState.Add("Counter", 0);
             }
 
             public override string ProcessCommand(ICommand command)
             {
+               // Game.GlobalState.
+
                 switch (command.Verb)
                 {
                     case VerbCodes.Use:

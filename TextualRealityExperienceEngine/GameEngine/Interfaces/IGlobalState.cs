@@ -27,6 +27,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
     public interface IGlobalState
     {
         void Add(string name, object state);
+        void Update(string name, object state);
         bool Exists(string name);
         object Get(string name);
         void Clear();

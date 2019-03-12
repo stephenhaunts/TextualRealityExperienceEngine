@@ -152,7 +152,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             GlobalState = new GlobalState();
             Difficulty = DifficultyEnum.Easy;
             HintSystemEnabled = false;
-            ContentManagement = new ContentManagement();
+            ContentManagement = new ContentManagement(true);
             Player = new Player();
         }
 
@@ -178,7 +178,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             GlobalState = new GlobalState();
             Difficulty = DifficultyEnum.Easy;
             HintSystemEnabled = false;
-            ContentManagement = new ContentManagement();
+            ContentManagement = new ContentManagement(true);
             Player = new Player();
         }
         
