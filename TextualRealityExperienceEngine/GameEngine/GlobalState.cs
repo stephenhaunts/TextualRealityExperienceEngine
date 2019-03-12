@@ -60,9 +60,9 @@ namespace TextualRealityExperienceEngine.GameEngine
                 throw new ArgumentNullException(nameof(state));
             }
 
-            if (!Exists(name))
+            if (!Exists(name.ToLower()))
             {
-                _globalState.Add(name, state);
+                _globalState.Add(name.ToLower(), state);
             }
         }
 
@@ -83,9 +83,9 @@ namespace TextualRealityExperienceEngine.GameEngine
                 throw new ArgumentNullException(nameof(state));
             }
 
-            if (Exists(name))
+            if (Exists(name.ToLower()))
             { 
-                _globalState[name] = state;
+                _globalState[name.ToLower()] = state;
             }
             else
             {
@@ -133,7 +133,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             try
             {
-                return _globalState[name];
+                return _globalState[name.ToLower()];
             }
             catch (KeyNotFoundException)
             {

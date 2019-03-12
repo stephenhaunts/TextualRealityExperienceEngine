@@ -59,12 +59,14 @@ namespace Tests.Integration.GameEngine
             public Outside(string name, string description, IGame game) : base(name, description, game)
             {
                 _lookedAtPlantPot = false;
-                Game.GlobalState.Add("Counter", 0);
+                Game.GlobalState.Add("counter", 0);
             }
 
             public override string ProcessCommand(ICommand command)
             {
-               // Game.GlobalState.
+                int counter = (int)Game.GlobalState.Get("counter");
+                counter++;
+                Game.GlobalState.Update("counter", counter);
 
                 switch (command.Verb)
                 {
@@ -255,6 +257,41 @@ namespace Tests.Integration.GameEngine
 
             reply = _game.ProcessCommand("pick up key");
             Assert.AreEqual("You already have the key.", reply.Reply);
+        }
+
+        [TestMethod]
+        public void CheckGameStateCounterUpdatesBetweenCommands()
+        {
+            InitializeGame();
+
+            int counter = (int)_game.GlobalState.Get("counter");
+            Assert.AreEqual(0, counter);
+
+            var reply = _game.ProcessCommand("look at plant pot");
+            Assert.IsTrue(reply.Reply.StartsWith("You move the plant pot and find a key sitting under it.", StringComparison.Ordinal));
+
+            counter = (int)_game.GlobalState.Get("counter");
+            Assert.AreEqual(1, counter);
+
+            reply = _game.ProcessCommand("pick up key");
+            Assert.AreEqual("You pick up the key.", reply.Reply);
+            Assert.AreEqual(1, _game.Player.Inventory.Count());
+            Assert.IsTrue(_game.Player.Inventory.Exists("Key"));
+
+            counter = (int)_game.GlobalState.Get("counter");
+            Assert.AreEqual(2, counter);
+
+            reply = _game.ProcessCommand("look at plant pot");
+            Assert.AreEqual("It's a plant pot. Quite unremarkable.", reply.Reply);
+
+            counter = (int)_game.GlobalState.Get("counter");
+            Assert.AreEqual(3, counter);
+
+            reply = _game.ProcessCommand("pick up key");
+            Assert.AreEqual("You already have the key.", reply.Reply);
+
+            counter = (int)_game.GlobalState.Get("counter");
+            Assert.AreEqual(4, counter);
         }
 
         [TestMethod]

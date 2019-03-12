@@ -91,6 +91,18 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
 
         [TestMethod]
+        public void GetReturnsObjectFromGlobalStateWithMixedCase()
+        {
+            IGlobalState state = new GlobalState();
+
+            int testNumber = 8;
+            state.Add("Test", testNumber);
+
+            Assert.AreEqual(testNumber, (int)state.Get("test"));
+            Assert.AreEqual(testNumber, (int)state.Get("TeSt"));
+        }
+
+        [TestMethod]
         public void CountReturnsZeroForNewGlobalState()
         {
             IGlobalState state = new GlobalState();
@@ -166,6 +178,22 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             state.Update("counter", counter);
 
             Assert.AreEqual(1, (int)state.Get("counter"));
+        }
+
+        [TestMethod]
+        public void UpdateValueInStateObjectWithMixedCase()
+        {
+            IGlobalState state = new GlobalState();
+
+            state.Add("counter", 0);
+
+            Assert.AreEqual(0, (int)state.Get("Counter"));
+
+            var counter = (int)state.Get("CoUnTer");
+            counter++;
+            state.Update("counTeR", counter);
+
+            Assert.AreEqual(1, (int)state.Get("cOuNtEr"));
         }
 
         [TestMethod]
