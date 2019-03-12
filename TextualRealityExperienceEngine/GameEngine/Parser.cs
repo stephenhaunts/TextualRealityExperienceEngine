@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
+using System.Text;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 using TextualRealityExperienceEngine.GameEngine.Synonyms;
 
@@ -119,6 +121,9 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
 
             var lowerCase = command.ToLower();
+
+            lowerCase = RemovePunctuation(lowerCase);
+
             var wordList = lowerCase.Split(' ');
             _command = new Command();
 
@@ -144,7 +149,25 @@ namespace TextualRealityExperienceEngine.GameEngine
                     MultiWordCommand(wordList);
                     _command.FullTextCommand = lowerCase;
                     return _command;
-            }                      
+            }                     
+        }
+
+        private string RemovePunctuation(string s)
+        {
+            var result = new StringBuilder();
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (Char.IsWhiteSpace(s[i]))
+                {
+                    result.Append(" ");
+                }
+                else if (!Char.IsLetter(s[i]) && !Char.IsNumber(s[i])) {  }
+                else
+                {
+                    result.Append(s[i]);
+                }
+            }
+            return result.ToString();
         }
 
         private void SingleWordCommand(string command)

@@ -196,6 +196,40 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
 
         [TestMethod]
+        public void ParseCommandReturnsValidCommandFor_Obtain_Key_From_Ground2RemovesPunctuation()
+        {
+            IParser parser = new Parser();
+            parser.Nouns.Add("key", "key");
+            parser.Nouns.Add("floor", "floor");
+            parser.Nouns.Add("ground", "floor");
+
+            var command = parser.ParseCommand("Obtain; uiouoiuiou!! Key,, iuouoiuio. from wibblebum ground.");
+
+            Assert.AreEqual(VerbCodes.Take, command.Verb);
+            Assert.AreEqual("key", command.Noun);
+            Assert.AreEqual(PropositionEnum.From, command.Preposition);
+            Assert.AreEqual("floor", command.Noun2);
+            Assert.AreEqual("obtain uiouoiuiou key iuouoiuio from wibblebum ground", command.FullTextCommand);
+        }
+
+        [TestMethod]
+        public void ParseCommandReturnsValidCommandFor_Obtain_Key_From_Ground2RemovesMorePunctuation()
+        {
+            IParser parser = new Parser();
+            parser.Nouns.Add("key", "key");
+            parser.Nouns.Add("floor", "floor");
+            parser.Nouns.Add("ground", "floor");
+
+            var command = parser.ParseCommand("Obtain! uiou'oiuiou@ Key±//.,' iuouoiuio.^ from &wibblebum ground.");
+
+            Assert.AreEqual(VerbCodes.Take, command.Verb);
+            Assert.AreEqual("key", command.Noun);
+            Assert.AreEqual(PropositionEnum.From, command.Preposition);
+            Assert.AreEqual("floor", command.Noun2);
+            Assert.AreEqual("obtain uiouoiuiou key iuouoiuio from wibblebum ground", command.FullTextCommand);
+        }
+
+        [TestMethod]
         public void ParseCommandReturnsValidCommandFor_Examine()
         {
             IParser parser = new Parser();
