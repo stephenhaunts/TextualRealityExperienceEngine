@@ -132,6 +132,17 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _synonymMappings.Add("clue", VerbCodes.Hint);
             _synonymMappings.Add("clues", VerbCodes.Hint);
             _synonymMappings.Add("sos", VerbCodes.Hint);
+
+            _synonymMappings.Add("attack", VerbCodes.Attack);
+            _synonymMappings.Add("hit", VerbCodes.Attack);
+            _synonymMappings.Add("barge", VerbCodes.Attack);
+            _synonymMappings.Add("kick", VerbCodes.Attack);
+            _synonymMappings.Add("wallop", VerbCodes.Attack);
+            _synonymMappings.Add("smash", VerbCodes.Attack);
+            _synonymMappings.Add("stab", VerbCodes.Attack);
+            _synonymMappings.Add("slap", VerbCodes.Attack);
+            _synonymMappings.Add("punch", VerbCodes.Attack);
+            _synonymMappings.Add("chop", VerbCodes.Attack);
         }
 
         /// <summary>

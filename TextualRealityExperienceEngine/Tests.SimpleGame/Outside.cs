@@ -55,12 +55,25 @@ namespace Tests.SimpleGame
             game.ContentManagement.AddContentItem("IWonderIfKey", "I wonder if the key you picked up will unlock the front door.");
             game.ContentManagement.AddContentItem("NoNeedToBeRudeOutside", "There is no need to be rude.");
             game.ContentManagement.AddContentItem("GrabKey", "You pick up the key.");
+            game.ContentManagement.AddContentItem("LookDoor", "The door is made of a black plastic that resembles a wooden texture. The lock looks very sturdy and as if it will hold back a good kick or shoulder barge.");
+            game.ContentManagement.AddContentItem("DoorLocked", "The door is locked.");
+            game.ContentManagement.AddContentItem("AttackDoor", "You shoulder barge the door as hard as you can, but the door does not budge. You feel an agonizing pain run through your shoulder and down your back. You are not as young as you used to be.");
+            game.ContentManagement.AddContentItem("SoloAttack", "You have the power to pick up a flower; weakling!!!");
         }
 
         public override string ProcessCommand(ICommand command)
         {            
             switch (command.Verb)
             {
+                case VerbCodes.Attack:
+                    switch (command.Noun)
+                    {
+                        case "door":
+                            return Game.ContentManagement.RetrieveContentItem("AttackDoor");
+                        default:
+                            return Game.ContentManagement.RetrieveContentItem("SoloAttack");
+                    }
+
                 case VerbCodes.Use:
                     switch (command.Noun)
                     {
@@ -72,6 +85,8 @@ namespace Tests.SimpleGame
                             _doorUnlocked = true;
                             SetDoorLock(false, Direction.North);
                             return Game.ContentManagement.RetrieveContentItem("TurnKey");
+                        case "door" when !Game.Player.Inventory.Exists("Key"):
+                            return Game.ContentManagement.RetrieveContentItem("DoorLocked");
                         default:
                             return Game.ContentManagement.RetrieveContentItem("DoNotHaveKey");
                     }
@@ -90,6 +105,8 @@ namespace Tests.SimpleGame
                         }
                         case "doormat":
                             return Game.ContentManagement.RetrieveContentItem("DoorMat");
+                        case "door":
+                            return Game.ContentManagement.RetrieveContentItem("LookDoor");
                     }
 
                     break;

@@ -89,7 +89,7 @@ namespace Tests.SimpleGame
 
         private static void AddContentItems()
         {
-            _game.ContentManagement.AddContentItem("Prologue","Welcome to test adventure.You will be bedazzled with awesomeness.");
+            _game.ContentManagement.AddContentItem("Prologue","Welcome to the test adventure from the Textual Reality Experience Engine. You will be bedazzled with amazement at the sheer awesomeness of our graphics engine.");
             _game.ContentManagement.AddContentItem("OutsideName", "Outside");
             _game.ContentManagement.AddContentItem("OutsideDescription", "You are standing on a driveway outside of a house. It is nighttime and very cold. " +
                                                                          "There is frost on the ground. There is a door to the north with a plant pot next to the door mat.");
