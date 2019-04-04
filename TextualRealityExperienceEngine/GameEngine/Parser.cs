@@ -157,11 +157,11 @@ namespace TextualRealityExperienceEngine.GameEngine
             var result = new StringBuilder();
             for (int i = 0; i < s.Length; i++)
             {
-                if (Char.IsWhiteSpace(s[i]))
+                if (char.IsWhiteSpace(s[i]))
                 {
                     result.Append(" ");
                 }
-                else if (!Char.IsLetter(s[i]) && !Char.IsNumber(s[i])) {  }
+                else if (!char.IsLetter(s[i]) && !char.IsNumber(s[i])) {  }
                 else
                 {
                     result.Append(s[i]);
