@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Dynamic;
 
@@ -43,6 +44,9 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         int HintCost { get; }
         IPlayer Player { get; set; }
         DateTime GameClock { get; set; }
+        void AddVisitedRoom(IRoom room);
+        bool CheckRoomVisited(string roomName);
+        List<(string name, string description)> GetVisitedRooms();
         void IncreaseScore(int increaseBy);
         void DecreaseScore(int decreaseBy);
         GameReply ProcessCommand(string command);

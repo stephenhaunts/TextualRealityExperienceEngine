@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
@@ -140,6 +141,8 @@ namespace TextualRealityExperienceEngine.GameEngine
         
         private readonly ICommandQueue _commandQueue = new CommandQueue();
 
+        private readonly Dictionary<string, IRoom> _visitedRooms = new Dictionary<string, IRoom>();
+
         /// <summary>
         /// Constructor : Set up the correct default initial game state.
         /// </summary>
@@ -154,6 +157,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             HintSystemEnabled = false;
             ContentManagement = new ContentManagement(true);
             Player = new Player();
+            _visitedRooms = new Dictionary<string, IRoom>();
         }
 
         /// <summary>
@@ -180,8 +184,9 @@ namespace TextualRealityExperienceEngine.GameEngine
             HintSystemEnabled = false;
             ContentManagement = new ContentManagement(true);
             Player = new Player();
+            _visitedRooms = new Dictionary<string, IRoom>();
         }
-        
+                
         /// <summary>
         /// You have several options when it comes to offering hints to the player. You could maintain your own counter
         /// and allow the player 5 hints, for example, or you could deduct from their score and use the score as a hint
@@ -205,6 +210,36 @@ namespace TextualRealityExperienceEngine.GameEngine
                         throw new ArgumentOutOfRangeException();
                 }  
             }
+        }
+
+        public void AddVisitedRoom(IRoom room)
+        {
+            if (room == null)
+            {
+                throw new ArgumentNullException(nameof(room));
+            }
+
+            if (!_visitedRooms.ContainsKey(room.Name.ToLower()))
+            {
+                _visitedRooms.Add(room.Name.ToLower(), room);
+            }
+        }
+
+        public bool CheckRoomVisited(string roomName)
+        {
+            return _visitedRooms.ContainsKey(roomName.ToLower());
+        }
+
+        public List<(string name, string description)> GetVisitedRooms()
+        {
+            var rooms = new List<(string name, string description)>();
+
+            foreach (KeyValuePair<string, IRoom> entry in _visitedRooms)
+            {
+                rooms.Add((entry.Key, entry.Value.Description));
+            }
+
+            return rooms;
         }
 
         /// <summary>
