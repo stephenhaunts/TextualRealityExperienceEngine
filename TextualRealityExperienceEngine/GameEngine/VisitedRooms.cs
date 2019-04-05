@@ -65,6 +65,11 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// <param name="roomName">Room name.</param>
         public bool CheckRoomVisited(string roomName)
         {
+            if (string.IsNullOrEmpty(roomName))
+            {
+                return false;
+            }
+
             return _visitedRooms.ContainsKey(roomName.ToLower());
         }
 

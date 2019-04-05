@@ -45,6 +45,13 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
 
         [TestMethod]
+        public void VisitedRoomsIsEmptyWithDefaultConstructor()
+        {
+            var game = new Game();
+            Assert.AreEqual(0, game.VisitedRooms.GetVisitedRooms().Count);
+        }
+
+        [TestMethod]
         public void PrologueIsEmptyWhenCreatedWithDefaultConstructor()
         {
             var game = new Game();
