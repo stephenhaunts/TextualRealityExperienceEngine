@@ -320,6 +320,7 @@ namespace TextualRealityExperienceEngine.GameEngine
 
                         Game.CurrentRoom = room;
                         Game.NumberOfMoves++;
+                        Game.VisitedRooms.AddVisitedRoom(room);
 
                         return room.Description;
                     }

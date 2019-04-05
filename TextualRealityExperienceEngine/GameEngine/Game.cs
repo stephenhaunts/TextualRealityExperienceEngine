@@ -50,12 +50,29 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// </summary>
         public string HelpText { get; set; }
 
+        private IRoom _startRoom;
+
         /// <summary>
         /// StartRoom is a reference to the starting room for the game. If you want the player to start in the small dungeon, then
         /// assign that room to this field.
         /// </summary>
-        public IRoom StartRoom { get; set; }
-        
+        public IRoom StartRoom 
+        {
+            get
+            {
+                return _startRoom;
+            }
+            set
+            {
+                _startRoom = value;
+
+                if ((VisitedRooms != null) && (value != null))
+                {
+                    VisitedRooms.AddVisitedRoom(value);
+                }
+            }
+        }
+
         /// <summary>
         /// As the player navigates around the map, this property contains a reference to the current active room.
         /// </summary>
@@ -154,6 +171,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         {
             Prologue = string.Empty;
             HelpText = string.Empty;
+            VisitedRooms = new VisitedRooms();
             StartRoom = null;
             Parser = new Parser();
             GlobalState = new GlobalState();
@@ -161,7 +179,6 @@ namespace TextualRealityExperienceEngine.GameEngine
             HintSystemEnabled = false;
             ContentManagement = new ContentManagement(true);
             Player = new Player();
-            VisitedRooms = new VisitedRooms();
         }
 
         /// <summary>
@@ -179,6 +196,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
 
             Prologue = prologue;
+            VisitedRooms = new VisitedRooms();
             StartRoom = room ?? throw new ArgumentNullException(nameof(room), "The initial room state can not be null.");
             CurrentRoom = room;
             HelpText = string.Empty;
@@ -188,7 +206,6 @@ namespace TextualRealityExperienceEngine.GameEngine
             HintSystemEnabled = false;
             ContentManagement = new ContentManagement(true);
             Player = new Player();
-            VisitedRooms = new VisitedRooms();
         }
                 
         /// <summary>
