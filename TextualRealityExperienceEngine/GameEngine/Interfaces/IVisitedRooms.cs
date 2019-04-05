@@ -21,37 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Dynamic;
 
 namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
-    public interface IGame
+    public interface IVisitedRooms
     {
-        string Prologue { get; set; }
-        string HelpText { get; set; }
-        IRoom StartRoom { get; set; }
-        IRoom CurrentRoom { get; set; }
-        IVisitedRooms VisitedRooms { get; set; }
-
-        DifficultyEnum Difficulty { get; set; }       
-        IParser Parser { get; }
-        IGlobalState GlobalState { get; }
-        int NumberOfMoves { get; set; }
-        int Score { get; }
-        bool HintSystemEnabled { get; set; }
-        int HintCost { get; }
-        IPlayer Player { get; set; }
-        DateTime GameClock { get; set; }
-
-        void IncreaseScore(int increaseBy);
-        void DecreaseScore(int decreaseBy);
-        GameReply ProcessCommand(string command);
-        IContentManagement ContentManagement { get; }
-        ReadOnlyCollection<ICommand> SaveGame();
-        void LoadGame(ReadOnlyCollection<ICommand> commands);
+        void AddVisitedRoom(IRoom room);
+        bool CheckRoomVisited(string roomName);
+        List<(string name, string description)> GetVisitedRooms();
     }
 }

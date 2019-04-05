@@ -62,6 +62,8 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// dim the lights.
         /// </summary>
         public bool LightsOn { get; set;}
+
+        public IVisitedRooms VisitedRooms { get; set; }
         
         private string _description;
 

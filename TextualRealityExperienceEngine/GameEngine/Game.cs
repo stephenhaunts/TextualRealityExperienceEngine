@@ -60,7 +60,13 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// As the player navigates around the map, this property contains a reference to the current active room.
         /// </summary>
         public IRoom CurrentRoom { get; set; }
-        
+
+        /// <summary>
+        /// Gets or sets the visited rooms.
+        /// </summary>
+        /// <value>The visited rooms.</value>
+        public IVisitedRooms VisitedRooms { get; set; }
+
         /// <summary>
         /// The parser is the system that takes the players written input and reduces the synonyms down to command
         /// instances that the game can interpret.
@@ -141,8 +147,6 @@ namespace TextualRealityExperienceEngine.GameEngine
         
         private readonly ICommandQueue _commandQueue = new CommandQueue();
 
-        private readonly Dictionary<string, IRoom> _visitedRooms = new Dictionary<string, IRoom>();
-
         /// <summary>
         /// Constructor : Set up the correct default initial game state.
         /// </summary>
@@ -157,7 +161,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             HintSystemEnabled = false;
             ContentManagement = new ContentManagement(true);
             Player = new Player();
-            _visitedRooms = new Dictionary<string, IRoom>();
+            VisitedRooms = new VisitedRooms();
         }
 
         /// <summary>
@@ -184,7 +188,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             HintSystemEnabled = false;
             ContentManagement = new ContentManagement(true);
             Player = new Player();
-            _visitedRooms = new Dictionary<string, IRoom>();
+            VisitedRooms = new VisitedRooms();
         }
                 
         /// <summary>
@@ -210,36 +214,6 @@ namespace TextualRealityExperienceEngine.GameEngine
                         throw new ArgumentOutOfRangeException();
                 }  
             }
-        }
-
-        public void AddVisitedRoom(IRoom room)
-        {
-            if (room == null)
-            {
-                throw new ArgumentNullException(nameof(room));
-            }
-
-            if (!_visitedRooms.ContainsKey(room.Name.ToLower()))
-            {
-                _visitedRooms.Add(room.Name.ToLower(), room);
-            }
-        }
-
-        public bool CheckRoomVisited(string roomName)
-        {
-            return _visitedRooms.ContainsKey(roomName.ToLower());
-        }
-
-        public List<(string name, string description)> GetVisitedRooms()
-        {
-            var rooms = new List<(string name, string description)>();
-
-            foreach (KeyValuePair<string, IRoom> entry in _visitedRooms)
-            {
-                rooms.Add((entry.Key, entry.Value.Description));
-            }
-
-            return rooms;
         }
 
         /// <summary>

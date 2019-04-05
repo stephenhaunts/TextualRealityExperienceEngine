@@ -38,6 +38,13 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
 
         [TestMethod]
+        public void VisitedRoomsIsNotNullWhenCreatedWithDefaultConstructor()
+        {
+            var game = new Game();
+            Assert.IsNotNull(game.VisitedRooms);
+        }
+
+        [TestMethod]
         public void PrologueIsEmptyWhenCreatedWithDefaultConstructor()
         {
             var game = new Game();
