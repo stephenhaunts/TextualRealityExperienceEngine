@@ -34,6 +34,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         Exit,
         Help,
         Score,
-        Clearscreen
+        Clearscreen,
+        Visited
     }
 }

@@ -181,6 +181,24 @@ namespace Tests.SimpleGame
                             Console.WriteLine();
                         }
                         continue;
+                    case GameStateEnum.Visited:
+                        Console.WriteLine();
+                        Console.WriteLine("Visited Locations");
+                        Console.WriteLine("-----------------");
+                        Console.WriteLine();
+                        Console.WriteLine("You have visited the following locations.");
+                        Console.WriteLine();
+
+                        foreach (var location in _game.VisitedRooms.GetVisitedRooms())
+                        {
+                            Console.WriteLine("    " + location.name);
+                        }
+
+                        Console.WriteLine();
+                        Console.WriteLine("To visit an already visited location type goto or visit and then the location name.");
+
+
+                        continue;
                     case GameStateEnum.Help:
                         Console.WriteLine();
                         Console.WriteLine("Game Manual");

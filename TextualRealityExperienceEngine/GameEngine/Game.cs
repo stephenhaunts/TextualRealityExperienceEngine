@@ -372,6 +372,14 @@ namespace TextualRealityExperienceEngine.GameEngine
                     reply.Reply = lowerCase;
                     return reply;
                 }
+                case "locations":
+                case "visited":
+                case "visited locations":
+                {
+                    reply.State = GameStateEnum.Visited;
+                    reply.Reply = lowerCase;
+                    return reply;
+                }
             }
 
             reply.State = GameStateEnum.Playing;
