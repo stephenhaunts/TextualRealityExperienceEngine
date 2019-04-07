@@ -196,8 +196,6 @@ namespace Tests.SimpleGame
 
                         Console.WriteLine();
                         Console.WriteLine("To visit an already visited location type goto or visit and then the location name.");
-
-
                         continue;
                     case GameStateEnum.Help:
                         Console.WriteLine();

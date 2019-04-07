@@ -113,7 +113,7 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var command = parser.ParseCommand("Twatty North");
 
             Assert.AreEqual(VerbCodes.NoCommand, command.Verb);
-            Assert.AreEqual("north", command.Noun);
+            Assert.AreEqual("", command.Noun);
             Assert.AreEqual("twatty north", command.FullTextCommand);
         }
 

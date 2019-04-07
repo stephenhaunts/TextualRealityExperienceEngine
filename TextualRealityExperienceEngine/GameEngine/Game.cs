@@ -69,6 +69,10 @@ namespace TextualRealityExperienceEngine.GameEngine
                 if ((VisitedRooms != null) && (value != null))
                 {
                     VisitedRooms.AddVisitedRoom(value);
+                    if (string.IsNullOrEmpty(Parser.Nouns.GetNounForSynonym(value.Name)))
+                    {
+                        Parser.Nouns.Add(value.Name.ToLower(), value.Name.ToLower());
+                    }
                 }
             }
         }
@@ -172,8 +176,8 @@ namespace TextualRealityExperienceEngine.GameEngine
             Prologue = string.Empty;
             HelpText = string.Empty;
             VisitedRooms = new VisitedRooms();
-            StartRoom = null;
             Parser = new Parser();
+            StartRoom = null;
             GlobalState = new GlobalState();
             Difficulty = DifficultyEnum.Easy;
             HintSystemEnabled = false;
@@ -197,10 +201,10 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             Prologue = prologue;
             VisitedRooms = new VisitedRooms();
+            Parser = new Parser();
             StartRoom = room ?? throw new ArgumentNullException(nameof(room), "The initial room state can not be null.");
             CurrentRoom = room;
             HelpText = string.Empty;
-            Parser = new Parser();
             GlobalState = new GlobalState();
             Difficulty = DifficultyEnum.Easy;
             HintSystemEnabled = false;

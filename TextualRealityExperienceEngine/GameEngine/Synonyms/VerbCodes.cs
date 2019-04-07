@@ -37,6 +37,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
         Look = 4,
         Drop = 5,
         Hint = 6,
-        Attack = 7
+        Attack = 7,
+        Visit = 8
     }
 }

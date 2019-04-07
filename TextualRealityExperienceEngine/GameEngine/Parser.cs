@@ -215,7 +215,11 @@ namespace TextualRealityExperienceEngine.GameEngine
         private bool ProcessVerbs(string word)
         {
             var verb = Verbs.GetVerbForSynonym(word);
-            _parserStates = ParserStatesEnum.Noun;
+
+            if (verb != VerbCodes.NoCommand)
+            {
+                _parserStates = ParserStatesEnum.Noun;
+            }
 
             if (verb != VerbCodes.NoCommand)
             {

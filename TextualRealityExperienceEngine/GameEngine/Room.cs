@@ -321,6 +321,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                         Game.CurrentRoom = room;
                         Game.NumberOfMoves++;
                         Game.VisitedRooms.AddVisitedRoom(room);
+                        //Game.Parser.Nouns.Add(room.Name, room.Name);
 
                         return room.Description;
                     }
@@ -375,6 +376,9 @@ namespace TextualRealityExperienceEngine.GameEngine
                                 throw new ArgumentOutOfRangeException();
                         }                        
                     }
+                    break;
+                case VerbCodes.Visit:
+                    int i = 0;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

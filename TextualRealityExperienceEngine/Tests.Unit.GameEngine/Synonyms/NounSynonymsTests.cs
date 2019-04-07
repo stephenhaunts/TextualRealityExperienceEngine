@@ -31,20 +31,21 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
     public class NounSynonymsTests
     {    
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void AddThrowsArgumentNullExceptionIsSynonymIsNull()
+        public void AddReturnsIfSynonymIsNull()
         {
             var nounSynonyms = new NounSynonyms();
             nounSynonyms.Add("", "");
+            Assert.AreEqual("", nounSynonyms.GetNounForSynonym(""));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void AddThrowsArgumentNullExceptionIsNounIsNull()
+        public void AddReturnsIFNounIsNull()
         {
             var nounSynonyms = new NounSynonyms();
             nounSynonyms.Add("test", "");
+            Assert.AreEqual("", nounSynonyms.GetNounForSynonym("test"));
         }
+
 
         [TestMethod]
         public void AddCreatesSynonymMappingForANoun()

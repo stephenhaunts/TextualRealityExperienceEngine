@@ -85,12 +85,12 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
         {
             if (string.IsNullOrEmpty(synonym))
             {
-                throw new ArgumentNullException(nameof(synonym));
+                return;
             }
 
             if (string.IsNullOrEmpty(noun))
             {
-                throw new ArgumentNullException(nameof(noun));
+                return;
             }
 
             _synonymsMappings.Add(synonym, noun);
@@ -107,7 +107,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
         {
             if (string.IsNullOrEmpty(synonym))
             {
-                throw new ArgumentNullException(nameof(synonym));
+                return string.Empty;
             }
 
             return _synonymsMappings.ContainsKey(synonym) ? _synonymsMappings[synonym] : string.Empty;
