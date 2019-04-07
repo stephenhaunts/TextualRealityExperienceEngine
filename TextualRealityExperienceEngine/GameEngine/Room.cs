@@ -378,8 +378,17 @@ namespace TextualRealityExperienceEngine.GameEngine
                     }
                     break;
                 case VerbCodes.Visit:
-                    int i = 0;
-                    break;
+                    if (Game.VisitedRooms.CheckRoomVisited(command.Noun))
+                    {
+                        var room = Game.VisitedRooms.GetRoomInstance(command.Noun);
+                        Game.CurrentRoom = room;
+                        return room.Description;
+                    }
+                    else
+                    {
+                        return "You can not visit this room as you have not previously been there.";
+                    }
+                   
                 default:
                     throw new ArgumentOutOfRangeException();
             }

@@ -30,6 +30,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
     {
         void AddVisitedRoom(IRoom room);
         bool CheckRoomVisited(string roomName);
+        IRoom GetRoomInstance(string roomName);
         List<(string name, string description)> GetVisitedRooms();
     }
 }

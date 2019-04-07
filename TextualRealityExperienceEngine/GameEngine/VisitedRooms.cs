@@ -74,6 +74,21 @@ namespace TextualRealityExperienceEngine.GameEngine
         }
 
         /// <summary>
+        /// Gets the room instanve.
+        /// </summary>
+        /// <returns>The room instanve.</returns>
+        /// <param name="roomName">Room name.</param>
+        public IRoom GetRoomInstance(string roomName)
+        {
+            if (string.IsNullOrEmpty(roomName))
+            {
+                return null;
+            }
+
+            return _visitedRooms[roomName.ToLower()];
+        }
+
+        /// <summary>
         /// Gets the visited rooms.
         /// </summary>
         /// <returns>The visited rooms.</returns>
