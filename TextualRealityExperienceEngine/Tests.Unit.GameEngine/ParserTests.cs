@@ -269,6 +269,40 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
 
         [TestMethod]
+        public void ParseCommandReturnsValidCommandForMultipleCommandsBeforeVerb()
+        {
+            IParser parser = new Parser();
+            parser.Nouns.Add("key", "key");
+            parser.Nouns.Add("floor", "floor");
+            parser.Nouns.Add("door", "door");
+
+            var command = parser.ParseCommand("could you please use the use key on door");
+
+            Assert.AreEqual(VerbCodes.Use, command.Verb);
+            Assert.AreEqual("key", command.Noun);
+            Assert.AreEqual(PropositionEnum.On, command.Preposition);
+            Assert.AreEqual("door", command.Noun2);
+            Assert.AreEqual("could you please use the use key on door", command.FullTextCommand);
+        }
+
+        [TestMethod]
+        public void ParseCommandReturnsValidCommandForMultipleCommandsBeforeVerbAndAfterNouns()
+        {
+            IParser parser = new Parser();
+            parser.Nouns.Add("key", "key");
+            parser.Nouns.Add("floor", "floor");
+            parser.Nouns.Add("door", "door");
+
+            var command = parser.ParseCommand("could you please use the use key on door. Many thanks my friend.");
+
+            Assert.AreEqual(VerbCodes.Use, command.Verb);
+            Assert.AreEqual("key", command.Noun);
+            Assert.AreEqual(PropositionEnum.On, command.Preposition);
+            Assert.AreEqual("door", command.Noun2);
+            Assert.AreEqual("could you please use the use key on door many thanks my friend", command.FullTextCommand);
+        }
+
+        [TestMethod]
         public void ProfanityFilterGetsTrippedForFullCommand()
         {
             IParser parser = new Parser();
