@@ -43,27 +43,30 @@ namespace Tests.SimpleGame
             AddContentItems();
 
             _game.Prologue = _game.ContentManagement.RetrieveContentItem("Prologue");
-            _game.HelpText = _game.ContentManagement.RetrieveContentItem("HelpText");     
+            _game.HelpText = _game.ContentManagement.RetrieveContentItem("HelpText");
+            _game.HintSystemEnabled = true;
 
+            SetupRooms();
+
+            _game.StartRoom = _outside;
+            _game.CurrentRoom = _outside;
+        }
+
+        private static void SetupRooms()
+        {
             _outside = new Outside(_game);
-
             _garage = new Garage(_game);
-
             _kitchen = new Kitchen(_game);
-
+            _lounge = new Lounge(_game);
             _hallway = new Hallway(_game)
             {
                 LightsOn = false
             };
 
-            _lounge = new Lounge(_game);
-            
-            _game.HintSystemEnabled = true;
-
             var doorway = new DoorWay
             {
                 Direction = Direction.North,
-                Locked = true,                
+                Locked = true,
             };
 
             var doorwayToGarage = new DoorWay
@@ -74,18 +77,14 @@ namespace Tests.SimpleGame
 
             _outside.AddExit(doorway, _hallway);
             _outside.AddExit(doorwayToGarage, _garage);
-
             _hallway.AddExit(Direction.West, _lounge);
             _hallway.AddExit(Direction.North, _kitchen);
-
-            _game.StartRoom = _outside;
-            _game.CurrentRoom = _outside;
         }
 
         private static void AddContentItems()
         {
             _game.ContentManagement.AddContentItem("NoNeedToBeRude", "There is no need to be rude.");
-            _game.ContentManagement.AddContentItem("Prologue","Welcome to the test adventure from the Textual Reality Experience Engine. You will be bedazzled with amazement at the sheer awesomeness of our graphics engine.");
+            _game.ContentManagement.AddContentItem("Prologue", "Welcome to the test adventure from the Textual Reality Experience Engine. \r\n\r\nYou will be bedazzled with amazement at the sheer awesomeness of our graphics engine.");
                           
             _game.ContentManagement.AddContentItem("HelpText", "Your aim is to find the treasure that is hidden somewhere in the house. \r\nYou need to type commands into the game to control the player.");
 
@@ -98,7 +97,7 @@ namespace Tests.SimpleGame
             Console.Clear();
             InitializeGame();
 
-            Console.WriteLine(_game.Prologue);
+            ConsoleEx.WordWrap(_game.Prologue);
             Console.WriteLine();
 
             ConsoleEx.WordWrap(_game.StartRoom.Description);
