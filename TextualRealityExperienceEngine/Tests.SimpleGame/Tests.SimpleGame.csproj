@@ -9,4 +9,9 @@
   <ItemGroup>
     <ProjectReference Include="..\GameEngine\GameEngine.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Downstairs\" />
+    <Folder Include="Upstairs\" />
+    <Folder Include="Crypt\" />
+  </ItemGroup>
 </Project>

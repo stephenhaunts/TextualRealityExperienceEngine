@@ -24,7 +24,7 @@ SOFTWARE.
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
-namespace Tests.SimpleGame
+namespace Tests.SimpleGame.Downstairs
 {
     public class Kitchen : Room
     {

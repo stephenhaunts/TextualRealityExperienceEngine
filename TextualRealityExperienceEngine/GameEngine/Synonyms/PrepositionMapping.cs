@@ -45,7 +45,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
         Behind = 10,
         At = 11,
         Up = 12,
-        From = 13
+        From = 12
     }
 
     /// <summary>

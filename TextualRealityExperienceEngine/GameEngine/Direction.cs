@@ -36,6 +36,8 @@ namespace TextualRealityExperienceEngine.GameEngine
         NorthEast = 4,
         SouthEast = 5,
         SouthWest = 6,
-        NorthWest = 7
+        NorthWest = 7,
+        Up = 8,
+        Down = 9
     }
 }
