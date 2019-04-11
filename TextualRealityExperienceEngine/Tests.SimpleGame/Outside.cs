@@ -38,10 +38,18 @@ namespace Tests.SimpleGame
         private bool _doorUnlocked = false;
         private bool _keyPickedUp = false;
 
-        public Outside(string name, string description, IGame game) : base(name, description, game)
+        public Outside(IGame game) : base(game)
         {
             _lookedAtPlantPot = false;
-            
+
+            game.ContentManagement.AddContentItem("OutsideName", "Outside");
+            game.ContentManagement.AddContentItem("OutsideDescription", "You are standing on a driveway outside of a house. It is nighttime and very cold. " +
+                                                                         "There is frost on the ground. There is a door to the north with a plant pot next to the door mat." +
+                                                                         "There is also a white metal garage door to the north west.");
+
+            Name = game.ContentManagement.RetrieveContentItem("OutsideName");
+            Description = game.ContentManagement.RetrieveContentItem("OutsideDescription");
+
             game.ContentManagement.AddContentItem("TurnKey", "You turn the key in the lock and you hear a THUNK of the door unlocking.");
             game.ContentManagement.AddContentItem("DoNotHaveKey", "You do not have a key.");
             game.ContentManagement.AddContentItem("ItsAPlantPot", "It's a plant pot. Quite unremarkable.");
@@ -53,12 +61,24 @@ namespace Tests.SimpleGame
             game.ContentManagement.AddContentItem("InterestingPlantPot", "The plant pot looks interesting.");
             game.ContentManagement.AddContentItem("UsefulKey", "That key looks like it might be useful.");
             game.ContentManagement.AddContentItem("IWonderIfKey", "I wonder if the key you picked up will unlock the front door.");
-            game.ContentManagement.AddContentItem("NoNeedToBeRudeOutside", "There is no need to be rude.");
             game.ContentManagement.AddContentItem("GrabKey", "You pick up the key.");
             game.ContentManagement.AddContentItem("LookDoor", "The door is made of a black plastic that resembles a wooden texture. The lock looks very sturdy and as if it will hold back a good kick or shoulder barge.");
             game.ContentManagement.AddContentItem("DoorLocked", "The door is locked.");
             game.ContentManagement.AddContentItem("AttackDoor", "You shoulder barge the door as hard as you can, but the door does not budge. You feel an agonizing pain run through your shoulder and down your back. You are not as young as you used to be.");
             game.ContentManagement.AddContentItem("SoloAttack", "You have the power to pick up a flower; weakling!!!");
+
+            game.Parser.Nouns.Add("plantpot", "plantpot");
+            game.Parser.Nouns.Add("plant", "plantpot");
+            game.Parser.Nouns.Add("pot", "plantpot");
+
+            game.Parser.Nouns.Add("key", "key");
+            game.Parser.Nouns.Add("keys", "key");
+
+            game.Parser.Nouns.Add("doormat", "doormat");
+            game.Parser.Nouns.Add("mat", "doormat");
+
+            game.Parser.Nouns.Add("door", "door");
+            game.Parser.Nouns.Add("frontdoor", "door");
         }
 
         public override string ProcessCommand(ICommand command)
@@ -158,7 +178,7 @@ namespace Tests.SimpleGame
 
             if (command.ProfanityDetected)
             {
-                return Game.ContentManagement.RetrieveContentItem("NoNeedToBeRudeOutside");
+                return Game.ContentManagement.RetrieveContentItem("NoNeedToBeRude");
             }
             
             var reply = base.ProcessCommand(command);

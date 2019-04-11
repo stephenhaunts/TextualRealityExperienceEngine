@@ -26,15 +26,15 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace Tests.SimpleGame
 {
-    public class Lounge : Room
+    public class Garage : Room
     {
-        public Lounge(IGame game) : base(game)
+        public Garage(IGame game) : base(game)
         {
-            game.ContentManagement.AddContentItem("LoungeName", "Lounge");
-            game.ContentManagement.AddContentItem("LoungeDescription", "You are stand in the lounge. There is a sofa and a TV inside. There is a door back to the hallway to the east.");
+            game.ContentManagement.AddContentItem("GarageName", "Garage");
+            game.ContentManagement.AddContentItem("GarageDescription", "You are standing in a garage, surrounded by pots of pain, an old bicycle and a lawn mower.");
 
-            Name = Game.ContentManagement.RetrieveContentItem("LoungeName");
-            Description = Game.ContentManagement.RetrieveContentItem("LoungeDescription");
+            Name = game.ContentManagement.RetrieveContentItem("GarageName");
+            Description = game.ContentManagement.RetrieveContentItem("GarageDescription");
         }
 
         public override string ProcessCommand(ICommand command)

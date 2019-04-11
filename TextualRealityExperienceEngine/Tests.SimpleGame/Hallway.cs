@@ -29,11 +29,25 @@ namespace Tests.SimpleGame
 {
     public class Hallway : Room
     {
-        public Hallway(string name, string description, IGame game) : base(name, description, game)
+        public Hallway(IGame game) : base(game)
         {
-            game.ContentManagement.AddContentItem("NoNeedToBeRude", "There is no need to be rude.");
+            game.ContentManagement.AddContentItem("HallwayName", "Hallway");
+            game.ContentManagement.AddContentItem("HallwayDescription", "You are standing in a hallway that is modern, yet worn. There is a door to the west, and a door to the north." +
+                                                                         "To the south the front door leads back to the driveway.");
+            game.ContentManagement.AddContentItem("HallwayLightsOff", "You are standing in a very dimly lit hallway. Your eyes struggle to adjust to the low light. " +
+                                                           "You notice there is a switch on the wall to your left.");
+
+            Name = game.ContentManagement.RetrieveContentItem("HallwayName");
+            Description = game.ContentManagement.RetrieveContentItem("HallwayDescription");
+            LightsOffDescription = game.ContentManagement.RetrieveContentItem("HallwayLightsOff");
+
             game.ContentManagement.AddContentItem("FlipLightSwitch",
                 "You flip the light switch and the lights flicker for a few seconds until they illuminate the hallway. You hear a faint buzzing sound coming from the lights.");
+           
+            game.Parser.Nouns.Add("light", "lightswitch");
+            game.Parser.Nouns.Add("lights", "lightswitch");
+            game.Parser.Nouns.Add("lightswitch", "lightswitch");
+            game.Parser.Nouns.Add("switch", "lightswitch");
         }
 
         public override string ProcessCommand(ICommand command)

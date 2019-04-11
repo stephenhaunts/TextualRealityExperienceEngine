@@ -33,6 +33,8 @@ namespace Tests.SimpleGame
         private static IRoom _outside;
         private static IRoom _hallway;
         private static IRoom _lounge;
+        private static IRoom _garage;
+        private static IRoom _kitchen;
 
         private static void InitializeGame()
         {
@@ -41,36 +43,20 @@ namespace Tests.SimpleGame
             AddContentItems();
 
             _game.Prologue = _game.ContentManagement.RetrieveContentItem("Prologue");
-            _game.HelpText = _game.ContentManagement.RetrieveContentItem("HelpText");
-            _game.Parser.Nouns.Add("light", "lightswitch");
-            _game.Parser.Nouns.Add("lights", "lightswitch");
-            _game.Parser.Nouns.Add("lightswitch", "lightswitch");
-            _game.Parser.Nouns.Add("switch", "lightswitch");
-            _game.Parser.Nouns.Add("plantpot", "plantpot");
-            _game.Parser.Nouns.Add("plant", "plantpot");
-            _game.Parser.Nouns.Add("pot", "plantpot");
+            _game.HelpText = _game.ContentManagement.RetrieveContentItem("HelpText");     
 
-            _game.Parser.Nouns.Add("key", "key");
-            _game.Parser.Nouns.Add("keys", "key");
+            _outside = new Outside(_game);
 
-            _game.Parser.Nouns.Add("doormat", "doormat");
-            _game.Parser.Nouns.Add("mat", "doormat");
+            _garage = new Garage(_game);
 
-            _game.Parser.Nouns.Add("door", "door");
-            _game.Parser.Nouns.Add("frontdoor", "door");
+            _kitchen = new Kitchen(_game);
 
-            _outside = new Outside(_game.ContentManagement.RetrieveContentItem("OutsideName"), 
-                               _game.ContentManagement.RetrieveContentItem("OutsideDescription"), _game);
-
-            _hallway = new Hallway(_game.ContentManagement.RetrieveContentItem("HallwayName"), 
-                               _game.ContentManagement.RetrieveContentItem("HallwayDescription"), _game)
+            _hallway = new Hallway(_game)
             {
-                LightsOn = false,
-                LightsOffDescription = _game.ContentManagement.RetrieveContentItem("HallwayLightsOff")
+                LightsOn = false
             };
 
-            _lounge = new Lounge(_game.ContentManagement.RetrieveContentItem("LoungeName"), 
-                             _game.ContentManagement.RetrieveContentItem("LoungeDescription"), _game);
+            _lounge = new Lounge(_game);
             
             _game.HintSystemEnabled = true;
 
@@ -80,8 +66,17 @@ namespace Tests.SimpleGame
                 Locked = true,                
             };
 
+            var doorwayToGarage = new DoorWay
+            {
+                Direction = Direction.NorthWest,
+                Locked = true,
+            };
+
             _outside.AddExit(doorway, _hallway);
+            _outside.AddExit(doorwayToGarage, _garage);
+
             _hallway.AddExit(Direction.West, _lounge);
+            _hallway.AddExit(Direction.North, _kitchen);
 
             _game.StartRoom = _outside;
             _game.CurrentRoom = _outside;
@@ -89,20 +84,9 @@ namespace Tests.SimpleGame
 
         private static void AddContentItems()
         {
+            _game.ContentManagement.AddContentItem("NoNeedToBeRude", "There is no need to be rude.");
             _game.ContentManagement.AddContentItem("Prologue","Welcome to the test adventure from the Textual Reality Experience Engine. You will be bedazzled with amazement at the sheer awesomeness of our graphics engine.");
-            _game.ContentManagement.AddContentItem("OutsideName", "Outside");
-            _game.ContentManagement.AddContentItem("OutsideDescription", "You are standing on a driveway outside of a house. It is nighttime and very cold. " +
-                                                                         "There is frost on the ground. There is a door to the north with a plant pot next to the door mat.");
-            
-            _game.ContentManagement.AddContentItem("HallwayName", "Hallway");
-            _game.ContentManagement.AddContentItem("HallwayDescription", "You are standing in a hallway that is modern, yet worn. There is a door to the west." +
-                                                                         "To the south the front door leads back to the driveway.");
-            
-            _game.ContentManagement.AddContentItem("HallwayLightsOff", "You are standing in a very dimly lit hallway. Your eyes struggle to adjust to the low light. " + 
-                                                                       "You notice there is a switch on the wall to your left.");
-            
-            _game.ContentManagement.AddContentItem("LoungeName", "Lounge");
-            _game.ContentManagement.AddContentItem("LoungeDescription", "You are stand in the lounge. There is a sofa and a TV inside. There is a door back to the hallway to the east.");
+                          
             _game.ContentManagement.AddContentItem("HelpText", "Your aim is to find the treasure that is hidden somewhere in the house. \r\nYou need to type commands into the game to control the player.");
 
             _game.ContentManagement.AddContentItem("AreYouSure", "Are you sure? (y/n) : ");
