@@ -320,8 +320,12 @@ namespace TextualRealityExperienceEngine.GameEngine
 
                         Game.CurrentRoom = room;
                         Game.NumberOfMoves++;
-                        Game.VisitedRooms.AddVisitedRoom(room);
-                        //Game.Parser.Nouns.Add(room.Name, room.Name);
+                            Game.VisitedRooms.AddVisitedRoom(room);
+
+                        if (string.IsNullOrEmpty(Game.Parser.Nouns.GetNounForSynonym(room.Name)))
+                        {
+                            Game.Parser.Nouns.Add(room.Name.ToLower(), room.Name.ToLower());
+                        }
 
                         return room.Description;
                     }
@@ -335,7 +339,14 @@ namespace TextualRealityExperienceEngine.GameEngine
                 {
                     if (string.IsNullOrEmpty(command.Noun))
                     {
-                        return Description;
+                        string roomDescription = Description;
+                        
+                        foreach (var item in DroppedObjects.DroppedObjectsList)
+                        {
+                            roomDescription += " \r\nThere is a " + item.Name + " on the floor.";
+                        }
+
+                        return roomDescription;
                     }
                     break;
                 }

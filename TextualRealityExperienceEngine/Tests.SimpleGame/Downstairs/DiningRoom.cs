@@ -26,15 +26,15 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace Tests.SimpleGame.Downstairs
 {
-    public class Kitchen : Room
+    public class DiningRoom : Room
     {
-        public Kitchen(IGame game) : base(game)
+        public DiningRoom(IGame game) : base(game)
         {
-            game.ContentManagement.AddContentItem("KitchenName", "Kitchen");
-            game.ContentManagement.AddContentItem("KitchenDescription", "You are standing in the kitchen. There is a small table to your left, a fridge in front of you and a cooker to the right. There is a door to the east.");
+            game.ContentManagement.AddContentItem("DiningRoomName", "DiningRoom");
+            game.ContentManagement.AddContentItem("DiningRoomDescription", "You are standing in the dining room. There is a small table to your left, a fridge in front of you and a cooker to the right. ");
 
-            Name = game.ContentManagement.RetrieveContentItem("KitchenName");
-            Description = game.ContentManagement.RetrieveContentItem("KitchenDescription");
+            Name = game.ContentManagement.RetrieveContentItem("DiningRoomName");
+            Description = game.ContentManagement.RetrieveContentItem("DiningRoomDescription");
         }
 
         public override string ProcessCommand(ICommand command)

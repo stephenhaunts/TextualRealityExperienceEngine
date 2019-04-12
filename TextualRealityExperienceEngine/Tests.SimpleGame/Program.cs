@@ -37,6 +37,7 @@ namespace Tests.SimpleGame
         private static IRoom _lounge;
         private static IRoom _garage;
         private static IRoom _kitchen;
+        private static IRoom _diningRoom;
 
         private static void InitializeGame()
         {
@@ -59,6 +60,8 @@ namespace Tests.SimpleGame
             _outside = new Outside(_game);
             _garage = new Garage(_game);
             _kitchen = new Kitchen(_game);
+            _diningRoom = new DiningRoom(_game);
+
             _lounge = new Lounge(_game);
             _hallway = new Hallway(_game)
             {
@@ -81,6 +84,7 @@ namespace Tests.SimpleGame
             _outside.AddExit(doorwayToGarage, _garage);
             _hallway.AddExit(Direction.West, _lounge);
             _hallway.AddExit(Direction.North, _kitchen);
+            _kitchen.AddExit(Direction.East, _diningRoom);
         }
 
         private static void AddContentItems()
