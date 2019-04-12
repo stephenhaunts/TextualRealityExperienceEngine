@@ -48,6 +48,10 @@ namespace Tests.SimpleGame.Downstairs
             game.Parser.Nouns.Add("lights", "lightswitch");
             game.Parser.Nouns.Add("lightswitch", "lightswitch");
             game.Parser.Nouns.Add("switch", "lightswitch");
+
+            game.Parser.Nouns.Add("stairs", "stairs");
+            game.Parser.Nouns.Add("staircase", "stairs");
+            game.Parser.Nouns.Add("steps", "stairs");
         }
 
         public override string ProcessCommand(ICommand command)
@@ -61,6 +65,10 @@ namespace Tests.SimpleGame.Downstairs
 
             if (command.Verb == VerbCodes.Use)
             {
+                if (command.Noun == "stairs")
+                {
+                    return GotoRoom("northeast");
+                }
                 if (command.Noun == "lightswitch")
                 {
                     LightsOn = !LightsOn;

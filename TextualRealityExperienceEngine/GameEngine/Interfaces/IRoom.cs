@@ -31,7 +31,8 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         string LightsOffDescription { get; set; }
 
         IGame Game { get; set; }
-        
+
+        string GotoRoom(string noun);
         void AddExit(DoorWay doorway, IRoom room, bool withExit = true);
         void AddExit(Direction direction, IRoom room, bool withExit = true);
         string ProcessCommand(ICommand command);

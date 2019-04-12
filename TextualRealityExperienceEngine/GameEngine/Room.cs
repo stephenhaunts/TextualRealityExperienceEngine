@@ -285,6 +285,48 @@ namespace TextualRealityExperienceEngine.GameEngine
         }
 
         /// <summary>
+        /// Goto a room by specifying the direction noun, ie north, south, northeast etc.
+        /// </summary>
+        /// <returns>The room description message to display when switching rooms.</returns>
+        /// <param name="noun">Direction noun, ie north, south, northeast etc.</param>
+        public string GotoRoom(string noun)
+        {
+            var direction = (Direction)Enum.Parse(typeof(Direction), noun, true);
+            var room = _roomExits.GetRoomForExit(direction);
+
+            if (room == null)
+                return "There is no exit to the " + noun.ToLower();
+
+            if (_roomExits.IsDoorLocked(direction))
+            {
+                return "The door is locked.";
+            }
+
+            Game.CurrentRoom = room;
+            Game.NumberOfMoves++;
+            Game.VisitedRooms.AddVisitedRoom(room);
+
+            if (string.IsNullOrEmpty(Game.Parser.Nouns.GetNounForSynonym(room.Name.ToLower())))
+            {
+                Game.Parser.Nouns.Add(room.Name.ToLower(), room.Name.ToLower());
+            }
+
+            var roomDescription = room.Description;
+
+            if (DroppedObjects.DroppedObjectsList.Count > 0)
+            {
+                roomDescription += " \r\n";
+            }
+
+            foreach (var item in DroppedObjects.DroppedObjectsList)
+            {
+                roomDescription += " \r\nThere is a " + item.Name + " on the floor.";
+            }
+
+            return roomDescription;
+        }
+
+        /// <summary>
         /// The ProcessCommand method is called by the main game once the parser has run. This method will handle the following
         /// functions:
         ///   - Navigation between rooms.
@@ -307,27 +349,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 {
                     try
                     {
-                        var direction = (Direction)Enum.Parse(typeof(Direction), command.Noun, true);
-                        var room = _roomExits.GetRoomForExit(direction);
-
-                        if (room == null)
-                            return "There is no exit to the " + command.Noun.ToLower();
-
-                        if (_roomExits.IsDoorLocked(direction))
-                        {
-                                return "The door is locked.";
-                        }
-
-                        Game.CurrentRoom = room;
-                        Game.NumberOfMoves++; 
-                        Game.VisitedRooms.AddVisitedRoom(room);
-
-                        if (string.IsNullOrEmpty(Game.Parser.Nouns.GetNounForSynonym(room.Name.ToLower())))
-                        {
-                            Game.Parser.Nouns.Add(room.Name.ToLower(), room.Name.ToLower());
-                        }
-
-                        return room.Description;
+                        return GotoRoom(command.Noun);
                     }
                     catch (ArgumentException)
                     {
@@ -340,7 +362,8 @@ namespace TextualRealityExperienceEngine.GameEngine
                     if (string.IsNullOrEmpty(command.Noun))
                     {
                         string roomDescription = Description;
-                        
+                        roomDescription += " \r\n";
+
                         foreach (var item in DroppedObjects.DroppedObjectsList)
                         {
                             roomDescription += " \r\nThere is a " + item.Name + " on the floor.";

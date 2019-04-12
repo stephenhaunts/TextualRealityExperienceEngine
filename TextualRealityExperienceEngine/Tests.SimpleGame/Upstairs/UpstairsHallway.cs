@@ -23,6 +23,7 @@ SOFTWARE.
 */
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.Synonyms;
 
 namespace Tests.SimpleGame.UpStairs
 {
@@ -39,7 +40,24 @@ namespace Tests.SimpleGame.UpStairs
 
         public override string ProcessCommand(ICommand command)
         {
-            return command.ProfanityDetected ? Game.ContentManagement.RetrieveContentItem("NoNeedToBeRude") : base.ProcessCommand(command);
+            string reply;
+
+            if (command.ProfanityDetected)
+            {
+                return Game.ContentManagement.RetrieveContentItem("NoNeedToBeRude");
+            }
+
+            if (command.Verb == VerbCodes.Use)
+            {
+                if (command.Noun == "stairs")
+                {
+                    return GotoRoom("southwest");
+                }
+            }
+
+            reply = base.ProcessCommand(command);
+
+            return reply;
         }
     }
 }
