@@ -319,12 +319,12 @@ namespace TextualRealityExperienceEngine.GameEngine
                         }
 
                         Game.CurrentRoom = room;
-                        Game.NumberOfMoves++;
-                            Game.VisitedRooms.AddVisitedRoom(room);
+                        Game.NumberOfMoves++; 
+                        Game.VisitedRooms.AddVisitedRoom(room);
 
-                        if (string.IsNullOrEmpty(Game.Parser.Nouns.GetNounForSynonym(room.Name)))
+                        if (string.IsNullOrEmpty(Game.Parser.Nouns.GetNounForSynonym(command.Noun.ToLower())))
                         {
-                            Game.Parser.Nouns.Add(room.Name.ToLower(), room.Name.ToLower());
+                            Game.Parser.Nouns.Add(command.Noun.ToLower(), command.Noun.ToLower());
                         }
 
                         return room.Description;
