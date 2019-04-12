@@ -322,9 +322,9 @@ namespace TextualRealityExperienceEngine.GameEngine
                         Game.NumberOfMoves++; 
                         Game.VisitedRooms.AddVisitedRoom(room);
 
-                        if (string.IsNullOrEmpty(Game.Parser.Nouns.GetNounForSynonym(command.Noun.ToLower())))
+                        if (string.IsNullOrEmpty(Game.Parser.Nouns.GetNounForSynonym(room.Name.ToLower())))
                         {
-                            Game.Parser.Nouns.Add(command.Noun.ToLower(), command.Noun.ToLower());
+                            Game.Parser.Nouns.Add(room.Name.ToLower(), room.Name.ToLower());
                         }
 
                         return room.Description;
