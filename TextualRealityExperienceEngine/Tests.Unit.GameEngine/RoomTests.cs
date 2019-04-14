@@ -338,5 +338,171 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             Assert.AreEqual(1, game.Player.Inventory.Count());
             Assert.AreEqual(0, room.DroppedObjects.DroppedObjectsList.Count);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void GotoRoomThrowsArgumentNullExceptionIfNounIsNull()
+        {
+            IGame game = new Game();
+            var room = new Room(game);
+            room.GotoRoom("");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void GotoRoomThrowsArgumentExceptionForInvalidNoun()
+        {
+            IGame game = new Game();
+            var room = new Room(game);
+            room.GotoRoom("floof");
+        }
+
+        [TestMethod]
+        public void GotoRoomReturnsNoRoomMessageForNoExit()
+        {
+            IGame game = new Game();
+            
+            var room = new Room(game);
+            var room2 = new Room("name2", "description2", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            room.AddExit(Direction.North, room2, true);
+
+            var message = room.GotoRoom("south");
+            Assert.AreEqual("There is no exit to the south.", message);
+        }
+
+        [TestMethod]
+        public void GotoRoomReturnsRoom()
+        {
+            IGame game = new Game();
+
+            var room = new Room(game);
+            var room2 = new Room("name2", "description2", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            room.AddExit(Direction.North, room2, true);
+
+            var message = room.GotoRoom("north");
+            Assert.AreEqual("description2", message);
+        }
+
+        [TestMethod]
+        public void GotoRoomSetsCurrentRoom()
+        {
+            IGame game = new Game();
+
+            var room = new Room("name1", "description1", game);
+            var room2 = new Room("name2", "description2", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            room.AddExit(Direction.North, room2, true);
+
+            Assert.AreEqual("description1", game.CurrentRoom.Description);
+            Assert.AreEqual("name1", game.CurrentRoom.Name);
+            Assert.AreEqual("description1", game.StartRoom.Description);
+            Assert.AreEqual("name1", game.StartRoom.Name);
+
+            room.GotoRoom("north");
+
+            Assert.AreEqual("description2", game.CurrentRoom.Description);
+            Assert.AreEqual("name2", game.CurrentRoom.Name);
+            Assert.AreEqual("description1", game.StartRoom.Description);
+            Assert.AreEqual("name1", game.StartRoom.Name);
+        }
+
+        [TestMethod]
+        public void GotoRoomSetsNewRoomAndReturnsDroppedObjectInDescription()
+        {
+            IGame game = new Game();
+            var room = new Room("test", "description", game);
+
+
+            IObject key = new GameObject("key", "A rusty key", "You picked up the key.");
+            game.Player.Inventory.Add("key", key);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            room.AddExit(Direction.North, room, true);
+
+            Assert.IsTrue(room.DroppedObjects.DropObject(key.Name));
+            var message = room.GotoRoom("north");
+            Assert.AreEqual("description\r\n\r\nThere is a key on the floor.", message);
+        }
+
+        [TestMethod]
+        public void GotoRoomSetsRoom()
+        {
+            IGame game = new Game();
+
+            var room = new Room(game);
+            var room2 = new Room("name2", "description2", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            room.AddExit(Direction.North, room2, true);
+
+            var message = room.GotoRoom("north");
+            Assert.AreEqual("description2", message);
+            Assert.IsTrue(game.VisitedRooms.CheckRoomVisited("name2"));
+
+            var visitedRoom = game.VisitedRooms.GetRoomInstance("name2");
+            Assert.AreEqual("name2", visitedRoom.Name);
+            Assert.AreEqual("description2", visitedRoom.Description);
+        }
+
+        [TestMethod]
+        public void GotoRoomIncrementsNumberOfMoves()
+        {
+            IGame game = new Game();
+
+            var room = new Room(game);
+            var room2 = new Room("name2", "description2", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            room.AddExit(Direction.North, room2, true);
+        
+            Assert.AreEqual(0, game.NumberOfMoves);
+            room.GotoRoom("north");
+            Assert.AreEqual(1, game.NumberOfMoves);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ProcessCommandThrowsArgumentNullExceptionIfCommandIsNull()
+        {
+            IGame game = new Game();
+
+            var room = new Room(game);
+            room.ProcessCommand(null);
+        }
+
+        [TestMethod]
+        public void ProcessCommandReturnsOopsStringForBadNounWhenMoving()
+        {
+            IGame game = new Game();
+
+            var room = new Room(game);         
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Go,
+                Noun = "banannas"
+            };
+
+            var reply = room.ProcessCommand(command);
+
+            Assert.AreEqual("Oops", reply);
+        }
     }
 }

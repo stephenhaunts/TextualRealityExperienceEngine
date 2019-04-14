@@ -36,7 +36,8 @@ namespace TextualRealityExperienceEngine.GameEngine
     public class Room : IRoom
     {
         private readonly IRoomExits _roomExits = new RoomExits();
-        
+        private string _description;
+
         /// <summary>
         /// The name of the room.
         /// </summary>
@@ -63,9 +64,11 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// </summary>
         public bool LightsOn { get; set;}
 
+        /// <summary>
+        /// Gets or sets the visited rooms.
+        /// </summary>
+        /// <value>The visited rooms.</value>
         public IVisitedRooms VisitedRooms { get; set; }
-        
-        private string _description;
 
         /// <summary>
         /// Default Constructor to setup the initial room state.
@@ -291,11 +294,16 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// <param name="noun">Direction noun, ie north, south, northeast etc.</param>
         public string GotoRoom(string noun)
         {
+            if (string.IsNullOrEmpty(noun))
+            {
+                throw new ArgumentNullException(nameof(noun));
+            }
+
             var direction = (Direction)Enum.Parse(typeof(Direction), noun, true);
             var room = _roomExits.GetRoomForExit(direction);
 
             if (room == null)
-                return "There is no exit to the " + noun.ToLower();
+                return "There is no exit to the " + noun.ToLower() + ".";
 
             if (_roomExits.IsDoorLocked(direction))
             {
@@ -315,12 +323,12 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             if (DroppedObjects.DroppedObjectsList.Count > 0)
             {
-                roomDescription += " \r\n";
+                roomDescription += "\r\n";
             }
 
             foreach (var item in DroppedObjects.DroppedObjectsList)
             {
-                roomDescription += " \r\nThere is a " + item.Name + " on the floor.";
+                roomDescription += "\r\nThere is a " + item.Name + " on the floor.";
             }
 
             return roomDescription;
@@ -343,6 +351,11 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// <returns>A text string to return to main caller.</returns>
         public virtual string ProcessCommand(ICommand command)
         {
+            if (command == null)
+            {
+                throw new ArgumentNullException(nameof(command));
+            }
+
             switch (command.Verb)
             {
                 case VerbCodes.Go:
