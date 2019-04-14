@@ -488,6 +488,21 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
 
         [TestMethod]
+        public void ProcessCommandReturnsEmptyStringForNoCommand()
+        {
+            IGame game = new Game();
+
+            var room = new Room(game);
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.NoCommand
+            };
+
+            Assert.AreEqual(string.Empty, room.ProcessCommand(command));
+        }
+
+        [TestMethod]
         public void ProcessCommandReturnsOopsStringForBadNounWhenMoving()
         {
             IGame game = new Game();
@@ -503,6 +518,332 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var reply = room.ProcessCommand(command);
 
             Assert.AreEqual("Oops", reply);
+        }
+
+        [TestMethod]
+        public void ProcessCommandReturnsRoomDescriptionForRoomWithNoDroppedObjects()
+        {
+            IGame game = new Game();
+
+            var room = new Room("room", "This is a standard room.", game);
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Look
+            };
+
+            var reply = room.ProcessCommand(command);
+
+            Assert.AreEqual("This is a standard room.", reply);
+        }
+
+        [TestMethod]
+        public void ProcessCommandReturnsRoomDescriptionForRoomWithSingleDroppedObject()
+        {
+            IGame game = new Game();
+
+            var room = new Room("room", "This is a standard room.", game);
+
+            IObject key = new GameObject("key", "A rusty key", "You picked up the key.");
+            game.Player.Inventory.Add("key", key);
+            room.DroppedObjects.DropObject(key.Name);
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Look
+            };
+
+            var reply = room.ProcessCommand(command);
+
+            Assert.AreEqual("This is a standard room.\r\n\r\nThere is a key on the floor.", reply);
+        }
+
+        [TestMethod]
+        public void ProcessCommandReturnsRoomDescriptionForRoomWithMultipleDroppedObject()
+        {
+            IGame game = new Game();
+
+            var room = new Room("room", "This is a standard room.", game);
+
+            IObject key = new GameObject("key", "A rusty key", "You picked up the key.");
+            IObject banana = new GameObject("banana", "A yellow banana", "You picked up the banana.");
+
+            game.Player.Inventory.Add("key", key);
+            game.Player.Inventory.Add("banana", banana);
+
+            room.DroppedObjects.DropObject(key.Name);
+            room.DroppedObjects.DropObject(banana.Name);
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Look
+            };
+
+            var reply = room.ProcessCommand(command);
+
+            Assert.AreEqual("This is a standard room.\r\n\r\nThere is a key on the floor.\r\nThere is a banana on the floor.", reply);
+        }
+
+        [TestMethod]
+        public void ProcessCommandReturnsMessageWhenYouPickUpAnObject()
+        {
+            IGame game = new Game();
+
+            var room = new Room("room", "This is a standard room.", game);
+
+            IObject key = new GameObject("key", "A rusty key", "You picked up the key.");
+            game.Player.Inventory.Add("key", key);
+            room.DroppedObjects.DropObject(key.Name);
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Take,
+                Noun = "key"
+            };
+
+            var reply = room.ProcessCommand(command);
+
+            Assert.AreEqual("You pick up the key.", reply);
+        }
+
+        [TestMethod]
+        public void ProcessCommandPicksUpAnObject()
+        {
+            IGame game = new Game();
+
+            var room = new Room("room", "This is a standard room.", game);
+
+            IObject key = new GameObject("key", "A rusty key", "You picked up the key.");
+            game.Player.Inventory.Add("key", key);
+            room.DroppedObjects.DropObject(key.Name);
+
+            Assert.AreEqual(1, room.DroppedObjects.DroppedObjectsList.Count);
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Take,
+                Noun = "key"
+            };
+
+            var reply = room.ProcessCommand(command);
+
+            Assert.AreEqual(0, room.DroppedObjects.DroppedObjectsList.Count);
+            Assert.AreEqual("You pick up the key.", reply);
+        }
+
+        [TestMethod]
+        public void ProcessCommandReturnsMessageWhenYouTryToPickUpAnInvalidObject()
+        {
+            IGame game = new Game();
+
+            var room = new Room("room", "This is a standard room.", game);
+
+            IObject key = new GameObject("key", "A rusty key", "You picked up the key.");
+            game.Player.Inventory.Add("key", key);
+            room.DroppedObjects.DropObject(key.Name);
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Take,
+                Noun = "cabbage"
+            };
+
+            var reply = room.ProcessCommand(command);
+
+            Assert.AreEqual("You can not pick up a cabbage.", reply);
+        }
+
+        [TestMethod]
+        public void ProcessCommandReturnsMessageWhenYouDropAnObjectFromYourInventory()
+        {
+            IGame game = new Game();
+
+            var room = new Room("room", "This is a standard room.", game);
+
+            IObject key = new GameObject("key", "A rusty key", "You picked up the key.");
+            game.Player.Inventory.Add("key", key);
+     
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Drop,
+                Noun = "key"
+            };
+
+            var reply = room.ProcessCommand(command);
+
+            Assert.AreEqual("You drop the key.", reply);
+        }
+
+        [TestMethod]
+        public void ProcessCommandReturnsMessageWhenYouFailToDropAnObjectInYourIventory()
+        {
+            IGame game = new Game();
+
+            var room = new Room("room", "This is a standard room.", game);
+
+            IObject key = new GameObject("key", "A rusty key", "You picked up the key.");
+            game.Player.Inventory.Add("key", key);
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Drop,
+                Noun = "cabbage"
+            };
+
+            var reply = room.ProcessCommand(command);
+
+            Assert.AreEqual("You do not have a cabbage to drop.", reply);
+        }
+
+        [TestMethod]
+        public void ProcessCommandDropsAnObjectToTheDroppedObjectList()
+        {
+            IGame game = new Game();
+
+            var room = new Room("room", "This is a standard room.", game);
+
+            IObject key = new GameObject("key", "A rusty key", "You picked up the key.");
+            game.Player.Inventory.Add("key", key);
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Drop,
+                Noun = "key"
+            };
+
+            Assert.AreEqual(0, room.DroppedObjects.DroppedObjectsList.Count);
+            var reply = room.ProcessCommand(command);
+
+            Assert.AreEqual("You drop the key.", reply);
+            Assert.AreEqual(1, room.DroppedObjects.DroppedObjectsList.Count);
+        }
+
+        [TestMethod]
+        public void ProcessCommandReturnsEmptyStringIfHintRequestWhenDisabled()
+        {
+            IGame game = new Game();
+
+            var room = new Room("room", "This is a standard room.", game);
+
+            game.HintSystemEnabled = false;
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Hint
+            };
+
+            Assert.AreEqual(string.Empty, room.ProcessCommand(command));
+        }
+
+        [TestMethod]
+        public void ProcessCommandReturnsNoHintStringIfDifficultyEasy()
+        {
+            IGame game = new Game();
+
+            var room = new Room("room", "This is a standard room.", game);
+
+            game.HintSystemEnabled = true;
+            game.Difficulty = DifficultyEnum.Easy;
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Hint
+            };
+
+            Assert.AreEqual("There are no more hints available.", room.ProcessCommand(command));
+        }
+
+        [TestMethod]
+        public void ProcessCommandReturnsNoHintStringIfDifficultyMedium()
+        {
+            IGame game = new Game();
+
+            var room = new Room("room", "This is a standard room.", game);
+
+            game.HintSystemEnabled = true;
+            game.Difficulty = DifficultyEnum.Medium;
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Hint
+            };
+
+            Assert.AreEqual("There are no more hints available.", room.ProcessCommand(command));
+        }
+
+        [TestMethod]
+        public void ProcessCommandReturnsNoHintStringIfDifficultyHard()
+        {
+            IGame game = new Game();
+
+            var room = new Room("room", "This is a standard room.", game);
+
+            game.HintSystemEnabled = true;
+            game.Difficulty = DifficultyEnum.Hard;
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Hint
+            };
+
+            Assert.AreEqual("Hints are not allowed for the Hard difficulty.", room.ProcessCommand(command));
+        }
+
+        [TestMethod]
+        public void ProcessCommandVisitsRoom()
+        {
+            IGame game = new Game();
+
+            var room = new Room("name1", "description1", game);
+            var room2 = new Room("name2", "description2", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            room.AddExit(Direction.North, room2, true);
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Go,
+                Noun = "north"
+            };
+
+            Assert.AreEqual("description2", room.ProcessCommand(command));
+
+            ICommand command2 = new Command
+            {
+                Verb = VerbCodes.Visit,
+                Noun = "name1"
+            };
+
+            Assert.AreEqual(2, game.VisitedRooms.GetVisitedRooms().Count);
+            Assert.AreEqual("description1", room.ProcessCommand(command2));
+
+            command2.Noun = "name2";
+            Assert.AreEqual("description2", room.ProcessCommand(command2));
+        }
+
+        [TestMethod]
+        public void ProcessCommandCantVisitRoomThatHasNotAlreadyBeenVisited()
+        {
+            IGame game = new Game();
+
+            var room = new Room("name1", "description1", game);
+            var room2 = new Room("name2", "description2", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            room.AddExit(Direction.North, room2, true);
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Visit,
+                Noun = "name2"
+            };
+
+            Assert.AreEqual(1, game.VisitedRooms.GetVisitedRooms().Count);
+            Assert.AreEqual("You can not visit this room as you have not previously been there.", room.ProcessCommand(command));
         }
     }
 }

@@ -146,6 +146,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             _synonymMappings.Add("punch", VerbCodes.Attack);
             _synonymMappings.Add("chop", VerbCodes.Attack);
 
+            _synonymMappings.Add("teleport", VerbCodes.Visit);
             _synonymMappings.Add("visit", VerbCodes.Visit);
             _synonymMappings.Add("goto", VerbCodes.Visit);
         }

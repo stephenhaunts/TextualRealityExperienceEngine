@@ -375,11 +375,15 @@ namespace TextualRealityExperienceEngine.GameEngine
                     if (string.IsNullOrEmpty(command.Noun))
                     {
                         string roomDescription = Description;
-                        roomDescription += " \r\n";
 
-                        foreach (var item in DroppedObjects.DroppedObjectsList)
+                        if (DroppedObjects.DroppedObjectsList.Count > 0)
                         {
-                            roomDescription += " \r\nThere is a " + item.Name + " on the floor.";
+                            roomDescription += "\r\n";
+
+                            foreach (var item in DroppedObjects.DroppedObjectsList)
+                            {
+                                roomDescription += "\r\nThere is a " + item.Name + " on the floor.";
+                            }
                         }
 
                         return roomDescription;
@@ -391,18 +395,18 @@ namespace TextualRealityExperienceEngine.GameEngine
                 case VerbCodes.Take:
                     if (DroppedObjects.PickUpDroppedObject(command.Noun))
                     {
-                        return "You pick up the " + command.Noun;
+                        return "You pick up the " + command.Noun + ".";
                     }
                     else
                     {
-                        return "You can not pick up a " + command.Noun;
+                        return "You can not pick up a " + command.Noun + ".";
                     }
                 case VerbCodes.Use:
                     break;
                 case VerbCodes.Drop:
                     if (DroppedObjects.DropObject(command.Noun))
                     {
-                        return "You drop the " + command.Noun;
+                        return "You drop the " + command.Noun + ".";
                     }
                     else
                     {
