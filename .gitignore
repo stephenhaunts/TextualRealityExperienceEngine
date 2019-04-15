@@ -70,3 +70,9 @@ TextualRealityExperienceEngine/Tests\.SimpleGame\.Library/obj/Debug/netstandard2
 TextualRealityExperienceEngine/Tests\.SimpleGame\.Library/obj/
 
 TextualRealityExperienceEngine/Tests\.SimpleGame\.Library/bin/Debug/netcoreapp2\.2/
+
+TextualRealityExperienceEngine/Tests\.Unit\.SimpleGame/bin/Debug/netcoreapp2\.2/
+
+TextualRealityExperienceEngine/Tests\.Unit\.SimpleGame/obj/Debug/netcoreapp2\.2/
+
+TextualRealityExperienceEngine/Tests\.Unit\.SimpleGame/obj/
