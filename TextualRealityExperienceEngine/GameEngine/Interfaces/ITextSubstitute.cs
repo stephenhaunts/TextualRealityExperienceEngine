@@ -27,5 +27,6 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
     public interface ITextSubstitute
     {
         void AddMacro(string macroId, string text);
+        bool IsValidMacroFormat(string macroId);
     }
 }

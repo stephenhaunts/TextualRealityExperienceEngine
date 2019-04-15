@@ -43,8 +43,24 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
         }
 
-        private bool CheckMacroFormat(string macroId)
+        public bool IsValidMacroFormat(string macroId)
         {
+            if (string.IsNullOrEmpty(macroId))
+            {
+                throw new ArgumentNullException(nameof(macroId));
+            }
+
+            macroId = macroId.TrimStart(' ');
+            macroId = macroId.TrimEnd(' ');
+
+            if (macroId.StartsWith("$(", StringComparison.Ordinal))
+            {
+                if (macroId.EndsWith(")", StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
     }
