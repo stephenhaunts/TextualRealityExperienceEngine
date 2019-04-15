@@ -220,12 +220,132 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var game = new Game {Difficulty = DifficultyEnum.Medium};
             Assert.AreEqual(3, game.HintCost);
         }
-        
+
         [TestMethod]
         public void HintCostReturns10ForHardDifficulty()
         {
             var game = new Game {Difficulty = DifficultyEnum.Hard};
             Assert.AreEqual(10, game.HintCost);
+        }
+
+        [TestMethod]
+        public void ProcessCommandReturnsCorrectCommandForClearscreen()
+        {
+            var game = new Game();
+            var reply = game.ProcessCommand("clear");
+
+            Assert.AreEqual(GameStateEnum.Clearscreen, reply.State);
+            Assert.AreEqual("clear", reply.Reply);
+
+            reply = game.ProcessCommand("cls");
+
+            Assert.AreEqual(GameStateEnum.Clearscreen, reply.State);
+            Assert.AreEqual("cls", reply.Reply);
+
+            reply = game.ProcessCommand("clearscreen");
+
+            Assert.AreEqual(GameStateEnum.Clearscreen, reply.State);
+            Assert.AreEqual("clearscreen", reply.Reply);
+
+            reply = game.ProcessCommand("clear screen");
+
+            Assert.AreEqual(GameStateEnum.Clearscreen, reply.State);
+            Assert.AreEqual("clear screen", reply.Reply);
+        }
+
+        [TestMethod]
+        public void ProcessCommandReturnsCorrectCommandForQuit()
+        {
+            var game = new Game();
+            var reply = game.ProcessCommand("Quit");
+
+            Assert.AreEqual(GameStateEnum.Exit, reply.State);
+            Assert.AreEqual("quit", reply.Reply);
+
+            reply = game.ProcessCommand("Exit");
+
+            Assert.AreEqual(GameStateEnum.Exit, reply.State);
+            Assert.AreEqual("exit", reply.Reply);
+
+            reply = game.ProcessCommand("Run away");
+
+            Assert.AreEqual(GameStateEnum.Exit, reply.State);
+            Assert.AreEqual("run away", reply.Reply);
+
+            reply = game.ProcessCommand("Kill yourself");
+
+            Assert.AreEqual(GameStateEnum.Exit, reply.State);
+            Assert.AreEqual("kill yourself", reply.Reply);
+
+            reply = game.ProcessCommand("Kill your self");
+
+            Assert.AreEqual(GameStateEnum.Exit, reply.State);
+            Assert.AreEqual("kill your self", reply.Reply);
+        }
+
+        [TestMethod]
+        public void ProcessCommandReturnsCorrectCommandForScore()
+        {
+            var game = new Game();
+            var reply = game.ProcessCommand("Show score");
+
+            Assert.AreEqual(GameStateEnum.Score, reply.State);
+            Assert.AreEqual("show score", reply.Reply);
+
+            reply = game.ProcessCommand("score");
+
+            Assert.AreEqual(GameStateEnum.Score, reply.State);
+            Assert.AreEqual("score", reply.Reply);
+
+            reply = game.ProcessCommand("View score");
+
+            Assert.AreEqual(GameStateEnum.Score, reply.State);
+            Assert.AreEqual("view score", reply.Reply);
+
+            reply = game.ProcessCommand("See score");
+
+            Assert.AreEqual(GameStateEnum.Score, reply.State);
+            Assert.AreEqual("see score", reply.Reply);
+
+            reply = game.ProcessCommand("What is my score");
+
+            Assert.AreEqual(GameStateEnum.Score, reply.State);
+            Assert.AreEqual("what is my score", reply.Reply);
+        }
+
+        [TestMethod]
+        public void ProcessCommandReturnsCorrectCommandForInventory()
+        {
+            var game = new Game();
+            var reply = game.ProcessCommand("Inventory");
+
+            Assert.AreEqual(GameStateEnum.Inventory, reply.State);
+            Assert.AreEqual("inventory", reply.Reply);
+
+            reply = game.ProcessCommand("View Inventory");
+
+            Assert.AreEqual(GameStateEnum.Inventory, reply.State);
+            Assert.AreEqual("view inventory", reply.Reply);              
+        }
+
+        [TestMethod]
+        public void ProcessCommandReturnsCorrectCommandForVisited()
+        {
+            var game = new Game();
+            var reply = game.ProcessCommand("Locations");
+
+            Assert.AreEqual(GameStateEnum.Visited, reply.State);
+            Assert.AreEqual("locations", reply.Reply);
+
+            reply = game.ProcessCommand("Visited");
+
+            Assert.AreEqual(GameStateEnum.Visited, reply.State);
+            Assert.AreEqual("visited", reply.Reply);
+
+            reply = game.ProcessCommand("Visited locations");
+
+            Assert.AreEqual(GameStateEnum.Visited, reply.State);
+            Assert.AreEqual("visited locations", reply.Reply);
         }
     }
 }
