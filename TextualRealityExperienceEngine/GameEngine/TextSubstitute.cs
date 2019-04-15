@@ -26,10 +26,18 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
+    /// <summary>
+    /// Text substitute.
+    /// </summary>
     public class TextSubstitute : ITextSubstitute
     {
         private readonly Dictionary<string, string> _macros = new Dictionary<string, string>();
 
+        /// <summary>
+        /// Adds the macro.
+        /// </summary>
+        /// <param name="macroId">Macro identifier.</param>
+        /// <param name="text">Text.</param>
         public void AddMacro(string macroId, string text)
         {
             if (string.IsNullOrEmpty(macroId))
@@ -52,6 +60,11 @@ namespace TextualRealityExperienceEngine.GameEngine
             _macros.Add(macroId, text);
         }
 
+        /// <summary>
+        /// Performs the substitution.
+        /// </summary>
+        /// <returns>The substitution.</returns>
+        /// <param name="sourceText">Source text.</param>
         public string PerformSubstitution(string sourceText)
         {
             int detectedOccurances = 0;
@@ -78,6 +91,10 @@ namespace TextualRealityExperienceEngine.GameEngine
             return sourceText;
         }
 
+        /// <summary>
+        /// Gets the count.
+        /// </summary>
+        /// <value>The count.</value>
         public int Count
         {
             get
@@ -86,6 +103,11 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
         }
 
+        /// <summary>
+        /// Exists the specified macroId.
+        /// </summary>
+        /// <returns>The exists.</returns>
+        /// <param name="macroId">Macro identifier.</param>
         public bool Exists(string macroId)
         {
             if (string.IsNullOrEmpty(macroId))
@@ -97,6 +119,11 @@ namespace TextualRealityExperienceEngine.GameEngine
 
         }
 
+        /// <summary>
+        /// Ises the valid macro format.
+        /// </summary>
+        /// <returns><c>true</c>, if valid macro format was ised, <c>false</c> otherwise.</returns>
+        /// <param name="macroId">Macro identifier.</param>
         public bool IsValidMacroFormat(string macroId)
         {
             if (string.IsNullOrEmpty(macroId))

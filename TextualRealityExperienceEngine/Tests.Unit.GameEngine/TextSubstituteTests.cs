@@ -197,16 +197,65 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
 
         [TestMethod]
-        public void PerformSubstitutionReplacesSingleNextedlMacro()
+        public void PerformSubstitutionReplacesSingleNestedlMacro()
         {
             var substitute = new TextSubstitute();
 
             substitute.AddMacro("$(name)", "My name is $(steve)");
+
             substitute.AddMacro("$(steve)", "Stephen Haunts");
 
             var result = substitute.PerformSubstitution("Hello, $(name).");
 
             Assert.AreEqual("Hello, My name is Stephen Haunts.", result);
+        }
+
+        [TestMethod]
+        public void PerformSubstitutionReplacesMultipleNestedlMacros()
+        {
+            var substitute = new TextSubstitute();
+
+            substitute.AddMacro("$(id)", "My name is $(steve) $(haunts)");
+
+            substitute.AddMacro("$(steve)", "Stephen");
+            substitute.AddMacro("$(haunts)", "Haunts");
+
+
+            var result = substitute.PerformSubstitution("Hello, $(id).");
+
+            Assert.AreEqual("Hello, My name is Stephen Haunts.", result);
+        }
+
+
+        [TestMethod]
+        public void PerformSubstitutionReplacesMultipleLayerNestedlMacros()
+        {
+            var substitute = new TextSubstitute();
+
+            substitute.AddMacro("$(id)", "My name is $(name)");
+            substitute.AddMacro("$(name)", "$(steve) $(haunts)");
+            substitute.AddMacro("$(steve)", "Stephen");
+            substitute.AddMacro("$(haunts)", "Haunts");
+
+            var result = substitute.PerformSubstitution("Hello, $(id).");
+
+            Assert.AreEqual("Hello, My name is Stephen Haunts.", result);
+        }
+
+        [TestMethod]
+        public void PerformSubstitutionReplacesMultipleLayerNestedlMacros2()
+        {
+            var substitute = new TextSubstitute();
+            substitute.AddMacro("$(gender)", "Mr");
+            substitute.AddMacro("$(haunts)", "Haunts");
+
+            substitute.AddMacro("$(id)", "My name is $(name)");
+            substitute.AddMacro("$(name)", "$(gender) $(steve) $(haunts)");
+            substitute.AddMacro("$(steve)", "Stephen");
+
+            var result = substitute.PerformSubstitution("Hello, $(id).");
+
+            Assert.AreEqual("Hello, My name is Mr Stephen Haunts.", result);
         }
     }
 }
