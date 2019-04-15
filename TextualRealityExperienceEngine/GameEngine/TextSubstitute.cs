@@ -52,6 +52,32 @@ namespace TextualRealityExperienceEngine.GameEngine
             _macros.Add(macroId, text);
         }
 
+        public string PerformSubstitution(string sourceText)
+        {
+            int detectedOccurances = 0;
+
+            if (string.IsNullOrEmpty(sourceText))
+            {
+                return string.Empty;
+            }
+
+            foreach (var macro in _macros)
+            {
+                if (sourceText.Contains(macro.Key))
+                {
+                    detectedOccurances++;
+                    sourceText = sourceText.Replace(macro.Key, macro.Value);
+                }
+            }
+
+            if (detectedOccurances > 0)
+            {
+                sourceText = PerformSubstitution(sourceText);
+            }
+
+            return sourceText;
+        }
+
         public int Count
         {
             get

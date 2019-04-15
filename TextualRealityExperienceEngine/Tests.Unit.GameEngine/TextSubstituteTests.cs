@@ -160,5 +160,53 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             var substitute = new TextSubstitute();
             Assert.IsFalse(substitute.IsValidMacroFormat("$(macro) blah"));
         }
+
+        [TestMethod]
+        public void PerformSubstitutionReturnsEmptyStringWhenSourceIsEmpty()
+        {
+            var substitute = new TextSubstitute();
+
+            substitute.AddMacro("$(number)", "one");
+            var result = substitute.PerformSubstitution("");
+
+            Assert.AreEqual(string.Empty, result);
+        }
+
+        [TestMethod]
+        public void PerformSubstitutionReplacesSimpleSingleMacro()
+        {
+            var substitute = new TextSubstitute();
+
+            substitute.AddMacro("$(number)", "one");
+            var result = substitute.PerformSubstitution("My favourite number is $(number).");
+
+            Assert.AreEqual("My favourite number is one.", result);
+        }
+
+        [TestMethod]
+        public void PerformSubstitutionReplacesSimpleDualMacro()
+        {
+            var substitute = new TextSubstitute();
+
+            substitute.AddMacro("$(number)", "one");
+            substitute.AddMacro("$(number2)", "two");
+
+            var result = substitute.PerformSubstitution("My favourite number is $(number) and $(number2).");
+
+            Assert.AreEqual("My favourite number is one and two.", result);
+        }
+
+        [TestMethod]
+        public void PerformSubstitutionReplacesSingleNextedlMacro()
+        {
+            var substitute = new TextSubstitute();
+
+            substitute.AddMacro("$(name)", "My name is $(steve)");
+            substitute.AddMacro("$(steve)", "Stephen Haunts");
+
+            var result = substitute.PerformSubstitution("Hello, $(name).");
+
+            Assert.AreEqual("Hello, My name is Stephen Haunts.", result);
+        }
     }
 }

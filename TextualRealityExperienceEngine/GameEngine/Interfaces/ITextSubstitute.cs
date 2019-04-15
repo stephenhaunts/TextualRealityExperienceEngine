@@ -30,5 +30,6 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         bool IsValidMacroFormat(string macroId);
         int Count { get; }
         bool Exists(string macroId);
+        string PerformSubstitution(string sourceText);
     }
 }
