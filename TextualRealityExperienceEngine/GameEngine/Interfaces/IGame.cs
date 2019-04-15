@@ -46,6 +46,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         int HintCost { get; }
         IPlayer Player { get; set; }
         DateTime GameClock { get; set; }
+        ITextSubstitute TextSubstitute { get; }
 
         void IncreaseScore(int increaseBy);
         void DecreaseScore(int decreaseBy);

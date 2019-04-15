@@ -24,6 +24,8 @@ SOFTWARE.
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityExperienceEngine.GameEngine;
+using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.Synonyms;
 
 namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 {
@@ -346,6 +348,64 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 
             Assert.AreEqual(GameStateEnum.Visited, reply.State);
             Assert.AreEqual("visited locations", reply.Reply);
+        }
+
+        [TestMethod]
+        public void ProcessCommandPerformsSimpleSingleMacroSubstitution()
+        {
+            IGame game = new Game();
+
+            game.TextSubstitute.AddMacro("$(first)", "hello world.");
+
+            var room = new Room("name1", "description1", game);
+            var room2 = new Room("name2", "description2 $(first)", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            room.AddExit(Direction.North, room2, true);
+
+            var result = game.ProcessCommand("go north");
+            Assert.AreEqual("description2 hello world.", result.Reply);
+         }
+
+        [TestMethod]
+        public void ProcessCommandPerformsSimpleEmbeddedMacroSubstitution()
+        {
+            IGame game = new Game();
+
+            game.TextSubstitute.AddMacro("$(second)", "hello world.");
+            game.TextSubstitute.AddMacro("$(first)", "$(second)");
+
+            var room = new Room("name1", "description1", game);
+            var room2 = new Room("name2", "description2 $(first)", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            room.AddExit(Direction.North, room2, true);
+
+            var result = game.ProcessCommand("go north");
+            Assert.AreEqual("description2 hello world.", result.Reply);
+        }
+
+        [TestMethod]
+        public void ProcessCommandGuardsAgainstInfinateLoopMacroExpansion()
+        {
+            IGame game = new Game();
+
+            game.TextSubstitute.AddMacro("$(first)", "$(first)");
+
+            var room = new Room("name1", "description1", game);
+            var room2 = new Room("name2", "description2 $(first)", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            room.AddExit(Direction.North, room2, true);
+
+            var result = game.ProcessCommand("go north");
+            Assert.AreEqual("description2 $(first)", result.Reply);
         }
     }
 }

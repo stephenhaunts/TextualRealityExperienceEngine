@@ -153,7 +153,14 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// to last Saturday, then that object would not be in your inventory if you want it to observe game time.
         /// </summary>
         public DateTime GameClock { get; set; }
-        
+
+        /// <summary>
+        /// Contains the text macro substitution dictionary. This is used when you want to be able to dynamically
+        /// switch out text content.
+        /// </summary>
+        /// <value>The text substitute.</value>
+        public ITextSubstitute TextSubstitute { get; private set; }
+
         /// <summary>
         /// The Difficulty flag let you set whether the game is Easy, Medium or Hard. You can query this flag in game
         /// to change game-play based on difficulty. This difficulty flag is also used to change the score multipliers
@@ -183,6 +190,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             HintSystemEnabled = false;
             ContentManagement = new ContentManagement(true);
             Player = new Player();
+            TextSubstitute = new TextSubstitute();
         }
 
         /// <summary>
@@ -210,6 +218,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             HintSystemEnabled = false;
             ContentManagement = new ContentManagement(true);
             Player = new Player();
+            TextSubstitute = new TextSubstitute();
         }
                 
         /// <summary>
@@ -276,7 +285,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             _commandQueue.AddCommand(parsedCommand);
 
             reply.State = GameStateEnum.Playing;
-            reply.Reply = CurrentRoom.ProcessCommand(parsedCommand);
+            reply.Reply = TextSubstitute.PerformSubstitution(CurrentRoom.ProcessCommand(parsedCommand));
 
             return reply;
         }
