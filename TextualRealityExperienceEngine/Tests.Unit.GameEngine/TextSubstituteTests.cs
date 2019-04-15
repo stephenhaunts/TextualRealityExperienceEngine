@@ -47,6 +47,36 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
 
         [TestMethod]
+        [ExpectedException(typeof(FormatException))]
+        public void AddMacroThrowsFormatExceptionIfMacroIdIsWrongFormat()
+        {
+            var substitute = new TextSubstitute();
+            substitute.AddMacro("w4t", "gfgfdsg");
+        }
+
+        [TestMethod]
+        public void AddMacroAddsMacroToDictionary()
+        {
+            var substitute = new TextSubstitute();
+
+            Assert.AreEqual(0, substitute.Count);
+            substitute.AddMacro("$(macro)", "text to substitute.");
+            Assert.AreEqual(1, substitute.Count);
+            Assert.IsTrue(substitute.Exists("$(macro)"));
+        }
+
+        [TestMethod]
+        public void AddMacroAddsMacroToDictionaryIsCaseInsensitive()
+        {
+            var substitute = new TextSubstitute();
+
+            Assert.AreEqual(0, substitute.Count);
+            substitute.AddMacro("$(MaCrO)", "text to substitute.");
+            Assert.AreEqual(1, substitute.Count);
+            Assert.IsTrue(substitute.Exists("$(macro)"));
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void CheckMacroFormatThrowsArgumentNullExceptionIfMacroIdIsNull()
         {

@@ -41,6 +41,34 @@ namespace TextualRealityExperienceEngine.GameEngine
             {
                 throw new ArgumentNullException(nameof(text));
             }
+
+            macroId = macroId.ToLower();
+
+            if (!IsValidMacroFormat(macroId))
+            {
+                throw new FormatException(nameof(macroId));
+            }
+
+            _macros.Add(macroId, text);
+        }
+
+        public int Count
+        {
+            get
+            {
+                return _macros.Count;
+            }
+        }
+
+        public bool Exists(string macroId)
+        {
+            if (string.IsNullOrEmpty(macroId))
+            {
+                throw new ArgumentNullException(nameof(macroId));
+            }
+
+            return _macros.ContainsKey(macroId);
+
         }
 
         public bool IsValidMacroFormat(string macroId)

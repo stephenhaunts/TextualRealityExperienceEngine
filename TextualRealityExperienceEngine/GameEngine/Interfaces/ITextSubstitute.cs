@@ -28,5 +28,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
     {
         void AddMacro(string macroId, string text);
         bool IsValidMacroFormat(string macroId);
+        int Count { get; }
+        bool Exists(string macroId);
     }
 }
