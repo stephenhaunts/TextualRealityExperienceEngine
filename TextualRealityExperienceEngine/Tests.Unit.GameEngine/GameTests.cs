@@ -110,6 +110,26 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
 
         [TestMethod]
+        public void TextSubstituteIsNotNullWhenGameConstructed()
+        {
+            var startRoom = new Room();
+            var prologue = "This is a progue";
+            var game = new Game(prologue, startRoom);
+
+            Assert.IsNotNull(game.TextSubstitute);
+        }
+
+        [TestMethod]
+        public void TextSubstituteDoesntContainAnyMacrosWhenGameConstrcuted()
+        {
+            var startRoom = new Room();
+            var prologue = "This is a progue";
+            var game = new Game(prologue, startRoom);
+
+            Assert.AreEqual(0, game.TextSubstitute.Count);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException), "The prologue can not be empty.")]
         public void OveriddenConstructorThrowsArgumentNullExcpetionIfProgueIsNull()
         {
@@ -367,7 +387,7 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 
             var result = game.ProcessCommand("go north");
             Assert.AreEqual("description2 hello world.", result.Reply);
-         }
+        }
 
         [TestMethod]
         public void ProcessCommandPerformsSimpleEmbeddedMacroSubstitution()
