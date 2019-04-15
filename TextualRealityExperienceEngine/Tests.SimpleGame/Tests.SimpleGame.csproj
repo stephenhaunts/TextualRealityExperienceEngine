@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GameEngine\GameEngine.csproj" />
+    <ProjectReference Include="..\Tests.SimpleGame.Library\Tests.SimpleGame.Library.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Downstairs\" />

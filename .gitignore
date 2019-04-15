@@ -62,3 +62,9 @@ TextualRealityExperienceEngine/Tests\.Integration\.GameEngine/bin/Debug/netcorea
 TextualRealityExperienceEngine/Tests\.Unit\.GameEngine/bin/Debug/netcoreapp2\.2/
 
 TextualRealityExperienceEngine/Tests\.SimpleGame/bin/Debug/netcoreapp2\.2/
+
+TextualRealityExperienceEngine/Tests\.SimpleGame\.Library/bin/Debug/netstandard2\.0/
+
+TextualRealityExperienceEngine/Tests\.SimpleGame\.Library/obj/Debug/netstandard2\.0/
+
+TextualRealityExperienceEngine/Tests\.SimpleGame\.Library/obj/
