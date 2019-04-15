@@ -103,7 +103,7 @@ namespace Tests.SimpleGame
             _game.ContentManagement.AddContentItem("ExitMessage", "Have it your way.. You spontaneously combust and depart this mortal coil in a puff of smoke....");           
         }
 
-        private static void Main(string[] args)
+        private static void Main()
         {
             Console.Clear();
             InitializeGame();
