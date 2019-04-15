@@ -31,6 +31,7 @@ namespace TextualRealityExperienceEngine.GameEngine
     /// </summary>
     public class TextSubstitute : ITextSubstitute
     {
+        private const int RECURSION_GUARD = 10;
         private readonly Dictionary<string, string> _macros = new Dictionary<string, string>();
 
         /// <summary>
@@ -67,11 +68,24 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// <param name="sourceText">Source text.</param>
         public string PerformSubstitution(string sourceText)
         {
-            int detectedOccurances = 0;
-
             if (string.IsNullOrEmpty(sourceText))
             {
                 return string.Empty;
+            }
+
+            sourceText = PerformSubstitution(sourceText, 0);
+
+            return sourceText;
+        }
+
+        private string PerformSubstitution(string sourceText, int recursionCounter)
+        {
+            int detectedOccurances = 0;
+            int counter = recursionCounter;
+
+            if (recursionCounter == RECURSION_GUARD)
+            {
+                return sourceText;
             }
 
             foreach (var macro in _macros)
@@ -85,7 +99,8 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             if (detectedOccurances > 0)
             {
-                sourceText = PerformSubstitution(sourceText);
+                counter++;
+                sourceText = PerformSubstitution(sourceText, counter);
             }
 
             return sourceText;

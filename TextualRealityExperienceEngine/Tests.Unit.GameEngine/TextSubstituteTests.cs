@@ -257,5 +257,17 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 
             Assert.AreEqual("Hello, My name is Mr Stephen Haunts.", result);
         }
+
+        [TestMethod]
+        public void PerformSubstitutionGuardsAgainstAnInfinateLoop()
+        {
+            var substitute = new TextSubstitute();
+
+            // This macro case should cause an infinate loop so we need to guard against it.
+            substitute.AddMacro("$(number)", "$(number)");
+            var result = substitute.PerformSubstitution("My favourite number is $(number).");
+
+            Assert.AreEqual("My favourite number is $(number).", result);
+        }
     }
 }
