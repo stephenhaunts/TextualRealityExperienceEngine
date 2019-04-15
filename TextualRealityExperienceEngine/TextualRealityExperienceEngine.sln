@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngine", "GameEngine\GameEngine.csproj", "{2890FB8E-743C-48AA-8C3B-AA54BA834AE5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game Engine", "Game Engine", "{7F0CE779-6F62-4C3B-B0D4-F1070781C98C}"
+	ProjectSection(SolutionItems) = preProject
+		GameEngine\TextSubstitute.cs = GameEngine\TextSubstitute.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", "{AE58414E-34AA-4E9C-B023-11A46527385C}"
 EndProject
