@@ -41,7 +41,12 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// This is the description of the object that can be displayed in game.
         /// </summary>
         public string Description { get; set; }
-        
+
+        /// <summary>
+        /// This is the long description of the object that can be displayed in game.
+        /// </summary>
+        public string LongDescription { get; set; }
+
         /// <summary>
         /// This is a message that cen be displayed when an object is collected, something like "You put the key in your 
         /// pocket".

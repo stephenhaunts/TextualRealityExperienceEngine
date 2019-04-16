@@ -30,7 +30,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
     {
         string Name { get; set; }
         string Description { get; set; }
-       //string LongDescription { get; set; }
+        string LongDescription { get; set; }
 
         string PickUpMessage { get; set; }
         DateTime PickedUpDateTime { get; set; }

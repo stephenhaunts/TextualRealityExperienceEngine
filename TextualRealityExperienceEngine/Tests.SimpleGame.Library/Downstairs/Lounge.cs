@@ -33,6 +33,8 @@ namespace Tests.SimpleGame.Downstairs
 
         public Lounge(IGame game) : base(game)
         {
+            _letter.LongDescription = "You open the letter and read it. It says:\r\n\r\n   \"Son, There was an alien invasion. There is so much we havn't told you, but there is little time and we don't know where you are. You must make your way to our hidden crypt hidden in the garage. When you are there we will explain all.\"";
+
             game.ContentManagement.AddContentItem("LoungeName", "Lounge");
             game.ContentManagement.AddContentItem("LoungeDescription", "You are stand in the lounge. There is a sofa at the back of the room and a TV in the corner. Next to the TV there is a fireplace and mantlepiece with various objects on top fo it. There is a door back to the hallway to the east.");
 

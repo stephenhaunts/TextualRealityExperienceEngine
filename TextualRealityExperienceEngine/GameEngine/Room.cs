@@ -392,8 +392,16 @@ namespace TextualRealityExperienceEngine.GameEngine
                     { 
                         if (Game.Player.Inventory.Exists(command.Noun))
                         {
-                            var inventoryObject = Game.Player.Inventory.Get(command.Noun);
-                            return inventoryObject.Description;
+                        var inventoryObject = Game.Player.Inventory.Get(command.Noun);
+
+                            if (!string.IsNullOrEmpty(inventoryObject.LongDescription))
+                            {
+                                return inventoryObject.LongDescription;
+                            }
+                            else
+                            {
+                                return inventoryObject.Description;
+                            }
                         }
                     }
                     break;
