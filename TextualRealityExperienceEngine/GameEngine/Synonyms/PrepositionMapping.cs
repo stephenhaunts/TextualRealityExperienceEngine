@@ -104,7 +104,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
         {
             if (string.IsNullOrEmpty(preposition))
             {
-                throw new ArgumentNullException(nameof(preposition));
+                return PropositionEnum.NotRecognised;
             }
           
             try

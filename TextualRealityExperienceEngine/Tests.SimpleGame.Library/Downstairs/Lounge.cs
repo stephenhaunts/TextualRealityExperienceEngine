@@ -42,8 +42,6 @@ namespace Tests.SimpleGame.Downstairs
             game.ContentManagement.AddContentItem("MentlePieceDescription", "In between various family photos there is a folded note with your name written on it.");
             game.ContentManagement.AddContentItem("AlreadyHaveLetter", "You already have the letter.");
 
-
-
             Name = Game.ContentManagement.RetrieveContentItem("LoungeName");
             Description = Game.ContentManagement.RetrieveContentItem("LoungeDescription");
 
