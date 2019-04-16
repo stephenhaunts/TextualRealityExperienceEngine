@@ -56,7 +56,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// <summary>
         /// A list of objects that have been dropped in a room.
         /// </summary>
-        public IDroppedObjects DroppedObjects;
+        public IDroppedObjects DroppedObjects { get; set; }
 
         /// <summary>
         /// This flag indicates if the lights are on in the room. You can use this as a game play mechanic so metaphorically
@@ -321,12 +321,12 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             var roomDescription = room.Description;
 
-            if (DroppedObjects.DroppedObjectsList.Count > 0)
+            if (room.DroppedObjects.DroppedObjectsList.Count > 0)
             {
                 roomDescription += "\r\n";
             }
 
-            foreach (var item in DroppedObjects.DroppedObjectsList)
+            foreach (var item in room.DroppedObjects.DroppedObjectsList)
             {
                 roomDescription += "\r\nThere is a " + item.Name + " on the floor.";
             }
