@@ -99,13 +99,19 @@ namespace Tests.SimpleGame.Downstairs
                     {
                         case "key" when (command.Noun2 == "door") && Game.Player.Inventory.Exists("Key"):
                             SetDoorLock(false, Direction.North);
+                            Game.NumberOfMoves++;
+                            Game.IncreaseScore(1);
                             _doorUnlocked = true;
                             return Game.ContentManagement.RetrieveContentItem("TurnKey");
                         case "door" when Game.Player.Inventory.Exists("Key"):
                             _doorUnlocked = true;
+                            Game.NumberOfMoves++;
+                            Game.IncreaseScore(1);
                             SetDoorLock(false, Direction.North);
                             return Game.ContentManagement.RetrieveContentItem("TurnKey");
                         case "door" when !Game.Player.Inventory.Exists("Key"):
+                            Game.NumberOfMoves++;
+                            Game.IncreaseScore(1);
                             return Game.ContentManagement.RetrieveContentItem("DoorLocked");
                         default:
                             return Game.ContentManagement.RetrieveContentItem("DoNotHaveKey");
@@ -124,8 +130,10 @@ namespace Tests.SimpleGame.Downstairs
 
                         }
                         case "doormat":
+                            Game.NumberOfMoves++;
                             return Game.ContentManagement.RetrieveContentItem("DoorMat");
                         case "door":
+                            Game.NumberOfMoves++;
                             return Game.ContentManagement.RetrieveContentItem("LookDoor");
                     }
 

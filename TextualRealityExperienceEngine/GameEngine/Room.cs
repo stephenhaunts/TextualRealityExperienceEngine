@@ -388,6 +388,14 @@ namespace TextualRealityExperienceEngine.GameEngine
 
                         return roomDescription;
                     }
+                    else 
+                    { 
+                        if (Game.Player.Inventory.Exists(command.Noun))
+                        {
+                            var inventoryObject = Game.Player.Inventory.Get(command.Noun);
+                            return inventoryObject.Description;
+                        }
+                    }
                     break;
                 }
                 case VerbCodes.NoCommand:
@@ -433,7 +441,19 @@ namespace TextualRealityExperienceEngine.GameEngine
                     {
                         var room = Game.VisitedRooms.GetRoomInstance(command.Noun);
                         Game.CurrentRoom = room;
-                        return room.Description;
+
+                        string roomDescription = room.Description;
+
+                        if (room.DroppedObjects.DroppedObjectsList.Count > 0)
+                        {
+                            roomDescription += "\r\n";
+
+                            foreach (var item in room.DroppedObjects.DroppedObjectsList)
+                            {
+                                roomDescription += "\r\nThere is a " + item.Name + " on the floor.";
+                            }
+                        }
+                        return roomDescription;
                     }
                     else
                     {

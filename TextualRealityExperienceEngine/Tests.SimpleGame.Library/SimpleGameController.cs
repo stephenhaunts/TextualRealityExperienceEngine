@@ -41,6 +41,9 @@ namespace Tests.SimpleGame.Library
         private IRoom Kitchen;
         private IRoom DiningRoom;
         private IRoom UpstairsHallway;
+        private IRoom LargeBedroom;
+        private IRoom SmallBedroom;
+        private IRoom Bathroom;
 
         public string Prologue
         {
@@ -81,6 +84,9 @@ namespace Tests.SimpleGame.Library
             Kitchen = new Kitchen(Game);
             DiningRoom = new DiningRoom(Game);
             UpstairsHallway = new UpstairsHallway(Game);
+            LargeBedroom = new LargeBedroom(Game);
+            SmallBedroom = new SmallBedroom(Game);
+            Bathroom = new Bathroom(Game);
 
             Lounge = new Lounge(Game);
             Hallway = new Hallway(Game)
@@ -105,6 +111,9 @@ namespace Tests.SimpleGame.Library
             Hallway.AddExit(Direction.West, Lounge);
             Hallway.AddExit(Direction.North, Kitchen);
             Hallway.AddExit(Direction.NorthEast, UpstairsHallway);
+            UpstairsHallway.AddExit(Direction.East, LargeBedroom);
+            UpstairsHallway.AddExit(Direction.West, SmallBedroom);
+            UpstairsHallway.AddExit(Direction.North, Bathroom);
 
             Kitchen.AddExit(Direction.East, DiningRoom);
         }

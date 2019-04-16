@@ -23,23 +23,90 @@ SOFTWARE.
 */
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.Synonyms;
 
 namespace Tests.SimpleGame.Downstairs
 {
     public class Lounge : Room
     {
+        private readonly IObject _letter = new GameObject("Letter", "It is a hand written letter addressed to you.", "You pick up the letter.");
+
         public Lounge(IGame game) : base(game)
         {
             game.ContentManagement.AddContentItem("LoungeName", "Lounge");
-            game.ContentManagement.AddContentItem("LoungeDescription", "You are stand in the lounge. There is a sofa and a TV inside. There is a door back to the hallway to the east.");
+            game.ContentManagement.AddContentItem("LoungeDescription", "You are stand in the lounge. There is a sofa at the back of the room and a TV in the corner. Next to the TV there is a fireplace and mantlepiece with various objects on top fo it. There is a door back to the hallway to the east.");
+
+            game.ContentManagement.AddContentItem("LetterDescription", "You open the letter and read it's contents. \r\n\r\n   It reads, \"Son, There was an alien invasion. There is so much we havn't told you, but there is little time and we don't know where you are. You must make your way to our hidden crypt hidden in the garage. When you are there we will explain all.\"");
+            game.ContentManagement.AddContentItem("MentlePieceDescription", "In between various family photos there is a folded note with your name written on it.");
+            game.ContentManagement.AddContentItem("AlreadyHaveLetter", "You already have the letter.");
+
+
 
             Name = Game.ContentManagement.RetrieveContentItem("LoungeName");
             Description = Game.ContentManagement.RetrieveContentItem("LoungeDescription");
+
+            game.Parser.Nouns.Add("letter", "letter");
+            game.Parser.Nouns.Add("envelope", "letter");
+            game.Parser.Nouns.Add("note", "letter");
+            game.Parser.Nouns.Add("folded", "letter");
+            game.Parser.Nouns.Add("foldednote", "letter");
+            game.Parser.Nouns.Add("paper", "letter");
+
+            game.Parser.Nouns.Add("mantlepiece", "mantlepiece");
+            game.Parser.Nouns.Add("fire", "mantlepiece");
+            game.Parser.Nouns.Add("fireplace", "mantlepiece");
+            game.Parser.Nouns.Add("hearth", "mantlepiece");
+
         }
 
         public override string ProcessCommand(ICommand command)
         {
-            return command.ProfanityDetected ? Game.ContentManagement.RetrieveContentItem("NoNeedToBeRude") : base.ProcessCommand(command);
+            switch (command.Verb)
+            {
+                case VerbCodes.Look:
+                    switch (command.Noun)
+                    {
+                        case "letter":
+                        {
+                            Game.IncreaseScore(1);
+                            Game.NumberOfMoves++;
+                            return Game.ContentManagement.RetrieveContentItem("LetterDescription");
+                        }
+                        case "mantlepiece":
+                        {
+                            Game.NumberOfMoves++;
+                            return Game.ContentManagement.RetrieveContentItem("MentlePieceDescription");
+                        }                    
+                    }
+                    break;
+
+                case VerbCodes.Take:
+                    if (command.Noun == "letter")
+                    {
+                        if (!Game.Player.Inventory.Exists("letter"))
+                        {
+                            Game.Player.Inventory.Add(_letter.Name, _letter);
+                            Game.IncreaseScore(1);
+                            Game.NumberOfMoves++;
+                            return _letter.PickUpMessage;
+                        }
+
+                        if (Game.Player.Inventory.Exists("letter"))
+                        {
+                            return Game.ContentManagement.RetrieveContentItem("AlreadyHaveLetter");
+                        }
+                    }
+                    break;
+
+            }
+
+            if (command.ProfanityDetected)
+            {
+                return Game.ContentManagement.RetrieveContentItem("NoNeedToBeRude");
+            }
+
+            var reply = base.ProcessCommand(command);
+            return reply;
         }
     }
 }

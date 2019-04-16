@@ -1,4 +1,4 @@
-﻿/*
+/*
 MIT License
 
 Copyright (c) 2019 
@@ -21,18 +21,34 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+using TextualRealityExperienceEngine.GameEngine;
+using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
-using System;
-
-namespace TextualRealityExperienceEngine.GameEngine.Interfaces
+namespace Tests.SimpleGame.UpStairs
 {
-    public interface IObject
+    public class LargeBedroom : Room
     {
-        string Name { get; set; }
-        string Description { get; set; }
-       //string LongDescription { get; set; }
+        public LargeBedroom(IGame game) : base(game)
+        {
+            game.ContentManagement.AddContentItem("LargeBedroomName", "LargeBedroom");
+            game.ContentManagement.AddContentItem("LargeBedroomDescription", "You are standing in the main bedroom of the house.");
 
-        string PickUpMessage { get; set; }
-        DateTime PickedUpDateTime { get; set; }
+            Name = game.ContentManagement.RetrieveContentItem("LargeBedroomName");
+            Description = game.ContentManagement.RetrieveContentItem("LargeBedroomDescription");
+        }
+
+        public override string ProcessCommand(ICommand command)
+        {
+            string reply;
+
+            if (command.ProfanityDetected)
+            {
+                return Game.ContentManagement.RetrieveContentItem("NoNeedToBeRude");
+            }                     
+
+            reply = base.ProcessCommand(command);
+
+            return reply;
+        }
     }
 }
