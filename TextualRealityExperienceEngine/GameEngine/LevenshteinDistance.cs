@@ -40,7 +40,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 throw new ArgumentNullException(nameof(target));
             }
 
-            source = source.ToLower();
+            source = source.ToLower();  
             target = target.ToLower();
 
             var distance = new int[source.Length + 1, target.Length + 1];

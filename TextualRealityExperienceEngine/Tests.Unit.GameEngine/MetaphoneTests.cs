@@ -69,5 +69,35 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
  
             Assert.AreEqual(token1, token2);
         }
+
+        [TestMethod]
+        public void GenerateMetaphoneCodeForTake()
+        {
+            IPhoneticMatch phonetic = new Metaphone();
+            var token1 = phonetic.CreateToken("take");
+            var token2 = phonetic.CreateToken("taek");
+
+            Assert.AreEqual(token1, token2);
+        }
+
+        [TestMethod]
+        public void GenerateMetaphoneCodeForTakeMixedCase()
+        {
+            IPhoneticMatch phonetic = new Metaphone();
+            var token1 = phonetic.CreateToken("tAke");
+            var token2 = phonetic.CreateToken("taEK");
+
+            Assert.AreEqual(token1, token2);
+        }
+
+        [TestMethod]
+        public void GenerateMetaphoneCodeForInventory()
+        {
+            IPhoneticMatch phonetic = new Metaphone();
+            var token1 = phonetic.CreateToken("inventory");
+            var token2 = phonetic.CreateToken("invintury");
+
+            Assert.AreEqual(token1, token2);
+        }
     }
 }
