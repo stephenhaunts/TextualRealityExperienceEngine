@@ -60,20 +60,20 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
         /// </summary>
         public PrepositionMapping()
         {
-            _prepositionMappings.Add("into", PropositionEnum.Into);
-            _prepositionMappings.Add("against", PropositionEnum.Against);
-            _prepositionMappings.Add("to", PropositionEnum.To);
-            _prepositionMappings.Add("in", PropositionEnum.In);
-            _prepositionMappings.Add("on", PropositionEnum.On);
+            Add("into", PropositionEnum.Into);
+            Add("against", PropositionEnum.Against);
+            Add("to", PropositionEnum.To);
+            Add("in", PropositionEnum.In);
+            Add("on", PropositionEnum.On);
 
-            _prepositionMappings.Add("through", PropositionEnum.Through);
-            _prepositionMappings.Add("over", PropositionEnum.Over);
-            _prepositionMappings.Add("under", PropositionEnum.Under);
-            _prepositionMappings.Add("across", PropositionEnum.Across);
-            _prepositionMappings.Add("behind", PropositionEnum.Behind);
-            _prepositionMappings.Add("at", PropositionEnum.At);
-            _prepositionMappings.Add("up", PropositionEnum.Up);
-            _prepositionMappings.Add("from", PropositionEnum.From);
+            Add("through", PropositionEnum.Through);
+            Add("over", PropositionEnum.Over);
+            Add("under", PropositionEnum.Under);
+            Add("across", PropositionEnum.Across);
+            Add("behind", PropositionEnum.Behind);
+            Add("at", PropositionEnum.At);
+            Add("up", PropositionEnum.Up);
+            Add("from", PropositionEnum.From);
         }
 
         /// <summary>

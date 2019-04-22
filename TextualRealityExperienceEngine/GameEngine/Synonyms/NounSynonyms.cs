@@ -41,37 +41,37 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
         /// </summary>
         public NounSynonyms()
         {
-            _synonymsMappings.Add("n", "north");
-            _synonymsMappings.Add("s", "south");
-            _synonymsMappings.Add("e", "east");
-            _synonymsMappings.Add("w", "west");
+            Add("n", "north");
+            Add("s", "south");
+            Add("e", "east");
+            Add("w", "west");
 
-            _synonymsMappings.Add("ne", "northeast");
-            _synonymsMappings.Add("se", "southeast");
-            _synonymsMappings.Add("sw", "southwest");
-            _synonymsMappings.Add("nw", "northwest");
+            Add("ne", "northeast");
+            Add("se", "southeast");
+            Add("sw", "southwest");
+            Add("nw", "northwest");
 
-            _synonymsMappings.Add("northeast", "northeast");
-            _synonymsMappings.Add("southeast", "southeast");
-            _synonymsMappings.Add("southwest", "southwest");
-            _synonymsMappings.Add("northwest", "northwest");
+            Add("northeast", "northeast");
+            Add("southeast", "southeast");
+            Add("southwest", "southwest");
+            Add("northwest", "northwest");
 
-            _synonymsMappings.Add("north", "north");
-            _synonymsMappings.Add("south", "south");
-            _synonymsMappings.Add("east", "east");
-            _synonymsMappings.Add("west", "west");
+            Add("north", "north");
+            Add("south", "south");
+            Add("east", "east");
+            Add("west", "west");
 
-            _synonymsMappings.Add("forward", "north");
-            _synonymsMappings.Add("backward", "south");
-            _synonymsMappings.Add("forwards", "north");
-            _synonymsMappings.Add("backwards", "south");
+            Add("forward", "north");
+            Add("backward", "south");
+            Add("forwards", "north");
+            Add("backwards", "south");
             
-            _synonymsMappings.Add("f", "north");
-            _synonymsMappings.Add("b", "south");
-            _synonymsMappings.Add("right", "east");                        
-            _synonymsMappings.Add("left", "west");            
-            _synonymsMappings.Add("r", "east");
-            _synonymsMappings.Add("l", "west");
+            Add("f", "north");
+            Add("b", "south");
+            Add("right", "east");                        
+            Add("left", "west");            
+            Add("r", "east");
+            Add("l", "west");
         }
 
         /// <summary>
