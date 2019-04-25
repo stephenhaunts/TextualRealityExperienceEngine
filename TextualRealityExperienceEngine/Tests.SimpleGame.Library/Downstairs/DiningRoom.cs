@@ -81,7 +81,7 @@ namespace Tests.SimpleGame.Downstairs
                             }
                         case "torch":
                             {
-                                if (!_openedCupboard)
+                                if (_openedCupboard)
                                 {
                                     Game.IncreaseScore(1);
                                     Game.NumberOfMoves++;
@@ -96,7 +96,7 @@ namespace Tests.SimpleGame.Downstairs
                                     }
                                     else
                                     {
-                                        break;
+                                        return Game.ContentManagement.RetrieveContentItem("LookAtTorch");
                                     }
                                 }
                             }
