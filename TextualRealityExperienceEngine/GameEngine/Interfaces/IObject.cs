@@ -34,5 +34,10 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 
         string PickUpMessage { get; set; }
         DateTime PickedUpDateTime { get; set; }
+
+        bool Edible { get; set; }
+        int PointsToApplyAfterEaten { get; set; }
+        string StatToModifyWhenEating { get; set; }
+        string EatenMessage { get; set; }
     }
 }

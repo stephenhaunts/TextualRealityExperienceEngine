@@ -59,6 +59,31 @@ namespace TextualRealityExperienceEngine.GameEngine
         public DateTime PickedUpDateTime { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this
+        /// <see cref="T:TextualRealityExperienceEngine.GameEngine.GameObject"/> is edible.
+        /// </summary>
+        /// <value><c>true</c> if edible; otherwise, <c>false</c>.</value>
+        public bool Edible { get; set; }
+
+        /// <summary>
+        /// Gets or sets the points to apply after eaten.
+        /// </summary>
+        /// <value>The points to apply after eaten.</value>
+        public int PointsToApplyAfterEaten { get; set; }
+
+        /// <summary>
+        /// Gets or sets the stat to modify when eating.
+        /// </summary>
+        /// <value>The stat to modify when eating.</value>
+        public string StatToModifyWhenEating { get; set; }
+
+        /// <summary>
+        /// Gets or sets the eaten message.
+        /// </summary>
+        /// <value>The eaten message.</value>
+        public string EatenMessage { get; set; }
+
+        /// <summary>
         /// Constructor that sets an objects initial state.
         /// </summary>
         /// <param name="name">The name of the object.</param>
@@ -69,6 +94,22 @@ namespace TextualRealityExperienceEngine.GameEngine
             Name = name;
             Description = description;
             PickUpMessage = pickUpMessage;
+            Edible = false;
+            PointsToApplyAfterEaten = 0;
+            StatToModifyWhenEating = string.Empty;
+            EatenMessage = string.Empty;
+        }
+
+        public GameObject(string name, string description, string pickUpMessage,
+                          bool edible, int pointsToApplyAfterEaten, string statToModifyAfterEaten, string eatenMessage)
+        {
+            Name = name;
+            Description = description;
+            PickUpMessage = pickUpMessage;
+            Edible = edible;
+            PointsToApplyAfterEaten = pointsToApplyAfterEaten;
+            StatToModifyWhenEating = statToModifyAfterEaten;
+            EatenMessage = eatenMessage;
         }
     }
 }
