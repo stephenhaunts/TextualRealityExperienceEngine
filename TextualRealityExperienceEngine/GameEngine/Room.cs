@@ -493,7 +493,11 @@ namespace TextualRealityExperienceEngine.GameEngine
                             {
                                 Game.Player.PlayerStats.AddTo(consumableObject.StatToModifyWhenEating, consumableObject.PointsToApplyAfterEaten);
 
-                                return consumableObject.EatenMessage;
+                                string reply = consumableObject.EatenMessage + "\r\n" + "Player " + 
+                                    consumableObject.StatToModifyWhenEating.ToUpper() + " increased by " +
+                                    consumableObject.PointsToApplyAfterEaten + " points to : " + Game.Player.PlayerStats.Get(consumableObject.StatToModifyWhenEating);
+
+                                return reply;
                             }
                         }
                         else
