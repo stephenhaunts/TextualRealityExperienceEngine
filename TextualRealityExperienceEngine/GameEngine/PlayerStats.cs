@@ -112,6 +112,11 @@ namespace TextualRealityExperienceEngine.GameEngine
                 throw new ArgumentNullException(nameof(name));
             }
 
+            if (!Exists(name))
+            {
+                Add(name, 0);
+            }
+
             _playerStats[name] = _playerStats[name] + addTo;
 
             return _playerStats[name];
@@ -122,6 +127,11 @@ namespace TextualRealityExperienceEngine.GameEngine
             if (string.IsNullOrEmpty(name))
             {
                 throw new ArgumentNullException(nameof(name));
+            }
+
+            if (!Exists(name))
+            {
+                Add(name, 0);
             }
 
             _playerStats[name] = _playerStats[name] - subtractFrom;

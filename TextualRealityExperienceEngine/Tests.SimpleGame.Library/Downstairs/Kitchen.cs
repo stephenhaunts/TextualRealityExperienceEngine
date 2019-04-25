@@ -29,8 +29,8 @@ namespace Tests.SimpleGame.Downstairs
 {
     public class Kitchen : Room
     {
-        private bool _openedFridge = false;
-        private readonly IObject _food = new GameObject("Food", "It is the remains of a cooked chicken.", "You pick up the chicken.");
+        private bool _openedFridge;
+        private readonly IObject _food = new GameObject("Food", "It is the remains of a cooked chicken.", "You pick up the chicken.", true, 10, "health", "You eat the chicken; it was lovely.");
 
         public Kitchen(IGame game) : base(game)
         {

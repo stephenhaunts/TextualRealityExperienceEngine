@@ -409,6 +409,11 @@ namespace TextualRealityExperienceEngine.GameEngine
                 case VerbCodes.NoCommand:
                     break;
                 case VerbCodes.Take:
+                    if (string.IsNullOrEmpty(command.Noun))
+                    {
+                        return "You can't take that.";
+                    }
+
                     if (DroppedObjects.PickUpDroppedObject(command.Noun))
                     {
                         return "You pick up the " + command.Noun + ".";
@@ -420,6 +425,11 @@ namespace TextualRealityExperienceEngine.GameEngine
                 case VerbCodes.Use:
                     break;
                 case VerbCodes.Drop:
+                    if (string.IsNullOrEmpty(command.Noun))
+                    {
+                        return "You can't drop that.";
+                    }
+
                     if (DroppedObjects.DropObject(command.Noun))
                     {
                         return "You drop the " + command.Noun + ".";
@@ -467,7 +477,33 @@ namespace TextualRealityExperienceEngine.GameEngine
                     {
                         return "You can not visit this room as you have not previously been there.";
                     }
-                   
+                case VerbCodes.Eat:
+                    if (string.IsNullOrEmpty(command.Noun))
+                    {
+                        return "I'm not hungry.";
+                    }
+
+                    if (Game.Player.Inventory.Exists(command.Noun))
+                    {
+                        var consumableObject = Game.Player.Inventory.Get(command.Noun);
+
+                        if (consumableObject.Edible)
+                        {
+                            if (Game.Player.Inventory.RemoveObject(command.Noun))
+                            {
+                                Game.Player.PlayerStats.AddTo(consumableObject.StatToModifyWhenEating, consumableObject.PointsToApplyAfterEaten);
+
+                                return consumableObject.EatenMessage;
+                            }
+                        }
+                        else
+                        {
+                            return "You can't eat a " + command.Noun + ".";
+                        }
+                    }
+
+                    return "I'm not hungry.";
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

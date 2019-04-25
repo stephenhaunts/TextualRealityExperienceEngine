@@ -113,6 +113,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             Add("climb", VerbCodes.Use);
             Add("open", VerbCodes.Use);
 
+
             Add("look", VerbCodes.Look);
             Add("examine", VerbCodes.Look);
             Add("peek", VerbCodes.Look);
@@ -150,6 +151,13 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             Add("teleport", VerbCodes.Visit);
             Add("visit", VerbCodes.Visit);
             Add("goto", VerbCodes.Visit);
+
+            Add("eat", VerbCodes.Eat);
+            Add("gobble", VerbCodes.Eat);
+            Add("consume", VerbCodes.Eat);
+            Add("munch", VerbCodes.Eat);
+            Add("gulp", VerbCodes.Eat);
+            Add("swallow", VerbCodes.Eat);
         }
 
         /// <summary>

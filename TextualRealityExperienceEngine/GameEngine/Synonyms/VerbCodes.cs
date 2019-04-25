@@ -38,6 +38,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
         Drop = 5,
         Hint = 6,
         Attack = 7,
-        Visit = 8
+        Visit = 8,
+        Eat = 9
     }
 }
