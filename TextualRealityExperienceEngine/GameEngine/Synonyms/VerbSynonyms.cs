@@ -183,14 +183,14 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
                 throw new ArgumentNullException(nameof(synonym));
             }
 
-            try
+            if (_synonymMappings.ContainsKey(synonym))
             {
                 return _synonymMappings[synonym];
             }
-            catch (KeyNotFoundException)
+            else
             {
                 return VerbCodes.NoCommand;
-            }
+            }                     
         }
     }
 }

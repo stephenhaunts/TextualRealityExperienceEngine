@@ -106,15 +106,15 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             {
                 return PropositionEnum.NotRecognised;
             }
-          
-            try
+
+            if (_prepositionMappings.ContainsKey(preposition))
             {
                 return _prepositionMappings[preposition];
             }
-            catch (KeyNotFoundException)
+            else
             {
                 return PropositionEnum.NotRecognised;
-            }
+            }                   
         }
     }
 }
