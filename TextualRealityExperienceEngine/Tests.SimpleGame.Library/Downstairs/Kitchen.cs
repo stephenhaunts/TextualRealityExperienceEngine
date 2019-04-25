@@ -30,7 +30,8 @@ namespace Tests.SimpleGame.Downstairs
     public class Kitchen : Room
     {
         private bool _openedFridge;
-        private readonly IObject _food = new GameObject("Food", "It is the remains of a cooked chicken.", "You pick up the chicken.", true, 10, "health", "You eat the chicken; it was lovely.");
+        private readonly IObject _chicken = new GameObject("Chicken", "It is the remains of a cooked chicken.", "You pick up the chicken.", true, 10, "health", "You eat the chicken; it was lovely.");
+        private readonly IObject _cheese = new GameObject("Cheese", "It is a small block of english cheddar.", "You pick up the cheese.", true, 5, "health", "You eat the cheese.");
 
         public Kitchen(IGame game) : base(game)
         {
@@ -40,14 +41,26 @@ namespace Tests.SimpleGame.Downstairs
             Name = game.ContentManagement.RetrieveContentItem("KitchenName");
             Description = game.ContentManagement.RetrieveContentItem("KitchenDescription");
 
-            game.ContentManagement.AddContentItem("LookedAtFridge", "You open the fridge and there about half a cooked chicken in the fridge covered in plastic film.");
-            game.ContentManagement.AddContentItem("LookedAtFridgeNoFood", "You open the fridge and it is empty.");
-            game.ContentManagement.AddContentItem("LookAtFood", "It is the remains of a cooked chicken.");
-            game.ContentManagement.AddContentItem("WhatFood", "What food?.");
-            game.ContentManagement.AddContentItem("AlreadyHaveFood", "You already have the chicken.");
+            game.ContentManagement.AddContentItem("ItsAFridge", "It's a fridge..");
 
-            game.Parser.Nouns.Add("chicken", "food");
-            game.Parser.Nouns.Add("food", "food");
+            game.ContentManagement.AddContentItem("LookedAtFridge", "You open the fridge door.");
+
+            game.ContentManagement.AddContentItem("LookAtChicken", "It is the remains of a cooked chicken.");
+            game.ContentManagement.AddContentItem("AlreadyHaveChicken", "You already have the chicken.");
+
+            game.ContentManagement.AddContentItem("LookAtCheese", "It is a small block of English cheddar cheese.");
+            game.ContentManagement.AddContentItem("AlreadyHaveCheese", "You already have the cheese.");
+
+            game.ContentManagement.AddContentItem("WhatFood", "What food?.");
+
+            game.Parser.Nouns.Add("chicken", "chicken");
+            game.Parser.Nouns.Add("chook", "chicken");
+            game.Parser.Nouns.Add("poultry", "chicken");
+            game.Parser.Nouns.Add("turkey", "chicken");
+
+            game.Parser.Nouns.Add("cheese", "cheese");
+            game.Parser.Nouns.Add("cheddar", "cheese");
+            game.Parser.Nouns.Add("chedderr", "cheese");
 
             game.Parser.Nouns.Add("fridge", "fridge");
             game.Parser.Nouns.Add("icebox", "fridge");
@@ -63,37 +76,56 @@ namespace Tests.SimpleGame.Downstairs
                     {
                         case "fridge":
                             {
-                                Game.IncreaseScore(1);
-                                Game.NumberOfMoves++;
-                                _openedFridge = true;
-
-                                if (!Game.Player.Inventory.Exists("food"))
+                                if (!_openedFridge)
                                 {
-                                    return Game.ContentManagement.RetrieveContentItem("LookedAtFridge");
+                                    return Game.ContentManagement.RetrieveContentItem("ItsAFridge");
                                 }
                                 else
                                 {
-                                    return Game.ContentManagement.RetrieveContentItem("LookedAtFridgeNoFood");
+                                    string message = "The fridge is open. ";
+
+                                    return FridgeContents(message);
                                 }
                             }
-                        case "food":
+                        case "chicken":
                             {
                                 if (_openedFridge)
                                 {
                                     Game.IncreaseScore(1);
                                     Game.NumberOfMoves++;
-                                    return Game.ContentManagement.RetrieveContentItem("LookAtFood");
+                                    return Game.ContentManagement.RetrieveContentItem("LookAtChicken");
                                 }
                                 else
                                 {
-                                    if (!Game.Player.Inventory.Exists("food"))
+                                    if (!Game.Player.Inventory.Exists("chicken"))
                                     {
                                         Game.NumberOfMoves++;
                                         return Game.ContentManagement.RetrieveContentItem("WhatFood");
                                     }
                                     else
                                     {
-                                        return Game.ContentManagement.RetrieveContentItem("LookAtFood");
+                                        return Game.ContentManagement.RetrieveContentItem("LookAtChicken");
+                                    }
+                                }
+                            }
+                        case "cheese":
+                            {
+                                if (_openedFridge)
+                                {
+                                    Game.IncreaseScore(1);
+                                    Game.NumberOfMoves++;
+                                    return Game.ContentManagement.RetrieveContentItem("LookAtCheese");
+                                }
+                                else
+                                {
+                                    if (!Game.Player.Inventory.Exists("cheese"))
+                                    {
+                                        Game.NumberOfMoves++;
+                                        return Game.ContentManagement.RetrieveContentItem("WhatFood");
+                                    }
+                                    else
+                                    {
+                                        return Game.ContentManagement.RetrieveContentItem("LookAtCheese");
                                     }
                                 }
                             }
@@ -109,44 +141,65 @@ namespace Tests.SimpleGame.Downstairs
                                 Game.NumberOfMoves++;
                                 _openedFridge = true;
 
-                                if (!Game.Player.Inventory.Exists("food"))
-                                {
-                                    return Game.ContentManagement.RetrieveContentItem("LookedAtFridge");
-                                }
-                                else
-                                {
-                                    return Game.ContentManagement.RetrieveContentItem("LookedAtFridgeNoFood");
-                                }
+                                string message = "You open the fridge door. ";
+
+                                message = FridgeContents(message);
+
+                                return message;
                             }
                     }
                     break;
 
                 case VerbCodes.Take:
-                    if (command.Noun == "food")
+                    switch (command.Noun)
                     {
-                        if (_openedFridge)
-                        {
-                            if (!Game.Player.Inventory.Exists("food"))
+                        case "chicken":
+                            if (_openedFridge)
                             {
-                                Game.Player.Inventory.Add(_food.Name, _food);
-                                Game.IncreaseScore(1);
-                                Game.NumberOfMoves++;
-                                return _food.PickUpMessage;
-                            }
+                                if (!Game.Player.Inventory.Exists("chicken"))
+                                {
+                                    Game.Player.Inventory.Add(_chicken.Name, _chicken);
+                                    Game.IncreaseScore(1);
+                                    Game.NumberOfMoves++;
+                                    return _chicken.PickUpMessage;
+                                }
 
-                            if (Game.Player.Inventory.Exists("food"))
-                            {
-                                return Game.ContentManagement.RetrieveContentItem("AlreadyHaveFood");
+                                if (Game.Player.Inventory.Exists("chicken "))
+                                {
+                                    return Game.ContentManagement.RetrieveContentItem("AlreadyHaveChicken");
+                                }
                             }
-                        }
-                        else
-                        {
-                            Game.NumberOfMoves++;
-                            return Game.ContentManagement.RetrieveContentItem("WhatFood");
-                        }
+                            else
+                            {
+                                Game.NumberOfMoves++;
+                                return Game.ContentManagement.RetrieveContentItem("WhatFood");
+                            }
+                            break;
+
+                        case "cheese":
+                            if (_openedFridge)
+                            {
+                                if (!Game.Player.Inventory.Exists("cheese"))
+                                {
+                                    Game.Player.Inventory.Add(_cheese.Name, _cheese);
+                                    Game.IncreaseScore(1);
+                                    Game.NumberOfMoves++;
+                                    return _cheese.PickUpMessage;
+                                }
+
+                                if (Game.Player.Inventory.Exists("cheese"))
+                                {
+                                    return Game.ContentManagement.RetrieveContentItem("AlreadyHaveCheese");
+                                }
+                            }
+                            else
+                            {
+                                Game.NumberOfMoves++;
+                                return Game.ContentManagement.RetrieveContentItem("WhatFood");
+                            }
+                            break;
                     }
                     break;
-
             }
 
             if (command.ProfanityDetected)
@@ -156,6 +209,33 @@ namespace Tests.SimpleGame.Downstairs
 
             var reply = base.ProcessCommand(command);
             return reply;
+        }
+
+        private string FridgeContents(string message)
+        {
+            bool chicken = Game.Player.Inventory.Exists("chicken");
+            bool cheese = Game.Player.Inventory.Exists("cheese");
+
+            if ((!chicken) || (!cheese))
+            {
+                message += "The fridge contains the following items, ";
+
+                if (!chicken)
+                {
+                    message += "Chicken ";
+                }
+
+                if (!cheese)
+                {
+                    message += "Cheese ";
+                }
+            }
+            else
+            {
+                message += "The fridge is empty.";
+            }
+
+            return message;
         }
     }
 }
