@@ -923,5 +923,32 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             Assert.AreEqual("You eat the chicken; it was lovely.\r\nPlayer HEALTH increased by 10 points to : 10", reply);
             Assert.IsFalse(game.Player.Inventory.Exists("Chicken"));
         }
+
+        [TestMethod]
+        public void ProcessCommandEatsEdibleFailsIfNotInTheInventory()
+        {
+            IGame game = new Game();
+
+            var room = new Room("name1", "description1", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            IObject _chicken = new GameObject("Chicken", "It is the remains of a cooked chicken.", "You pick up the chicken.", true, 10, "health", "You eat the chicken; it was lovely.");
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Eat,
+                Noun = "chicken"
+            };
+
+            Assert.IsFalse(game.Player.Inventory.Exists("Chicken"));
+
+            var reply = room.ProcessCommand(command);
+
+            Assert.AreEqual("I'm not hungry.", reply);
+
+            Assert.IsFalse(game.Player.Inventory.Exists("Chicken"));
+        }
     }
 }
