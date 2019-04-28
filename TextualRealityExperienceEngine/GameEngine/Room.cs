@@ -491,11 +491,16 @@ namespace TextualRealityExperienceEngine.GameEngine
                         {
                             if (Game.Player.Inventory.RemoveObject(command.Noun))
                             {
-                                Game.Player.PlayerStats.AddTo(consumableObject.StatToModifyWhenEating, consumableObject.PointsToApplyAfterEaten);
+                                string reply = consumableObject.EatenMessage;
 
-                                string reply = consumableObject.EatenMessage + "\r\n" + "Player " + 
-                                    consumableObject.StatToModifyWhenEating.ToUpper() + " increased by " +
-                                    consumableObject.PointsToApplyAfterEaten + " points to : " + Game.Player.PlayerStats.Get(consumableObject.StatToModifyWhenEating);
+                                foreach (var stat in consumableObject.StatsAdjustment)
+                                {
+                                    Game.Player.PlayerStats.AddTo(stat.StatToModify, stat.PointsToApply);
+
+                                    reply += "\r\n" + "Player " +
+                                        stat.StatToModify.ToUpper() + " increased by " +
+                                        stat.PointsToApply + " points to : " + Game.Player.PlayerStats.Get(stat.StatToModify);
+                                }
 
                                 return reply;
                             }

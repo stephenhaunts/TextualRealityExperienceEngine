@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System;
+using System.Collections.Generic;
 
 namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
@@ -36,8 +37,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         DateTime PickedUpDateTime { get; set; }
 
         bool Edible { get; set; }
-        int PointsToApplyAfterEaten { get; set; }
-        string StatToModifyWhenEating { get; set; }
+        List<PlayerStatsAdjustments> StatsAdjustment { get; }
         string EatenMessage { get; set; }
     }
 }

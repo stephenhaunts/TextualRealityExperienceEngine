@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
@@ -96,7 +97,7 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             IObject gameObject = new GameObject("objectName", "object description", "pickup message",
                 true, 100, "health", "you have eaten the cheese");
 
-            Assert.AreEqual(100, gameObject.PointsToApplyAfterEaten);
+            Assert.AreEqual(100, gameObject.StatsAdjustment[0].PointsToApply);
         }
 
         [TestMethod]
@@ -105,7 +106,7 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             IObject gameObject = new GameObject("objectName", "object description", "pickup message",
                 true, 100, "health", "you have eaten the cheese");
 
-            Assert.AreEqual("health", gameObject.StatToModifyWhenEating);
+            Assert.AreEqual("health", gameObject.StatsAdjustment[0].StatToModify);
         }
 
         [TestMethod]
@@ -115,6 +116,87 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
                 true, 100, "health", "you have eaten the cheese");
 
             Assert.AreEqual("you have eaten the cheese", gameObject.EatenMessage);
+        }
+
+        [TestMethod]
+        public void SecondConstructorSetsNameTest()
+        {
+            List<PlayerStatsAdjustments> stats = new List<PlayerStatsAdjustments>();
+            PlayerStatsAdjustments health = new PlayerStatsAdjustments("health", 10);
+            PlayerStatsAdjustments skill = new PlayerStatsAdjustments("skill", 5);
+            stats.Add(health);
+            stats.Add(skill);
+
+            IObject gameObject = new GameObject("objectName", "object description", "pickup message",
+                true, stats, "you have eaten the cheese");
+
+            Assert.AreEqual("objectName", gameObject.Name);
+        }
+
+        [TestMethod]
+        public void SecondConstructorSetsDescriptionTest()
+        {
+            List<PlayerStatsAdjustments> stats = new List<PlayerStatsAdjustments>();
+            PlayerStatsAdjustments health = new PlayerStatsAdjustments("health", 10);
+            PlayerStatsAdjustments skill = new PlayerStatsAdjustments("skill", 5);
+            stats.Add(health);
+            stats.Add(skill);
+
+            IObject gameObject = new GameObject("objectName", "object description", "pickup message",
+                true, stats, "you have eaten the cheese");
+
+            Assert.AreEqual("object description", gameObject.Description);
+        }
+
+        [TestMethod]
+        public void SecondConstructorSetsPickupMessageTest()
+        {
+            List<PlayerStatsAdjustments> stats = new List<PlayerStatsAdjustments>();
+            PlayerStatsAdjustments health = new PlayerStatsAdjustments("health", 10);
+            PlayerStatsAdjustments skill = new PlayerStatsAdjustments("skill", 5);
+            stats.Add(health);
+            stats.Add(skill);
+
+            IObject gameObject = new GameObject("objectName", "object description", "pickup message",
+                true, stats, "you have eaten the cheese");
+
+            Assert.AreEqual("pickup message", gameObject.PickUpMessage);
+        }
+
+        [TestMethod]
+        public void SecondConstructorSetsEatenFlagTest()
+        {
+            List<PlayerStatsAdjustments> stats = new List<PlayerStatsAdjustments>();
+            PlayerStatsAdjustments health = new PlayerStatsAdjustments("health", 10);
+            PlayerStatsAdjustments skill = new PlayerStatsAdjustments("skill", 5);
+            stats.Add(health);
+            stats.Add(skill);
+
+            IObject gameObject = new GameObject("objectName", "object description", "pickup message",
+                true, stats, "you have eaten the cheese");
+
+            Assert.IsTrue(gameObject.Edible);
+        }
+
+
+        [TestMethod]
+        public void SecondExtendedConstructorStatsToApplyTest()
+        {
+            List<PlayerStatsAdjustments> stats = new List<PlayerStatsAdjustments>();
+            PlayerStatsAdjustments health = new PlayerStatsAdjustments("health", 10);
+            PlayerStatsAdjustments skill = new PlayerStatsAdjustments("skill", 5);
+            stats.Add(health);
+            stats.Add(skill);
+
+            IObject gameObject = new GameObject("objectName", "object description", "pickup message",
+                true, stats, "you have eaten the cheese");
+
+            Assert.AreEqual(10, gameObject.StatsAdjustment[0].PointsToApply);
+            Assert.AreEqual("health", gameObject.StatsAdjustment[0].StatToModify);
+
+            Assert.AreEqual(5, gameObject.StatsAdjustment[1].PointsToApply);
+            Assert.AreEqual("skill", gameObject.StatsAdjustment[1].StatToModify);
+
         }
     }
 }

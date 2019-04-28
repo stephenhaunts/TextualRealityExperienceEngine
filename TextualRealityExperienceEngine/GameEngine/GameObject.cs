@@ -23,10 +23,25 @@ SOFTWARE.
 */
 
 using System;
+using System.Collections.Generic;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
+    public class PlayerStatsAdjustments
+    {
+        public int PointsToApply { get; private set; }
+        public string StatToModify { get; private set; }
+
+        public PlayerStatsAdjustments(string statToModify, int pointsToApply)
+        {
+            StatToModify = statToModify;
+            PointsToApply = pointsToApply;
+        }
+    }
+
+
+
     /// <summary>
     /// Represents a game object that can be picked up and used by the player. An example could be a key, or weapon.
     /// </summary>
@@ -69,13 +84,15 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// Gets or sets the points to apply after eaten.
         /// </summary>
         /// <value>The points to apply after eaten.</value>
-        public int PointsToApplyAfterEaten { get; set; }
+        //public int PointsToApplyAfterEaten { get; set; }
 
         /// <summary>
         /// Gets or sets the stat to modify when eating.
         /// </summary>
         /// <value>The stat to modify when eating.</value>
-        public string StatToModifyWhenEating { get; set; }
+        //public string StatToModifyWhenEating { get; set; }
+
+        public List<PlayerStatsAdjustments> StatsAdjustment { get; private set; }
 
         /// <summary>
         /// Gets or sets the eaten message.
@@ -95,8 +112,9 @@ namespace TextualRealityExperienceEngine.GameEngine
             Description = description;
             PickUpMessage = pickUpMessage;
             Edible = false;
-            PointsToApplyAfterEaten = 0;
-            StatToModifyWhenEating = string.Empty;
+
+            StatsAdjustment = new List<PlayerStatsAdjustments>();
+
             EatenMessage = string.Empty;
         }
 
@@ -107,8 +125,25 @@ namespace TextualRealityExperienceEngine.GameEngine
             Description = description;
             PickUpMessage = pickUpMessage;
             Edible = edible;
-            PointsToApplyAfterEaten = pointsToApplyAfterEaten;
-            StatToModifyWhenEating = statToModifyAfterEaten;
+
+            StatsAdjustment = new List<PlayerStatsAdjustments>();
+
+            PlayerStatsAdjustments adjustment = new PlayerStatsAdjustments(statToModifyAfterEaten, pointsToApplyAfterEaten);
+            StatsAdjustment.Add(adjustment);
+
+            EatenMessage = eatenMessage;
+        }
+
+        public GameObject(string name, string description, string pickUpMessage,
+                  bool edible, List<PlayerStatsAdjustments> StatsToUpdate, string eatenMessage)
+        {
+            Name = name;
+            Description = description;
+            PickUpMessage = pickUpMessage;
+            Edible = edible;
+
+            StatsAdjustment = new List<PlayerStatsAdjustments>(StatsToUpdate);
+
             EatenMessage = eatenMessage;
         }
     }
