@@ -28,20 +28,6 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
-    public class PlayerStatsAdjustments
-    {
-        public int PointsToApply { get; private set; }
-        public string StatToModify { get; private set; }
-
-        public PlayerStatsAdjustments(string statToModify, int pointsToApply)
-        {
-            StatToModify = statToModify;
-            PointsToApply = pointsToApply;
-        }
-    }
-
-
-
     /// <summary>
     /// Represents a game object that can be picked up and used by the player. An example could be a key, or weapon.
     /// </summary>
@@ -81,17 +67,9 @@ namespace TextualRealityExperienceEngine.GameEngine
         public bool Edible { get; set; }
 
         /// <summary>
-        /// Gets or sets the points to apply after eaten.
+        /// Gets the stats adjustment.
         /// </summary>
-        /// <value>The points to apply after eaten.</value>
-        //public int PointsToApplyAfterEaten { get; set; }
-
-        /// <summary>
-        /// Gets or sets the stat to modify when eating.
-        /// </summary>
-        /// <value>The stat to modify when eating.</value>
-        //public string StatToModifyWhenEating { get; set; }
-
+        /// <value>The stats adjustment.</value>
         public List<PlayerStatsAdjustments> StatsAdjustment { get; private set; }
 
         /// <summary>
