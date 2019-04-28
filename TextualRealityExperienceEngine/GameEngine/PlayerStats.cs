@@ -93,7 +93,12 @@ namespace TextualRealityExperienceEngine.GameEngine
                 throw new ArgumentNullException(nameof(name));
             }
 
-            return _playerStats[name];
+            if (Exists(name))
+            {
+                return _playerStats[name];
+            }
+
+            return 0;
         }
 
         /// <summary>

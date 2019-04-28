@@ -845,5 +845,83 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             Assert.AreEqual(1, game.VisitedRooms.GetVisitedRooms().Count);
             Assert.AreEqual("You can not visit this room as you have not previously been there.", room.ProcessCommand(command));
         }
+
+        [TestMethod]
+        public void ProcessCommandEatsEdibleObject()
+        {
+            IGame game = new Game();
+
+            var room = new Room("name1", "description1", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            IObject _chicken = new GameObject("Chicken", "It is the remains of a cooked chicken.", "You pick up the chicken.", true, 10, "health", "You eat the chicken; it was lovely.");
+            game.Player.Inventory.Add(_chicken.Name, _chicken);
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Eat,
+                Noun = "chicken"
+            };
+
+            var reply = room.ProcessCommand(command);
+
+            Assert.AreEqual("You eat the chicken; it was lovely.\r\nPlayer HEALTH increased by 10 points to : 10", reply);
+        }
+
+        [TestMethod]
+        public void ProcessCommandEatsEdibleObjectAddsPointsToHealthStat()
+        {
+            IGame game = new Game();
+
+            var room = new Room("name1", "description1", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            IObject _chicken = new GameObject("Chicken", "It is the remains of a cooked chicken.", "You pick up the chicken.", true, 10, "health", "You eat the chicken; it was lovely.");
+            game.Player.Inventory.Add(_chicken.Name, _chicken);
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Eat,
+                Noun = "chicken"
+            };
+
+            Assert.AreEqual(0, game.Player.PlayerStats.Get("health"));
+
+            var reply = room.ProcessCommand(command);
+
+            Assert.AreEqual("You eat the chicken; it was lovely.\r\nPlayer HEALTH increased by 10 points to : 10", reply);
+            Assert.AreEqual(10, game.Player.PlayerStats.Get("health"));
+        }
+
+        [TestMethod]
+        public void ProcessCommandEatsEdibleObjectRemovesFromInventory()
+        {
+            IGame game = new Game();
+
+            var room = new Room("name1", "description1", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            IObject _chicken = new GameObject("Chicken", "It is the remains of a cooked chicken.", "You pick up the chicken.", true, 10, "health", "You eat the chicken; it was lovely.");
+            game.Player.Inventory.Add(_chicken.Name, _chicken);
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Eat,
+                Noun = "chicken"
+            };
+
+            Assert.IsTrue(game.Player.Inventory.Exists("Chicken"));
+
+            var reply = room.ProcessCommand(command);
+
+            Assert.AreEqual("You eat the chicken; it was lovely.\r\nPlayer HEALTH increased by 10 points to : 10", reply);
+            Assert.IsFalse(game.Player.Inventory.Exists("Chicken"));
+        }
     }
 }
