@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
@@ -935,6 +936,136 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
             game.StartRoom = room;
 
             IObject _chicken = new GameObject("Chicken", "It is the remains of a cooked chicken.", "You pick up the chicken.", true, 10, "health", "You eat the chicken; it was lovely.");
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Eat,
+                Noun = "chicken"
+            };
+
+            Assert.IsFalse(game.Player.Inventory.Exists("Chicken"));
+
+            var reply = room.ProcessCommand(command);
+
+            Assert.AreEqual("I'm not hungry.", reply);
+
+            Assert.IsFalse(game.Player.Inventory.Exists("Chicken"));
+        }
+
+        [TestMethod]
+        public void ProcessCommandEatsEdibleObjectWithMultipleStatsToUpdate()
+        {
+            IGame game = new Game();
+
+            var room = new Room("name1", "description1", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            List<PlayerStatsAdjustments> stats = new List<PlayerStatsAdjustments>();
+            PlayerStatsAdjustments health = new PlayerStatsAdjustments("health", 10);
+            PlayerStatsAdjustments skill = new PlayerStatsAdjustments("skill", 5);
+            stats.Add(health);
+            stats.Add(skill);
+
+            IObject _chicken = new GameObject("Chicken", "It is the remains of a cooked chicken.", "You pick up the chicken.", true, stats, "You eat the chicken; it was lovely.");
+            game.Player.Inventory.Add(_chicken.Name, _chicken);
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Eat,
+                Noun = "chicken"
+            };
+
+            var reply = room.ProcessCommand(command);
+
+            Assert.AreEqual("You eat the chicken; it was lovely.\r\nPlayer HEALTH increased by 10 points to : 10\r\nPlayer SKILL increased by 5 points to : 5", reply);
+        }
+
+        [TestMethod]
+        public void ProcessCommandEatsEdibleObjectAddsPointsToHealthStatWithMultipleStatsToUpdate()
+        {
+            IGame game = new Game();
+
+            var room = new Room("name1", "description1", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            List<PlayerStatsAdjustments> stats = new List<PlayerStatsAdjustments>();
+            PlayerStatsAdjustments health = new PlayerStatsAdjustments("health", 10);
+            PlayerStatsAdjustments skill = new PlayerStatsAdjustments("skill", 5);
+            stats.Add(health);
+            stats.Add(skill);
+
+            IObject _chicken = new GameObject("Chicken", "It is the remains of a cooked chicken.", "You pick up the chicken.", true, stats, "You eat the chicken; it was lovely.");
+            game.Player.Inventory.Add(_chicken.Name, _chicken);
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Eat,
+                Noun = "chicken"
+            };
+
+            Assert.AreEqual(0, game.Player.PlayerStats.Get("health"));
+
+            var reply = room.ProcessCommand(command);
+
+            Assert.AreEqual("You eat the chicken; it was lovely.\r\nPlayer HEALTH increased by 10 points to : 10\r\nPlayer SKILL increased by 5 points to : 5", reply);
+            Assert.AreEqual(10, game.Player.PlayerStats.Get("health"));
+            Assert.AreEqual(5, game.Player.PlayerStats.Get("skill"));
+        }
+
+        [TestMethod]
+        public void ProcessCommandEatsEdibleObjectRemovesFromInventoryWithMultipleStatsToUpdate()
+        {
+            IGame game = new Game();
+
+            var room = new Room("name1", "description1", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            List<PlayerStatsAdjustments> stats = new List<PlayerStatsAdjustments>();
+            PlayerStatsAdjustments health = new PlayerStatsAdjustments("health", 10);
+            PlayerStatsAdjustments skill = new PlayerStatsAdjustments("skill", 5);
+            stats.Add(health);
+            stats.Add(skill);
+
+            IObject _chicken = new GameObject("Chicken", "It is the remains of a cooked chicken.", "You pick up the chicken.", true, stats, "You eat the chicken; it was lovely.");
+            game.Player.Inventory.Add(_chicken.Name, _chicken);
+
+            ICommand command = new Command
+            {
+                Verb = VerbCodes.Eat,
+                Noun = "chicken"
+            };
+
+            Assert.IsTrue(game.Player.Inventory.Exists("Chicken"));
+
+            var reply = room.ProcessCommand(command);
+
+            Assert.AreEqual("You eat the chicken; it was lovely.\r\nPlayer HEALTH increased by 10 points to : 10\r\nPlayer SKILL increased by 5 points to : 5", reply);
+            Assert.IsFalse(game.Player.Inventory.Exists("Chicken"));
+        }
+
+        [TestMethod]
+        public void ProcessCommandEatsEdibleFailsIfNotInTheInventoryWithMultipleStatsToUpdate()
+        {
+            IGame game = new Game();
+
+            var room = new Room("name1", "description1", game);
+
+            game.CurrentRoom = room;
+            game.StartRoom = room;
+
+            List<PlayerStatsAdjustments> stats = new List<PlayerStatsAdjustments>();
+            PlayerStatsAdjustments health = new PlayerStatsAdjustments("health", 10);
+            PlayerStatsAdjustments skill = new PlayerStatsAdjustments("skill", 5);
+            stats.Add(health);
+            stats.Add(skill);
+
+            IObject _chicken = new GameObject("Chicken", "It is the remains of a cooked chicken.", "You pick up the chicken.", true, stats, "You eat the chicken; it was lovely.");
 
             ICommand command = new Command
             {
