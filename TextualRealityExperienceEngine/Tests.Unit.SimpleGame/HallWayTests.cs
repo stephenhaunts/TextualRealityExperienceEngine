@@ -200,6 +200,5 @@ namespace Tests.Unit.SimpleGame
             Assert.AreEqual(controller.RetrieveContentItem("HallwayDescription"), controller.ProcessCommand("go south").Reply);
             Assert.AreEqual("Hallway", controller.Game.CurrentRoom.Name);
         }
-
     }
 }
