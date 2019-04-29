@@ -111,7 +111,7 @@ namespace Tests.Unit.SimpleGame
         }
 
         [TestMethod]
-        public void CanExitToKitchenAndGoBackToHallWay()
+        public void CanExitToHallwayAndGoBackToLounge()
         {
             SimpleGameController controller = new SimpleGameController();
             controller.InitializeGame();
