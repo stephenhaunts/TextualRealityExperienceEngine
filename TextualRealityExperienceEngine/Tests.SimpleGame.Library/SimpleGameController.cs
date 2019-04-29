@@ -33,7 +33,8 @@ namespace Tests.SimpleGame.Library
 {
     public class SimpleGameController
     {
-        private IGame Game = new Game();
+        public IGame Game { get; private set; }
+
         private IRoom Outside;
         private IRoom Hallway;
         private IRoom Lounge;
@@ -77,7 +78,7 @@ namespace Tests.SimpleGame.Library
             Game.CurrentRoom = Outside;
         }
 
-        public void SetupRooms()
+        private void SetupRooms()
         {
             Outside = new Outside(Game);
             Garage = new Garage(Game);
@@ -118,7 +119,7 @@ namespace Tests.SimpleGame.Library
             Kitchen.AddExit(Direction.East, DiningRoom);
         }
 
-        public void AddContentItems()
+        private void AddContentItems()
         {
             Game.ContentManagement.AddContentItem("NoNeedToBeRude", "There is no need to be rude.");
             Game.ContentManagement.AddContentItem("Prologue", "Welcome to the test adventure from the Textual Reality Experience Engine. \r\n\r\nYou will be bedazzled with amazement at the sheer awesomeness of our graphics engine.");
