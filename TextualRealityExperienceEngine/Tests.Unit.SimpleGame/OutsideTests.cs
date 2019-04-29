@@ -128,6 +128,8 @@ namespace Tests.Unit.SimpleGame
 
             Assert.AreEqual("You drop the key.", controller.ProcessCommand("drop the key").Reply);
 
+            Assert.IsFalse(controller.Game.Player.Inventory.Exists("Key"));
+
             Assert.AreEqual(controller.RetrieveContentItem("DoorLocked"), controller.ProcessCommand("unlock the door").Reply);
         }
 
@@ -149,6 +151,8 @@ namespace Tests.Unit.SimpleGame
             Assert.IsTrue(controller.Game.Player.Inventory.Exists("Key"));
 
             Assert.AreEqual("You drop the key.", controller.ProcessCommand("drop the key").Reply);
+
+            Assert.IsFalse(controller.Game.Player.Inventory.Exists("Key"));
 
             Assert.AreEqual(controller.RetrieveContentItem("GrabKey"), controller.ProcessCommand("pick up the key").Reply);
 
