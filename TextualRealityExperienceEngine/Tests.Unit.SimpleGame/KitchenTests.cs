@@ -76,52 +76,7 @@ namespace Tests.Unit.SimpleGame
             Assert.AreEqual(controller.RetrieveContentItem("LookAtCheese"), controller.ProcessCommand("look at the cheese.").Reply);
         }
 
-        // [TestMethod]
-        // public void LookAtTheFirePlaceAndReadNote()
-        // {
-        //     SimpleGameController controller = new SimpleGameController();
-        //     controller.InitializeGame();
-
-        //     controller.Game.LoadGame(CompleteOutsideAndHallWaySection());
-
-        //     Assert.AreEqual(controller.RetrieveContentItem("MentlePieceDescription"), controller.ProcessCommand("look at fire place.").Reply);
-        //     Assert.AreEqual(controller.RetrieveContentItem("LetterDescription"), controller.ProcessCommand("read the letter.").Reply);
-        // }
-
-        // [TestMethod]
-        // public void GetTheLetter()
-        // {
-        //     SimpleGameController controller = new SimpleGameController();
-        //     controller.InitializeGame();
-
-        //     controller.Game.LoadGame(CompleteOutsideAndHallWaySection());
-
-        //     Assert.AreEqual(controller.RetrieveContentItem("MentlePieceDescription"), controller.ProcessCommand("look at fire place.").Reply);
-        //     Assert.AreEqual(controller.RetrieveContentItem("LetterDescription"), controller.ProcessCommand("read the letter.").Reply);
-
-        //     Assert.IsFalse(controller.Game.Player.Inventory.Exists("Letter"));
-        //     Assert.AreEqual("You pick up the letter.", controller.ProcessCommand("pick up the letter.").Reply);
-        //     Assert.IsTrue(controller.Game.Player.Inventory.Exists("Letter"));
-        // }
-
-
-        //[TestMethod]
-        //public void TryToGetTheLetterTwice()
-        //{
-        //    SimpleGameController controller = new SimpleGameController();
-        //    controller.InitializeGame();
-
-        //    controller.Game.LoadGame(CompleteOutsideAndHallWaySection());
-
-        //    Assert.AreEqual(controller.RetrieveContentItem("MentlePieceDescription"), controller.ProcessCommand("look at fire place.").Reply);
-        //    Assert.AreEqual(controller.RetrieveContentItem("LetterDescription"), controller.ProcessCommand("read the letter.").Reply);
-
-        //    Assert.IsFalse(controller.Game.Player.Inventory.Exists("Letter"));
-        //    Assert.AreEqual("You pick up the letter.", controller.ProcessCommand("pick up the letter.").Reply);
-        //    Assert.IsTrue(controller.Game.Player.Inventory.Exists("Letter"));
-
-        //    Assert.AreEqual(controller.RetrieveContentItem("AlreadyHaveLetter"), controller.ProcessCommand("pick up the letter.").Reply);
-        //}
+   
 
         [TestMethod]
         public void CanExitToHallway()
