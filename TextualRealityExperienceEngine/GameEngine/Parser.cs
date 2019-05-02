@@ -195,6 +195,12 @@ namespace TextualRealityExperienceEngine.GameEngine
 
                 if (_parserStates == ParserStatesEnum.Noun)
                 {
+                    if (word == "fat")
+                    {
+                        _command.Adjective = "fat";
+                        continue;
+                    }
+
                     var noun = ProcessNoun(word, ParserStatesEnum.Preposition);
 
                     if (noun == string.Empty)continue; 
@@ -210,6 +216,12 @@ namespace TextualRealityExperienceEngine.GameEngine
 
                 if (_parserStates == ParserStatesEnum.Noun2)
                 {
+                    if (word == "fat")
+                    {
+                        _command.Adjective2 = "fat";
+                        continue;
+                    }
+
                     var noun = ProcessNoun(word, ParserStatesEnum.Preposition2);
 
                     if (noun == string.Empty) continue; 
@@ -225,6 +237,12 @@ namespace TextualRealityExperienceEngine.GameEngine
 
                 if (_parserStates == ParserStatesEnum.Noun3)
                 {
+                    if (word == "fat")
+                    {
+                        _command.Adjective3 = "fat";
+                        continue;
+                    }
+
                     var noun = ProcessNoun(word, ParserStatesEnum.None);
 
                     if (noun == string.Empty) continue; 

@@ -43,7 +43,12 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// The verb that was specified by the player.
         /// </summary>
         public VerbCodes Verb { get; set; }
-        
+
+        /// <summary>
+        /// The first adjective that was specified by the player.
+        /// </summary>
+        public string Adjective { get; set; }
+
         /// <summary>
         /// The first noun that was specified by the player.
         /// </summary>
@@ -53,7 +58,12 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// The first preposition that was specified by the player after the first verb and noun combination.
         /// </summary>
         public PropositionEnum Preposition { get; set; }
-        
+
+        /// <summary>
+        /// The second adjective that was specified by the player.
+        /// </summary>
+        public string Adjective2 { get; set; }
+
         /// <summary>
         /// The second noun that was specified by the player.
         /// </summary>
@@ -63,6 +73,11 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// The second preposition that was specified by the player after the first verb and noun combination.
         /// </summary>
         public PropositionEnum Preposition2 { get; set; }
+
+        /// <summary>
+        /// The third adjective that was specified by the player.
+        /// </summary>
+        public string Adjective3 { get; set; }
 
         /// <summary>
         /// The third noun that was specified by the player.
@@ -87,9 +102,14 @@ namespace TextualRealityExperienceEngine.GameEngine
         public Command()
         {
             Verb = VerbCodes.NoCommand;
+            Adjective = string.Empty;
             Noun = string.Empty;
             Preposition = PropositionEnum.NotRecognised;
+            Adjective2 = string.Empty;
             Noun2 = string.Empty;
+            Preposition2 = PropositionEnum.NotRecognised;
+            Adjective3 = string.Empty;
+            Noun3 = string.Empty;
             ProfanityDetected = false;
             Profanity = string.Empty;
         }

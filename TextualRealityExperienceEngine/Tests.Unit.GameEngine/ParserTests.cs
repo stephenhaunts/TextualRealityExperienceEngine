@@ -363,6 +363,118 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
 
         [TestMethod]
+        public void ParseCommandReturnsValidCommandForMultipleNounsAndPrepositionsFloweryEnglishAndAdjectives()
+        {
+            IParser parser = new Parser();
+            parser.Nouns.Add("key", "key");
+            parser.Nouns.Add("floor", "floor");
+            parser.Nouns.Add("door", "door");
+            parser.Nouns.Add("ledge", "ledge");
+
+            var command = parser.ParseCommand("I say old chap, could you use the skinny key on the door under the fat ledge. Thank you kind sir, you are a total legend.");
+
+            Assert.AreEqual(VerbCodes.Use, command.Verb);
+            Assert.AreEqual("key", command.Noun);
+            Assert.AreEqual(PropositionEnum.On, command.Preposition);
+            Assert.AreEqual("door", command.Noun2);
+            Assert.AreEqual(PropositionEnum.Under, command.Preposition2);
+            Assert.AreEqual("ledge", command.Noun3);
+            Assert.AreEqual("i say old chap could you use the skinny key on the door under the fat ledge thank you kind sir you are a total legend", command.FullTextCommand);
+        }
+
+        [TestMethod]
+        public void ParseCommandReturnsValidCommandForMultipleNounsAndPrepositionsAndAllAdjective()
+        {
+            IParser parser = new Parser();
+            parser.Nouns.Add("key", "key");
+            parser.Nouns.Add("floor", "floor");
+            parser.Nouns.Add("door", "door");
+            parser.Nouns.Add("ledge", "ledge");
+
+            var command = parser.ParseCommand("use fat key on fat door under fat ledge.");
+
+            Assert.AreEqual(VerbCodes.Use, command.Verb);
+            Assert.AreEqual("fat", command.Adjective);
+            Assert.AreEqual("key", command.Noun);
+            Assert.AreEqual(PropositionEnum.On, command.Preposition);
+            Assert.AreEqual("fat", command.Adjective2);
+            Assert.AreEqual("door", command.Noun2);
+            Assert.AreEqual(PropositionEnum.Under, command.Preposition2);
+            Assert.AreEqual("fat", command.Adjective3);
+            Assert.AreEqual("ledge", command.Noun3);
+            Assert.AreEqual("use fat key on fat door under fat ledge", command.FullTextCommand);
+        }
+
+        [TestMethod]
+        public void ParseCommandReturnsValidCommandForMultipleNounsAndPrepositionsAndFirstAdjective()
+        {
+            IParser parser = new Parser();
+            parser.Nouns.Add("key", "key");
+            parser.Nouns.Add("floor", "floor");
+            parser.Nouns.Add("door", "door");
+            parser.Nouns.Add("ledge", "ledge");
+
+            var command = parser.ParseCommand("use fat key on door under ledge.");
+
+            Assert.AreEqual(VerbCodes.Use, command.Verb);
+            Assert.AreEqual("fat", command.Adjective);
+            Assert.AreEqual("key", command.Noun);
+            Assert.AreEqual(PropositionEnum.On, command.Preposition);
+            Assert.AreEqual(string.Empty, command.Adjective2);
+            Assert.AreEqual("door", command.Noun2);
+            Assert.AreEqual(PropositionEnum.Under, command.Preposition2);
+            Assert.AreEqual(string.Empty, command.Adjective3);
+            Assert.AreEqual("ledge", command.Noun3);
+            Assert.AreEqual("use fat key on door under ledge", command.FullTextCommand);
+        }
+
+        [TestMethod]
+        public void ParseCommandReturnsValidCommandForMultipleNounsAndPrepositionsAndSecondAdjective()
+        {
+            IParser parser = new Parser();
+            parser.Nouns.Add("key", "key");
+            parser.Nouns.Add("floor", "floor");
+            parser.Nouns.Add("door", "door");
+            parser.Nouns.Add("ledge", "ledge");
+
+            var command = parser.ParseCommand("use key on fat door under ledge.");
+
+            Assert.AreEqual(VerbCodes.Use, command.Verb);
+            Assert.AreEqual(string.Empty, command.Adjective);
+            Assert.AreEqual("key", command.Noun);
+            Assert.AreEqual(PropositionEnum.On, command.Preposition);
+            Assert.AreEqual("fat", command.Adjective2);
+            Assert.AreEqual("door", command.Noun2);
+            Assert.AreEqual(PropositionEnum.Under, command.Preposition2);
+            Assert.AreEqual(string.Empty, command.Adjective3);
+            Assert.AreEqual("ledge", command.Noun3);
+            Assert.AreEqual("use key on fat door under ledge", command.FullTextCommand);
+        }
+
+        [TestMethod]
+        public void ParseCommandReturnsValidCommandForMultipleNounsAndPrepositionsAndThirdAdjective()
+        {
+            IParser parser = new Parser();
+            parser.Nouns.Add("key", "key");
+            parser.Nouns.Add("floor", "floor");
+            parser.Nouns.Add("door", "door");
+            parser.Nouns.Add("ledge", "ledge");
+
+            var command = parser.ParseCommand("use key on door under fat ledge.");
+
+            Assert.AreEqual(VerbCodes.Use, command.Verb);
+            Assert.AreEqual(string.Empty, command.Adjective);
+            Assert.AreEqual("key", command.Noun);
+            Assert.AreEqual(PropositionEnum.On, command.Preposition);
+            Assert.AreEqual(string.Empty, command.Adjective2);
+            Assert.AreEqual("door", command.Noun2);
+            Assert.AreEqual(PropositionEnum.Under, command.Preposition2);
+            Assert.AreEqual("fat", command.Adjective3);
+            Assert.AreEqual("ledge", command.Noun3);
+            Assert.AreEqual("use key on door under fat ledge", command.FullTextCommand);
+        }
+
+        [TestMethod]
         public void ProfanityFilterGetsTrippedForFullCommand()
         {
             IParser parser = new Parser();

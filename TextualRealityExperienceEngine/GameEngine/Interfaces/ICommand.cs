@@ -30,14 +30,20 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         string FullTextCommand { get; set; }
         
         VerbCodes Verb { get; set; }
-        
+
+        string Adjective { get; set; }
+
         string Noun { get; set; }
         
         PropositionEnum Preposition { get; set; }
-        
+
+        string Adjective2 { get; set; }
+
         string Noun2 { get; set; }
 
         PropositionEnum Preposition2 { get; set; }
+
+        string Adjective3 { get; set; }
 
         string Noun3 { get; set; }
 
