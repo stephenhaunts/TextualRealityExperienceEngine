@@ -197,33 +197,38 @@ namespace TextualRealityExperienceEngine.GameEngine
                 {
                     var noun = ProcessNoun(word, ParserStatesEnum.Preposition);
 
-                    if (noun == string.Empty)continue; _command.Noun = noun;                    
+                    if (noun == string.Empty)continue; 
+                    _command.Noun = noun;                    
                 }
 
                 if (_parserStates == ParserStatesEnum.Preposition)
                 {               
                     var preposition = ProcessPreposition(word, ParserStatesEnum.Noun2);
-                    if (preposition == PropositionEnum.NotRecognised) continue; _command.Preposition = preposition;
+                    if (preposition == PropositionEnum.NotRecognised) { continue; }
+                    _command.Preposition = preposition;
                 }
 
                 if (_parserStates == ParserStatesEnum.Noun2)
                 {
                     var noun = ProcessNoun(word, ParserStatesEnum.Preposition2);
 
-                    if (noun == string.Empty) continue; else _command.Noun2 = noun;
+                    if (noun == string.Empty) continue; 
+                    _command.Noun2 = noun;
                 }
 
                 if (_parserStates == ParserStatesEnum.Preposition2)
                 {
                     var preposition = ProcessPreposition(word, ParserStatesEnum.Noun3);
-                    if (preposition == PropositionEnum.NotRecognised) continue; _command.Preposition2 = preposition;
+                    if (preposition == PropositionEnum.NotRecognised) continue; 
+                    _command.Preposition2 = preposition;
                 }
 
                 if (_parserStates == ParserStatesEnum.Noun3)
                 {
                     var noun = ProcessNoun(word, ParserStatesEnum.None);
 
-                    if (noun == string.Empty) continue; _command.Noun3 = noun;
+                    if (noun == string.Empty) continue; 
+                    _command.Noun3 = noun;
                 }
             }
 

@@ -303,6 +303,66 @@ namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
         }
 
         [TestMethod]
+        public void ParseCommandReturnsValidCommandForMultiplePrepositionsAndNouns()
+        {
+            IParser parser = new Parser();
+            parser.Nouns.Add("key", "key");
+            parser.Nouns.Add("floor", "floor");
+            parser.Nouns.Add("door", "door");
+            parser.Nouns.Add("glove", "glove");
+
+            var command = parser.ParseCommand("use key on door with glove.");
+
+            Assert.AreEqual(VerbCodes.Use, command.Verb);
+            Assert.AreEqual("key", command.Noun);
+            Assert.AreEqual(PropositionEnum.On, command.Preposition);
+            Assert.AreEqual("door", command.Noun2);
+            Assert.AreEqual(PropositionEnum.With, command.Preposition2);
+            Assert.AreEqual("glove", command.Noun3);
+            Assert.AreEqual("use key on door with glove", command.FullTextCommand);
+        }
+
+        [TestMethod]
+        public void ParseCommandReturnsValidCommandForMultipleNounsAndPrepositions2()
+        {
+            IParser parser = new Parser();
+            parser.Nouns.Add("key", "key");
+            parser.Nouns.Add("floor", "floor");
+            parser.Nouns.Add("door", "door");
+            parser.Nouns.Add("ledge", "ledge");
+
+            var command = parser.ParseCommand("use key on door under ledge.");
+
+            Assert.AreEqual(VerbCodes.Use, command.Verb);
+            Assert.AreEqual("key", command.Noun);
+            Assert.AreEqual(PropositionEnum.On, command.Preposition);
+            Assert.AreEqual("door", command.Noun2);
+            Assert.AreEqual(PropositionEnum.Under, command.Preposition2);
+            Assert.AreEqual("ledge", command.Noun3);
+            Assert.AreEqual("use key on door under ledge", command.FullTextCommand);
+        }
+
+        [TestMethod]
+        public void ParseCommandReturnsValidCommandForMultipleNounsAndPrepositionsFloweryEnglish()
+        {
+            IParser parser = new Parser();
+            parser.Nouns.Add("key", "key");
+            parser.Nouns.Add("floor", "floor");
+            parser.Nouns.Add("door", "door");
+            parser.Nouns.Add("ledge", "ledge");
+
+            var command = parser.ParseCommand("I say old chap, could you use the key on the door under ledge. Thank you kind sir, you are a total legend.");
+
+            Assert.AreEqual(VerbCodes.Use, command.Verb);
+            Assert.AreEqual("key", command.Noun);
+            Assert.AreEqual(PropositionEnum.On, command.Preposition);
+            Assert.AreEqual("door", command.Noun2);
+            Assert.AreEqual(PropositionEnum.Under, command.Preposition2);
+            Assert.AreEqual("ledge", command.Noun3);
+            Assert.AreEqual("i say old chap could you use the key on the door under ledge thank you kind sir you are a total legend", command.FullTextCommand);
+        }
+
+        [TestMethod]
         public void ProfanityFilterGetsTrippedForFullCommand()
         {
             IParser parser = new Parser();

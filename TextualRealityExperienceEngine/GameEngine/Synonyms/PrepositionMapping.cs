@@ -45,7 +45,8 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
         Behind = 10,
         At = 11,
         Up = 12,
-        From = 12
+        From = 12,
+        With = 13
     }
 
     /// <summary>
@@ -74,6 +75,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             Add("at", PropositionEnum.At);
             Add("up", PropositionEnum.Up);
             Add("from", PropositionEnum.From);
+            Add("with", PropositionEnum.With);
         }
 
         /// <summary>
