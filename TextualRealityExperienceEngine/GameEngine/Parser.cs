@@ -197,12 +197,13 @@ namespace TextualRealityExperienceEngine.GameEngine
                 {
                     var noun = ProcessNoun(word, ParserStatesEnum.Preposition);
 
-                    if (noun == string.Empty)continue; else _command.Noun = noun;                    
+                    if (noun == string.Empty)continue; _command.Noun = noun;                    
                 }
 
                 if (_parserStates == ParserStatesEnum.Preposition)
-                {
-                    if (ProcessPreposition(word)) continue;
+                {               
+                    var preposition = ProcessPreposition(word, ParserStatesEnum.Noun2);
+                    if (preposition == PropositionEnum.NotRecognised) continue; _command.Preposition = preposition;
                 }
 
                 if (_parserStates == ParserStatesEnum.Noun2)
@@ -214,14 +215,15 @@ namespace TextualRealityExperienceEngine.GameEngine
 
                 if (_parserStates == ParserStatesEnum.Preposition2)
                 {
-                    if (ProcessPreposition2(word)) continue;
+                    var preposition = ProcessPreposition(word, ParserStatesEnum.Noun3);
+                    if (preposition == PropositionEnum.NotRecognised) continue; _command.Preposition2 = preposition;
                 }
 
                 if (_parserStates == ParserStatesEnum.Noun3)
                 {
                     var noun = ProcessNoun(word, ParserStatesEnum.None);
 
-                    if (noun == string.Empty) continue; else _command.Noun3 = noun;
+                    if (noun == string.Empty) continue; _command.Noun3 = noun;
                 }
             }
 
@@ -259,33 +261,17 @@ namespace TextualRealityExperienceEngine.GameEngine
             return string.Empty;
         }
 
-        private bool ProcessPreposition(string word)
-        {
-            var preposition = Prepositions.GetPreposition(word);
-            
-            if (preposition != PropositionEnum.NotRecognised)
-            {
-                _command.Preposition = preposition;
-                _parserStates = ParserStatesEnum.Noun2;
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool ProcessPreposition2(string word)
+        private PropositionEnum ProcessPreposition(string word, ParserStatesEnum nextState)
         {
             var preposition = Prepositions.GetPreposition(word);
 
             if (preposition != PropositionEnum.NotRecognised)
             {
-                _command.Preposition2 = preposition;
-                _parserStates = ParserStatesEnum.Noun3;
-                return true;
+                _parserStates = nextState;
+                return preposition;
             }
 
-            return false;
-        }
-
+            return PropositionEnum.NotRecognised;
+        }              
     }
 }
