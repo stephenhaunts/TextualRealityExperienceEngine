@@ -88,23 +88,14 @@ namespace TextualRealityExperienceEngine.GameEngine
                 return toReturn;
             }
 
-            var lowerCase = command.ToLower();
+            SanitizeInput(command, out string lowerCase, out string[] wordList);
+            CheckForProfanity(lowerCase);
 
-            lowerCase = RemovePunctuation(lowerCase);
+            return ReduceInputToCommand(lowerCase, wordList);
+        }
 
-            var wordList = lowerCase.Split(' ');
-            _command = new Command();
-
-            if (EnableProfanityFilter)
-            {
-                var profanity = _profanityFilter.StringContainsFirstProfanity(lowerCase);
-                if (!string.IsNullOrEmpty(profanity))
-                {
-                    _command.ProfanityDetected = true;
-                    _command.Profanity = profanity;
-                }
-            }
-
+        private ICommand ReduceInputToCommand(string lowerCase, string[] wordList)
+        {
             switch (wordList.Length)
             {
                 case 0:
@@ -117,10 +108,8 @@ namespace TextualRealityExperienceEngine.GameEngine
                     MultiWordCommand(wordList);
                     _command.FullTextCommand = lowerCase;
                     return _command;
-            }                     
+            }
         }
-
-
 
         private void SingleWordCommand(string command)
         {
@@ -207,48 +196,6 @@ namespace TextualRealityExperienceEngine.GameEngine
             }
 
             _parserStates = ParserStatesEnum.Verb;
-        }
-
-        private VerbCodes ProcessVerbs(string word, ParserStatesEnum nextState)
-        {
-            var verb = Verbs.GetVerbForSynonym(word);
-
-            if (verb != VerbCodes.NoCommand)
-            {
-                _parserStates = nextState;
-            }
-
-            if (verb != VerbCodes.NoCommand)
-            {
-                return verb;
-            }
-
-            return VerbCodes.NoCommand;
-        }             
-
-        private string ProcessNoun(string word, ParserStatesEnum nextState)
-        {
-            var noun = Nouns.GetNounForSynonym(word);
-            if (!string.IsNullOrEmpty(noun))
-            {
-                _parserStates = nextState;
-                return noun;           
-            }
-
-            return string.Empty;
-        }
-
-        private PropositionEnum ProcessPreposition(string word, ParserStatesEnum nextState)
-        {
-            var preposition = Prepositions.GetPreposition(word);
-
-            if (preposition != PropositionEnum.NotRecognised)
-            {
-                _parserStates = nextState;
-                return preposition;
-            }
-
-            return PropositionEnum.NotRecognised;
-        }              
+        }           
     }
 }

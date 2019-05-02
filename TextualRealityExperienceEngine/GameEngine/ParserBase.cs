@@ -106,5 +106,69 @@ namespace TextualRealityExperienceEngine.GameEngine
 
             return result.ToString();
         }
+
+        protected VerbCodes ProcessVerbs(string word, ParserStatesEnum nextState)
+        {
+            var verb = Verbs.GetVerbForSynonym(word);
+
+            if (verb != VerbCodes.NoCommand)
+            {
+                _parserStates = nextState;
+            }
+
+            if (verb != VerbCodes.NoCommand)
+            {
+                return verb;
+            }
+
+            return VerbCodes.NoCommand;
+        }
+
+        protected string ProcessNoun(string word, ParserStatesEnum nextState)
+        {
+            var noun = Nouns.GetNounForSynonym(word);
+            if (!string.IsNullOrEmpty(noun))
+            {
+                _parserStates = nextState;
+                return noun;
+            }
+
+            return string.Empty;
+        }
+
+        protected PropositionEnum ProcessPreposition(string word, ParserStatesEnum nextState)
+        {
+            var preposition = Prepositions.GetPreposition(word);
+
+            if (preposition != PropositionEnum.NotRecognised)
+            {
+                _parserStates = nextState;
+                return preposition;
+            }
+
+            return PropositionEnum.NotRecognised;
+        }
+
+        protected void CheckForProfanity(string lowerCase)
+        {
+            if (EnableProfanityFilter)
+            {
+                var profanity = _profanityFilter.StringContainsFirstProfanity(lowerCase);
+                if (!string.IsNullOrEmpty(profanity))
+                {
+                    _command.ProfanityDetected = true;
+                    _command.Profanity = profanity;
+                }
+            }
+        }
+
+        protected void SanitizeInput(string command, out string lowerCase, out string[] wordList)
+        {
+            lowerCase = command.ToLower();
+            lowerCase = RemovePunctuation(lowerCase);
+
+            wordList = lowerCase.Split(' ');
+            _command = new Command();
+        }
     }
 }
