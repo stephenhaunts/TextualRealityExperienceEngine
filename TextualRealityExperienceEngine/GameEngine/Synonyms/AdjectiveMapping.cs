@@ -1,7 +1,7 @@
 ﻿/*
 MIT License
 
-Copyright (c) 2019 
+Copyright(c) 2019 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,16 +21,44 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+using System;
+using System.Collections.Generic;
+using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
-namespace TextualRealityExperienceEngine.GameEngine.Interfaces
+namespace TextualRealityExperienceEngine.GameEngine.Synonyms
 {
-    public interface IParser
+    public class AdjectiveMapping : IAdjectiveMapping
     {
-        ICommand ParseCommand(string command);
-        IVerbSynonyms Verbs { get; }
-        INounSynonyms Nouns { get; }
-        IPrepositionMapping Prepositions { get; }
-        IAdjectiveMapping Adjectives { get; }
-        bool EnableProfanityFilter { get; set; }
+        readonly Dictionary<string, string> _adjectiveMapping = new Dictionary<string, string>();
+
+        public AdjectiveMapping()
+        {
+            Add("fat");
+        }
+
+        public void Add(string adjective)
+        {
+            if (string.IsNullOrEmpty(adjective))
+            {
+                throw new ArgumentNullException(nameof(adjective));
+            }
+
+            _adjectiveMapping.Add(adjective, adjective);
+        }
+
+        public bool CheckAdjectiveExists(string adjective)
+        {
+            if (string.IsNullOrEmpty(adjective))
+            {
+                return false;
+            }
+
+            if (_adjectiveMapping.ContainsKey(adjective))
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

@@ -60,6 +60,9 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// Retrieve the prepositions being used by the parser.
         /// </summary>
         public IPrepositionMapping Prepositions { get; }
+
+        public IAdjectiveMapping Adjectives { get; }
+
         private ParserStatesEnum _parserStates = ParserStatesEnum.Verb;
         private ICommand _command;
         private readonly IProfanityFilter _profanityFilter = new ProfanityFilter();
@@ -72,6 +75,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             Verbs = new VerbSynonyms();
             Nouns = new NounSynonyms();
             Prepositions = new PrepositionMapping();
+            Adjectives = new AdjectiveMapping();
             EnableProfanityFilter = true;
         }
 
@@ -87,6 +91,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             Verbs = verbSynonyms;
             Nouns = nounSynonyms;
             Prepositions = prepositionMapping;
+            Adjectives = new AdjectiveMapping();
             EnableProfanityFilter = true;
         }
 
@@ -195,9 +200,9 @@ namespace TextualRealityExperienceEngine.GameEngine
 
                 if (_parserStates == ParserStatesEnum.Noun)
                 {
-                    if (word == "fat")
+                    if (Adjectives.CheckAdjectiveExists(word))
                     {
-                        _command.Adjective = "fat";
+                        _command.Adjective = word;
                         continue;
                     }
 
@@ -216,9 +221,9 @@ namespace TextualRealityExperienceEngine.GameEngine
 
                 if (_parserStates == ParserStatesEnum.Noun2)
                 {
-                    if (word == "fat")
+                    if (Adjectives.CheckAdjectiveExists(word))
                     {
-                        _command.Adjective2 = "fat";
+                        _command.Adjective2 = word;
                         continue;
                     }
 
@@ -237,9 +242,9 @@ namespace TextualRealityExperienceEngine.GameEngine
 
                 if (_parserStates == ParserStatesEnum.Noun3)
                 {
-                    if (word == "fat")
+                    if (Adjectives.CheckAdjectiveExists(word))
                     {
-                        _command.Adjective3 = "fat";
+                        _command.Adjective3 = word;
                         continue;
                     }
 
