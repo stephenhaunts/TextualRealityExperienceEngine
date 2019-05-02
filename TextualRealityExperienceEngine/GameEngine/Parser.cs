@@ -128,70 +128,63 @@ namespace TextualRealityExperienceEngine.GameEngine
         private void MultiWordCommand(string[] commandList)
         {
             foreach (var word in commandList)
-            {                
-                if (_parserStates == ParserStatesEnum.Verb)
+            {            
+                switch(_parserStates)
                 {
-                    var verb = ProcessVerbs(word, ParserStatesEnum.Noun);
+                    case ParserStatesEnum.Verb:
+                        var verb = ProcessVerbs(word, ParserStatesEnum.Noun);
 
-                    if (verb == VerbCodes.NoCommand) { continue; }
-                    _command.Verb = verb;
-                }
+                        if (verb == VerbCodes.NoCommand) { continue; }
 
-                if (_parserStates == ParserStatesEnum.Noun)
-                {
-                    if (Adjectives.CheckAdjectiveExists(word))
-                    {
-                        _command.Adjective = word;
-                        continue;
-                    }
+                        _command.Verb = verb;
+                        break;
+                    case ParserStatesEnum.Noun:
+                        if (Adjectives.CheckAdjectiveExists(word))
+                        {
+                            _command.Adjective = word;
+                            continue;
+                        }
 
-                    var noun = ProcessNoun(word, ParserStatesEnum.Preposition);
+                        var noun = ProcessNoun(word, ParserStatesEnum.Preposition);
 
-                    if (noun == string.Empty)continue; 
-                    _command.Noun = noun;                    
-                }
+                        if (noun == string.Empty) continue;
+                        _command.Noun = noun;
+                        break;
+                    case ParserStatesEnum.Preposition:
+                        var preposition = ProcessPreposition(word, ParserStatesEnum.Noun2);
 
-                if (_parserStates == ParserStatesEnum.Preposition)
-                {               
-                    var preposition = ProcessPreposition(word, ParserStatesEnum.Noun2);
+                        if (preposition == PropositionEnum.NotRecognised) { continue; }
+                        _command.Preposition = preposition;
+                        break;
+                    case ParserStatesEnum.Noun2:
+                        if (Adjectives.CheckAdjectiveExists(word))
+                        {
+                            _command.Adjective2 = word;
+                            continue;
+                        }
 
-                    if (preposition == PropositionEnum.NotRecognised) { continue; }
-                    _command.Preposition = preposition;
-                }
+                        var noun2 = ProcessNoun(word, ParserStatesEnum.Preposition2);
 
-                if (_parserStates == ParserStatesEnum.Noun2)
-                {
-                    if (Adjectives.CheckAdjectiveExists(word))
-                    {
-                        _command.Adjective2 = word;
-                        continue;
-                    }
+                        if (noun2 == string.Empty) continue;
+                        _command.Noun2 = noun2;
+                        break;
+                    case ParserStatesEnum.Preposition2:
+                        var preposition2 = ProcessPreposition(word, ParserStatesEnum.Noun3);
+                        if (preposition2 == PropositionEnum.NotRecognised) continue;
+                        _command.Preposition2 = preposition2;
+                        break;
+                    case ParserStatesEnum.Noun3:
+                        if (Adjectives.CheckAdjectiveExists(word))
+                        {
+                            _command.Adjective3 = word;
+                            continue;
+                        }
 
-                    var noun = ProcessNoun(word, ParserStatesEnum.Preposition2);
+                        var noun3 = ProcessNoun(word, ParserStatesEnum.None);
 
-                    if (noun == string.Empty) continue; 
-                    _command.Noun2 = noun;
-                }
-
-                if (_parserStates == ParserStatesEnum.Preposition2)
-                {
-                    var preposition = ProcessPreposition(word, ParserStatesEnum.Noun3);
-                    if (preposition == PropositionEnum.NotRecognised) continue; 
-                    _command.Preposition2 = preposition;
-                }
-
-                if (_parserStates == ParserStatesEnum.Noun3)
-                {
-                    if (Adjectives.CheckAdjectiveExists(word))
-                    {
-                        _command.Adjective3 = word;
-                        continue;
-                    }
-
-                    var noun = ProcessNoun(word, ParserStatesEnum.None);
-
-                    if (noun == string.Empty) continue; 
-                    _command.Noun3 = noun;
+                        if (noun3 == string.Empty) continue;
+                        _command.Noun3 = noun3;
+                        break;
                 }
             }
 
