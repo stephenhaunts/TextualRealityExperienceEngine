@@ -43,13 +43,8 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// <summary>
         /// Default constructor that sets the default initial state of the parser.
         /// </summary>
-        public Parser()
+        public Parser() 
         {
-            Verbs = new VerbSynonyms();
-            Nouns = new NounSynonyms();
-            Prepositions = new PrepositionMapping();
-            Adjectives = new AdjectiveMapping();
-            EnableProfanityFilter = true;
         }
 
         /// <summary>
@@ -59,13 +54,8 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// <param name="verbSynonyms">Verb synonyms to be used by the parser.</param>
         /// <param name="nounSynonyms">Noun synonyms to be used by the parser.</param>
         /// <param name="prepositionMapping">Prepositions being used by the parser.</param>
-        public Parser(IVerbSynonyms verbSynonyms, INounSynonyms nounSynonyms, IPrepositionMapping prepositionMapping)
+        public Parser(IVerbSynonyms verbSynonyms, INounSynonyms nounSynonyms, IPrepositionMapping prepositionMapping) : base(verbSynonyms,nounSynonyms,prepositionMapping)
         {
-            Verbs = verbSynonyms;
-            Nouns = nounSynonyms;
-            Prepositions = prepositionMapping;
-            Adjectives = new AdjectiveMapping();
-            EnableProfanityFilter = true;
         }
 
         /// <summary>

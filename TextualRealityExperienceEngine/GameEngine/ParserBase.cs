@@ -31,6 +31,31 @@ namespace TextualRealityExperienceEngine.GameEngine
 {
     public class ParserBase
     {
+        public ParserBase()
+        {
+            Verbs = new VerbSynonyms();
+            Nouns = new NounSynonyms();
+            Prepositions = new PrepositionMapping();
+            Adjectives = new AdjectiveMapping();
+            EnableProfanityFilter = true;
+        }
+
+        /// <summary>
+        /// Constructor that allows you to custom set the verb, noun and preposition synonyms used by the parser. This
+        /// constructor is mostly used by the unit tests.
+        /// </summary>
+        /// <param name="verbSynonyms">Verb synonyms to be used by the parser.</param>
+        /// <param name="nounSynonyms">Noun synonyms to be used by the parser.</param>
+        /// <param name="prepositionMapping">Prepositions being used by the parser.</param>
+        public ParserBase(IVerbSynonyms verbSynonyms, INounSynonyms nounSynonyms, IPrepositionMapping prepositionMapping)
+        {
+            Verbs = verbSynonyms;
+            Nouns = nounSynonyms;
+            Prepositions = prepositionMapping;
+            Adjectives = new AdjectiveMapping();
+            EnableProfanityFilter = true;
+        }
+
         /// <summary>
         /// Retrieve the verb synonyms being used by the parser.
         /// </summary>
