@@ -37,35 +37,8 @@ namespace TextualRealityExperienceEngine.GameEngine
     /// verb - noun
     /// verb - noun - preposition - noun
     /// </summary>
-    public class Parser : IParser
+    public class Parser : ParserBase, IParser
     {
-        /// <summary>
-        /// Retrieve the verb synonyms being used by the parser.
-        /// </summary>
-        public IVerbSynonyms Verbs { get; }
-        
-        /// <summary>
-        /// Retrieve the noun synonyms being used by the parser.
-        /// </summary>
-        public INounSynonyms Nouns { get; }
-        
-        /// <summary>
-        /// If this flag is set to True, then the users input passed into the parser will also be scanned for profanity.
-        /// It is not the intention of this engine to perform any censorship, but it can be useful to know if the player
-        /// ius a potty mouthed little so and so. You can even use this fact as part of the narrative.
-        /// </summary>
-        public bool EnableProfanityFilter { get; set; }
-        
-        /// <summary>
-        /// Retrieve the prepositions being used by the parser.
-        /// </summary>
-        public IPrepositionMapping Prepositions { get; }
-
-        public IAdjectiveMapping Adjectives { get; }
-
-        private ParserStatesEnum _parserStates = ParserStatesEnum.Verb;
-        private ICommand _command;
-        private readonly IProfanityFilter _profanityFilter = new ProfanityFilter();
 
         /// <summary>
         /// Default constructor that sets the default initial state of the parser.
@@ -157,23 +130,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             }                     
         }
 
-        private string RemovePunctuation(string s)
-        {
-            var result = new StringBuilder();
-            for (int i = 0; i < s.Length; i++)
-            {
-                if (char.IsWhiteSpace(s[i]))
-                {
-                    result.Append(" ");
-                }
-                else if (!char.IsLetter(s[i]) && !char.IsNumber(s[i])) {  }
-                else
-                {
-                    result.Append(s[i]);
-                }
-            }
-            return result.ToString();
-        }
+
 
         private void SingleWordCommand(string command)
         {
@@ -195,7 +152,10 @@ namespace TextualRealityExperienceEngine.GameEngine
             {                
                 if (_parserStates == ParserStatesEnum.Verb)
                 {
-                    if (ProcessVerbs(word)) continue;                                                  
+                    var verb = ProcessVerbs(word, ParserStatesEnum.Noun);
+
+                    if (verb == VerbCodes.NoCommand) { continue; }
+                    _command.Verb = verb;
                 }
 
                 if (_parserStates == ParserStatesEnum.Noun)
@@ -215,6 +175,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                 if (_parserStates == ParserStatesEnum.Preposition)
                 {               
                     var preposition = ProcessPreposition(word, ParserStatesEnum.Noun2);
+
                     if (preposition == PropositionEnum.NotRecognised) { continue; }
                     _command.Preposition = preposition;
                 }
@@ -258,24 +219,22 @@ namespace TextualRealityExperienceEngine.GameEngine
             _parserStates = ParserStatesEnum.Verb;
         }
 
-        private bool ProcessVerbs(string word)
+        private VerbCodes ProcessVerbs(string word, ParserStatesEnum nextState)
         {
             var verb = Verbs.GetVerbForSynonym(word);
 
             if (verb != VerbCodes.NoCommand)
             {
-                _parserStates = ParserStatesEnum.Noun;
+                _parserStates = nextState;
             }
 
             if (verb != VerbCodes.NoCommand)
             {
-                _command.Verb = verb;
-                return true;
+                return verb;
             }
 
-            return false;
-        }
-
+            return VerbCodes.NoCommand;
+        }             
 
         private string ProcessNoun(string word, ParserStatesEnum nextState)
         {
