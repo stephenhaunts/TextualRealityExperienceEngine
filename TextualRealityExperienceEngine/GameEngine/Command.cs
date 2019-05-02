@@ -58,7 +58,17 @@ namespace TextualRealityExperienceEngine.GameEngine
         /// The second noun that was specified by the player.
         /// </summary>
         public string Noun2 { get; set; }
-        
+
+        /// <summary>
+        /// The second preposition that was specified by the player after the first verb and noun combination.
+        /// </summary>
+        public PropositionEnum Preposition2 { get; set; }
+
+        /// <summary>
+        /// The third noun that was specified by the player.
+        /// </summary>
+        public string Noun3 { get; set; }
+
         /// <summary>
         /// If the profanity filter detects any profane language, then this flag is set to true. It is not the purpose
         /// of the engine to perform censorship, but the developer of the game can decide what do to, with censor the language,

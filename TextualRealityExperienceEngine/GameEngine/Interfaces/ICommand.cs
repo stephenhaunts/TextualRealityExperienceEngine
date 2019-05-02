@@ -37,6 +37,10 @@ namespace TextualRealityExperienceEngine.GameEngine.Interfaces
         
         string Noun2 { get; set; }
 
+        PropositionEnum Preposition2 { get; set; }
+
+        string Noun3 { get; set; }
+
         bool ProfanityDetected { get; set; }
         
         string Profanity { get; set; }

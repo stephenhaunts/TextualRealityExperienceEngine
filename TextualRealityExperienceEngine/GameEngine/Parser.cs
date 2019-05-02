@@ -195,7 +195,9 @@ namespace TextualRealityExperienceEngine.GameEngine
 
                 if (_parserStates == ParserStatesEnum.Noun)
                 {
-                    if (ProcessNoun1(word)) continue;
+                    var noun = ProcessNoun(word, ParserStatesEnum.Preposition);
+
+                    if (noun == string.Empty)continue; else _command.Noun = noun;                    
                 }
 
                 if (_parserStates == ParserStatesEnum.Preposition)
@@ -205,7 +207,21 @@ namespace TextualRealityExperienceEngine.GameEngine
 
                 if (_parserStates == ParserStatesEnum.Noun2)
                 {
-                    ProcessNoun2(word);
+                    var noun = ProcessNoun(word, ParserStatesEnum.Preposition2);
+
+                    if (noun == string.Empty) continue; else _command.Noun2 = noun;
+                }
+
+                if (_parserStates == ParserStatesEnum.Preposition2)
+                {
+                    if (ProcessPreposition2(word)) continue;
+                }
+
+                if (_parserStates == ParserStatesEnum.Noun3)
+                {
+                    var noun = ProcessNoun(word, ParserStatesEnum.None);
+
+                    if (noun == string.Empty) continue; else _command.Noun3 = noun;
                 }
             }
 
@@ -230,18 +246,17 @@ namespace TextualRealityExperienceEngine.GameEngine
             return false;
         }
 
-        private bool ProcessNoun1(string word)
+
+        private string ProcessNoun(string word, ParserStatesEnum nextState)
         {
             var noun = Nouns.GetNounForSynonym(word);
             if (!string.IsNullOrEmpty(noun))
             {
-                _command.Noun = noun;
-                _parserStates = ParserStatesEnum.Preposition;
-
-                return true;
+                _parserStates = nextState;
+                return noun;           
             }
 
-            return false;
+            return string.Empty;
         }
 
         private bool ProcessPreposition(string word)
@@ -258,17 +273,19 @@ namespace TextualRealityExperienceEngine.GameEngine
             return false;
         }
 
-        private bool ProcessNoun2(string word)
+        private bool ProcessPreposition2(string word)
         {
-            var noun = Nouns.GetNounForSynonym(word);
-            
-            if (!string.IsNullOrEmpty(noun))
+            var preposition = Prepositions.GetPreposition(word);
+
+            if (preposition != PropositionEnum.NotRecognised)
             {
-                _command.Noun2 = noun;
+                _command.Preposition2 = preposition;
+                _parserStates = ParserStatesEnum.Noun3;
                 return true;
             }
 
             return false;
         }
+
     }
 }
