@@ -78,3 +78,13 @@ TextualRealityExperienceEngine/Tests\.Unit\.SimpleGame/obj/Debug/netcoreapp2\.2/
 TextualRealityExperienceEngine/Tests\.Unit\.SimpleGame/obj/
 
 TextualRealityExperienceEngine/\.vs/
+
+TextualRealityExperienceEngine/Tests.Integration.GameEngine/bin/Debug/netcoreapp3.0/
+
+TextualRealityExperienceEngine/Tests.SimpleGame.Library/bin/Debug/netcoreapp3.0/
+
+TextualRealityExperienceEngine/Tests.SimpleGame/bin/Debug/netcoreapp3.0/
+
+TextualRealityExperienceEngine/Tests.Unit.GameEngine/bin/Debug/netcoreapp3.0/
+
+TextualRealityExperienceEngine/Tests.Unit.SimpleGame/bin/Debug/netcoreapp3.0/
