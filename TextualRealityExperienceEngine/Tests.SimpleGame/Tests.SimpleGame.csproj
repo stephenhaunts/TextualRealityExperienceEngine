@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GameEngine\GameEngine.csproj" />
     <ProjectReference Include="..\Tests.SimpleGame.Library\Tests.SimpleGame.Library.csproj" />
+    <ProjectReference Include="..\TextProcessing\TextProcessing.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Upstairs\Hallway.cs" />

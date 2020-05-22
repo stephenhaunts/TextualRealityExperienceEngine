@@ -22,10 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
-using TextualRealityExperienceEngine.GameEngine.Synonyms;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms;
 
-namespace TextualRealityExperienceEngine.GameEngine
+namespace TextualRealityExperienceEngine.GameEngine.TextProcessing
 {
     /// <summary>
     /// This object represents a command that is returned from the parser to the game object. The values in the

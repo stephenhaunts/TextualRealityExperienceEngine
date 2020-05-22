@@ -22,9 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TextualRealityExperienceEngine.GameEngine;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing;
 
 namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 {

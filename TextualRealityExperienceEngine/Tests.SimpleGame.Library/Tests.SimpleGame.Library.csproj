@@ -10,6 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEngine\GameEngine.csproj" />
+    <ProjectReference Include="..\TextProcessing\TextProcessing.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Crypt\" />

@@ -26,7 +26,9 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
-using TextualRealityExperienceEngine.GameEngine.Synonyms;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms;
 using TextualRealityExperienceEngine.Tests.Unit.GameEngine.Stubs;
 
 namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine

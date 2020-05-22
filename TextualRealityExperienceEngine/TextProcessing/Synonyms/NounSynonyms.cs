@@ -23,9 +23,8 @@ SOFTWARE.
 */
 using System;
 using System.Collections.Generic;
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
-namespace TextualRealityExperienceEngine.GameEngine.Synonyms
+namespace TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms
 {
     /// <summary>
     /// The NounSynonyms class handles the mapping of many synonyms to a single verb. This means the parser can map and

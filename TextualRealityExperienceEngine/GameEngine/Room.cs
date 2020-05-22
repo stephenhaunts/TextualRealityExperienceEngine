@@ -25,7 +25,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
-using TextualRealityExperienceEngine.GameEngine.Synonyms;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms;
 
 namespace TextualRealityExperienceEngine.GameEngine 
 {
@@ -162,8 +163,6 @@ namespace TextualRealityExperienceEngine.GameEngine
             {
                 return;
             }
-
-            var door = new DoorWay {Locked = false};
 
             switch (direction)
             {

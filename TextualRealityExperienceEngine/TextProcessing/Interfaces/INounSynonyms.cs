@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace TextualRealityExperienceEngine.GameEngine.Interfaces
+namespace TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms
 {
     public interface INounSynonyms
     {

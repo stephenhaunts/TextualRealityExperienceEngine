@@ -1,7 +1,7 @@
 ﻿/*
 MIT License
 
-Copyright(c) 2019 
+Copyright (c) 2019 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,23 +22,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace TextualRealityExperienceEngine.GameEngine.Synonyms
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms;
+
+namespace TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces
 {
-    /// <summary>
-    /// Supported base verbs used by the game engine. You can have many different synonyms mapped to the verbs, but the
-    /// verb synonyms will map to one of these codes from the parser.
-    /// </summary>
-    public enum VerbCodes
+    public interface IParser
     {
-        NoCommand = 0,
-        Go = 1,
-        Take = 2,
-        Use = 3,
-        Look = 4,
-        Drop = 5,
-        Hint = 6,
-        Attack = 7,
-        Visit = 8,
-        Eat = 9
+        ICommand ParseCommand(string command);
+        IVerbSynonyms Verbs { get; }
+        INounSynonyms Nouns { get; }
+        IPrepositionMapping Prepositions { get; }
+        IAdjectiveMapping Adjectives { get; }
+        bool EnableProfanityFilter { get; set; }
     }
 }

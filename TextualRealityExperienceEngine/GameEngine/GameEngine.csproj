@@ -30,12 +30,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
-    <Folder Include="Synonyms\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Collections.Immutable">
       <HintPath>..\..\..\..\..\..\..\usr\local\share\dotnet\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.1.0\ref\netcoreapp2.1\System.Collections.Immutable.dll</HintPath>
       <Private>False</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TextProcessing\TextProcessing.csproj" />
   </ItemGroup>
 </Project>

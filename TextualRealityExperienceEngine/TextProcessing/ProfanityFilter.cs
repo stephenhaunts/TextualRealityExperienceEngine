@@ -25,9 +25,9 @@ SOFTWARE.
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
 
-namespace TextualRealityExperienceEngine.GameEngine
+namespace TextualRealityExperienceEngine.GameEngine.TextProcessing
 {
     /// <summary>
     /// This class will detect profanity and racial slurs contained within some text and return an indication flag.

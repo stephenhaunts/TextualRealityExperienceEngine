@@ -22,16 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System.Collections.ObjectModel;
-
-namespace TextualRealityExperienceEngine.GameEngine.Interfaces
+namespace TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms
 {
-    public interface IProfanityFilter
+    public interface IPrepositionMapping
     {
-        bool IsProfanity(string word);
-        
-        string StringContainsFirstProfanity(string sentence);
-
-        ReadOnlyCollection<string> DetectAllProfanities(string sentence);
+        void Add(string inputProposition, PropositionEnum preposition);
+        PropositionEnum GetPreposition(string preposition);
     }
 }

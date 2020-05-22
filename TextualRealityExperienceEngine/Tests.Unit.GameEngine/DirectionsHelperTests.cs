@@ -21,11 +21,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TextualRealityExperienceEngine.GameEngine;
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
-using TextualRealityExperienceEngine.GameEngine.Synonyms;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms;
 
 namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 {

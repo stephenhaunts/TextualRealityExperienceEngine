@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tests.SimpleGame.Library;
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
 
 namespace Tests.Unit.SimpleGame
 {

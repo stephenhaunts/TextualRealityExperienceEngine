@@ -24,11 +24,11 @@ SOFTWARE.
 
 using System;
 using System.Text;
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
-using TextualRealityExperienceEngine.GameEngine.Synonyms;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms;
 
-namespace TextualRealityExperienceEngine.GameEngine
-{
+namespace TextualRealityExperienceEngine.GameEngine.TextProcessing
+{ 
     public class ParserBase
     {
         public ParserBase()
@@ -91,6 +91,7 @@ namespace TextualRealityExperienceEngine.GameEngine
         protected string RemovePunctuation(string s)
         {
             var result = new StringBuilder();
+
             for (int i = 0; i < s.Length; i++)
             {
                 if (char.IsWhiteSpace(s[i]))

@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
+
 namespace TextualRealityExperienceEngine.GameEngine.Interfaces
 {
     public interface IRoom

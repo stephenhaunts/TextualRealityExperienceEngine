@@ -26,6 +26,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {

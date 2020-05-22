@@ -1,7 +1,7 @@
 ﻿/*
 MIT License
 
-Copyright(c) 2018 
+Copyright (c) 2019 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,19 +21,34 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms;
 
-namespace TextualRealityExperienceEngine.GameEngine.Synonyms
+namespace TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces
 {
-    public enum NounCodes
+    public interface ICommand
     {
-        North = 0,
-        East = 1,
-        South = 2,
-        West = 3,
-        NorthEast = 4,
-        SouthEast = 5,
-        SouthWest = 6,
-        NorthWest = 7
+        string FullTextCommand { get; set; }
+        
+        VerbCodes Verb { get; set; }
+
+        string Adjective { get; set; }
+
+        string Noun { get; set; }
+        
+        PropositionEnum Preposition { get; set; }
+
+        string Adjective2 { get; set; }
+
+        string Noun2 { get; set; }
+
+        PropositionEnum Preposition2 { get; set; }
+
+        string Adjective3 { get; set; }
+
+        string Noun3 { get; set; }
+
+        bool ProfanityDetected { get; set; }
+        
+        string Profanity { get; set; }
     }
 }

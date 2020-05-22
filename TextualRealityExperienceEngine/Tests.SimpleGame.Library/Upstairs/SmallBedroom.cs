@@ -23,6 +23,7 @@ SOFTWARE.
 */
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
 
 namespace Tests.SimpleGame.UpStairs
 {

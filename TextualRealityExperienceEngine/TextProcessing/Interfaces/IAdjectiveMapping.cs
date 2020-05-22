@@ -1,4 +1,4 @@
-/*
+﻿/*
 MIT License
 
 Copyright (c) 2019 
@@ -21,19 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace TextualRealityExperienceEngine.GameEngine
+
+namespace TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces
 {
-    /// <summary>
-    /// This enumeration helps to control the state machine for the parser.
-    /// </summary>
-    public enum ParserStatesEnum
+    public interface IAdjectiveMapping
     {
-        None = 0,
-        Verb = 1,
-        Noun = 2,
-        Preposition = 3,
-        Noun2 = 4,
-        Preposition2 = 5,
-        Noun3 = 6
+        void Add(string adjective);
+        bool CheckAdjectiveExists(string adjective);
     }
 }

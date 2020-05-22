@@ -24,10 +24,10 @@ SOFTWARE.
 
 using System;
 using System.Text;
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
-using TextualRealityExperienceEngine.GameEngine.Synonyms;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms;
 
-namespace TextualRealityExperienceEngine.GameEngine
+namespace TextualRealityExperienceEngine.GameEngine.TextProcessing
 {
     /// <summary>
     /// The parser is the system that takes the players written input and reduces the synonyms down to command
@@ -39,7 +39,6 @@ namespace TextualRealityExperienceEngine.GameEngine
     /// </summary>
     public class Parser : ParserBase, IParser
     {
-
         /// <summary>
         /// Default constructor that sets the default initial state of the parser.
         /// </summary>

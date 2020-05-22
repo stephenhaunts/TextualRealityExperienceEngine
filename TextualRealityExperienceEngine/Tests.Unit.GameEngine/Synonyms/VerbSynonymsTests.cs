@@ -23,7 +23,7 @@ SOFTWARE.
 */
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TextualRealityExperienceEngine.GameEngine.Synonyms;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms;
 
 namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
 {

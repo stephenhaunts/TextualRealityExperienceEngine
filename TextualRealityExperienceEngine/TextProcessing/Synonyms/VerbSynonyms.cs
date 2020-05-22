@@ -23,9 +23,8 @@ SOFTWARE.
 */
 using System;
 using System.Collections.Generic;
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
-namespace TextualRealityExperienceEngine.GameEngine.Synonyms
+namespace TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms
 {
     /// <summary>
     /// Mapping of verb synonyms to verb enum codes. This is where the parser will reduce the different input verb
@@ -131,6 +130,7 @@ namespace TextualRealityExperienceEngine.GameEngine.Synonyms
             Add("lift", VerbCodes.Look);
             Add("read", VerbCodes.Look);
 
+            Add("help", VerbCodes.Hint);
             Add("hint", VerbCodes.Hint);
             Add("hints", VerbCodes.Hint);
             Add("clue", VerbCodes.Hint);

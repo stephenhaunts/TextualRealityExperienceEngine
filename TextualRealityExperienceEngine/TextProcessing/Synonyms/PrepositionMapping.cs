@@ -23,9 +23,8 @@ SOFTWARE.
 */
 using System;
 using System.Collections.Generic;
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
-namespace TextualRealityExperienceEngine.GameEngine.Synonyms
+namespace TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms
 {
     /// <summary>
     /// Enumeration of supported prepositions in the parser.

@@ -88,3 +88,7 @@ TextualRealityExperienceEngine/Tests.SimpleGame/bin/Debug/netcoreapp3.0/
 TextualRealityExperienceEngine/Tests.Unit.GameEngine/bin/Debug/netcoreapp3.0/
 
 TextualRealityExperienceEngine/Tests.Unit.SimpleGame/bin/Debug/netcoreapp3.0/
+
+TextualRealityExperienceEngine/TextProcessing/bin/Debug/netstandard2.1/
+
+TextualRealityExperienceEngine/TextProcessing/obj/

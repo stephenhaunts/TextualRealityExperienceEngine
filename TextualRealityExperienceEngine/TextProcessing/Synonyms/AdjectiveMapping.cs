@@ -23,9 +23,9 @@ SOFTWARE.
 */
 using System;
 using System.Collections.Generic;
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
 
-namespace TextualRealityExperienceEngine.GameEngine.Synonyms
+namespace TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms
 {
     public class AdjectiveMapping : IAdjectiveMapping
     {
