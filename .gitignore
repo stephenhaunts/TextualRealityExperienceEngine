@@ -92,3 +92,13 @@ TextualRealityExperienceEngine/Tests.Unit.SimpleGame/bin/Debug/netcoreapp3.0/
 TextualRealityExperienceEngine/TextProcessing/bin/Debug/netstandard2.1/
 
 TextualRealityExperienceEngine/TextProcessing/obj/
+
+TextualRealityExperienceEngine/GameEngine/bin/Release/TextualRealityExperienceEngine.1.0.3.nupkg
+
+TextualRealityExperienceEngine/Tests.SimpleGame.Library/bin/Release/netcoreapp3.0/
+
+TextualRealityExperienceEngine/Tests.SimpleGame/bin/Release/netcoreapp3.0/
+
+TextualRealityExperienceEngine/Tests.SimpleGame/Tests.SimpleGame.csproj 2.user
+
+*.user

@@ -44,6 +44,14 @@ namespace TextualRealityExperienceEngine.GameEngine
             const string newline = "\r\n";
             int pos, next;
             var sb = new StringBuilder();
+            var consoleWidth = Console.WindowWidth;
+
+            // This is a bodge because the integrated console terminal in Visual Studio for Mac doesn't return
+            // a value for Console.WindowWidth.
+            if (consoleWidth == 0)
+            {
+                consoleWidth = 80;
+            }
 
             // Parse each line of text
             for (pos = 0; pos < paragraph.Length; pos = next)
@@ -67,9 +75,9 @@ namespace TextualRealityExperienceEngine.GameEngine
                     {
                         var len = eol - pos;
 
-                        if (len > Console.WindowWidth)
+                        if (len > consoleWidth)
                         {
-                            len = BreakLine(paragraph, pos, Console.WindowWidth);
+                            len = BreakLine(paragraph, pos, consoleWidth);
                         }
 
                         sb.Append(paragraph, pos, len);

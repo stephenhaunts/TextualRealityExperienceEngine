@@ -1,0 +1,37 @@
+{
+  "runtimeTarget": {
+    "name": ".NETStandard,Version=v2.1/",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETStandard,Version=v2.1": {},
+    ".NETStandard,Version=v2.1/": {
+      "GameEngine/1.0.0": {
+        "dependencies": {
+          "TextProcessing": "1.0.0"
+        },
+        "runtime": {
+          "GameEngine.dll": {}
+        }
+      },
+      "TextProcessing/1.0.0": {
+        "runtime": {
+          "TextProcessing.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "GameEngine/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TextProcessing/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
