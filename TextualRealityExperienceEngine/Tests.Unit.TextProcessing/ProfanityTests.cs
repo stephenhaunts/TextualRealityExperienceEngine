@@ -25,7 +25,7 @@ SOFTWARE.
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing;
 
-namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
+namespace TextualRealityExperienceEngine.Tests.Unit.TextProcessing
 {
     [TestClass]
     public class ProfanityTests

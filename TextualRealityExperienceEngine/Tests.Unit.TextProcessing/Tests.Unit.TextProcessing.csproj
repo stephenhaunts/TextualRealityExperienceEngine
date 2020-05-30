@@ -5,6 +5,7 @@
 
     <IsPackable>false</IsPackable>
     <ReleaseVersion>0.2</ReleaseVersion>
+    <RootNamespace>TextualRealityExperienceEngine.Tests.Unit.TextProcessing</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,5 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TextProcessing\TextProcessing.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Synonyms\" />
   </ItemGroup>
 </Project>

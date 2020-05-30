@@ -22,13 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TextualRealityExperienceEngine.GameEngine;
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
+
 using TextualRealityExperienceEngine.GameEngine.TextProcessing;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms;
 
-namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
+namespace TextualRealityExperienceEngine.Tests.Unit.TextProcessing
 {
     [TestClass]
     public class ParserTests

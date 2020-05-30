@@ -26,6 +26,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Stubs\" />
-    <Folder Include="Synonyms\" />
   </ItemGroup>
 </Project>

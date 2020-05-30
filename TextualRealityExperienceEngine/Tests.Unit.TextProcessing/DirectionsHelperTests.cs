@@ -26,7 +26,7 @@ using TextualRealityExperienceEngine.GameEngine.TextProcessing;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms;
 
-namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
+namespace TextualRealityExperienceEngine.Tests.Unit.TextProcessing
 {
     [TestClass]
     public class DirectionsHelperTests

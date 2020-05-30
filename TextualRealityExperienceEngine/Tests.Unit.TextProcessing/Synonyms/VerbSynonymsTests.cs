@@ -25,7 +25,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms;
 
-namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
+namespace TextualRealityExperienceEngine.Tests.Unit.TextProcessing
 {
     [TestClass]
     public class VerbSynonymsTests
