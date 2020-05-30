@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Simple Game Example", "Simp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextProcessing", "TextProcessing\TextProcessing.csproj", "{6F0892E4-B888-40D4-BCF6-1C9D8123BBC2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Unit.TextProcessing", "Tests.Unit.TextProcessing\Tests.Unit.TextProcessing.csproj", "{32954835-04BA-40FB-B059-2FEA57349F66}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{6F0892E4-B888-40D4-BCF6-1C9D8123BBC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F0892E4-B888-40D4-BCF6-1C9D8123BBC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F0892E4-B888-40D4-BCF6-1C9D8123BBC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32954835-04BA-40FB-B059-2FEA57349F66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32954835-04BA-40FB-B059-2FEA57349F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32954835-04BA-40FB-B059-2FEA57349F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32954835-04BA-40FB-B059-2FEA57349F66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2890FB8E-743C-48AA-8C3B-AA54BA834AE5} = {7F0CE779-6F62-4C3B-B0D4-F1070781C98C}
@@ -65,6 +71,7 @@ Global
 		{9C29B0C2-65FA-4B74-8A6A-805F8E77E5B8} = {1392CC69-429B-4301-869E-4A56516BBC58}
 		{1392CC69-429B-4301-869E-4A56516BBC58} = {AE58414E-34AA-4E9C-B023-11A46527385C}
 		{6F0892E4-B888-40D4-BCF6-1C9D8123BBC2} = {7F0CE779-6F62-4C3B-B0D4-F1070781C98C}
+		{32954835-04BA-40FB-B059-2FEA57349F66} = {1392CC69-429B-4301-869E-4A56516BBC58}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
