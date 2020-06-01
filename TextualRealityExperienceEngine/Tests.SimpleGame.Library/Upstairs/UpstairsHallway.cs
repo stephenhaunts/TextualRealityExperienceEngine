@@ -25,7 +25,6 @@ using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms;
-using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
 
 namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library.UpStairs
 {
