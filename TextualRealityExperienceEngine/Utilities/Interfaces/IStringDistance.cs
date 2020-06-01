@@ -23,7 +23,7 @@ SOFTWARE.
 */
 using System;
 
-namespace TextualRealityExperienceEngine.GameEngine.Interfaces
+namespace TextualRealityExperienceEngine.GameEngine.Utilities.Interfaces
 {
     public interface IStringDistance
     {
