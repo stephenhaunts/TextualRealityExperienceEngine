@@ -11,6 +11,7 @@
     <ProjectReference Include="..\GameEngine\GameEngine.csproj" />
     <ProjectReference Include="..\Tests.SimpleGame.Library\Tests.SimpleGame.Library.csproj" />
     <ProjectReference Include="..\TextProcessing\TextProcessing.csproj" />
+    <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Upstairs\Hallway.cs" />

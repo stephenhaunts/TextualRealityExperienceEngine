@@ -23,6 +23,7 @@ SOFTWARE.
 */
 using System;
 using TextualRealityExperienceEngine.GameEngine;
+using TextualRealityExperienceEngine.GameEngine.Utilities;
 using TextualRealityExperienceEngine.Tests.SimpleGame.Library;
 
 namespace TextualRealityExperienceEngine.Tests.SimpleGame

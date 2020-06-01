@@ -24,7 +24,7 @@ SOFTWARE.
 using System;
 using System.Text;
 
-namespace TextualRealityExperienceEngine.GameEngine
+namespace TextualRealityExperienceEngine.GameEngine.Utilities
 {
     /// <summary>
     /// ConsoleEx offers the ability to write text to the console but with the added feature of word wrapping so that
@@ -44,7 +44,7 @@ namespace TextualRealityExperienceEngine.GameEngine
             const string newline = "\r\n";
             int pos, next;
             var sb = new StringBuilder();
-            var consoleWidth = Console.WindowWidth;
+            var consoleWidth = Console.WindowWidth;           
 
             // This is a bodge because the integrated console terminal in Visual Studio for Mac doesn't return
             // a value for Console.WindowWidth.
