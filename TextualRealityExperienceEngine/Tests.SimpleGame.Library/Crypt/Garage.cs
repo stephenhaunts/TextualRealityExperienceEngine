@@ -25,7 +25,7 @@ using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
 
-namespace Tests.SimpleGame.Crypt
+namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library.Crypt
 {
     public class Garage : Room
     {

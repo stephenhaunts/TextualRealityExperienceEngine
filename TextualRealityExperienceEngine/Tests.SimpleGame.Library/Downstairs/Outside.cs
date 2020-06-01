@@ -29,7 +29,7 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms;
 
-namespace Tests.SimpleGame.Downstairs
+namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library.Downstairs
 {
     public class Outside : Room
     {

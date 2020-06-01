@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Tests.SimpleGame.Library;
+using TextualRealityExperienceEngine.Tests.SimpleGame.Library;
 
-namespace Tests.Unit.SimpleGame
+namespace TextualRealityExperienceEngine.Tests.Unit.SimpleGame
 {
     [TestClass]
     public class OutsideTests

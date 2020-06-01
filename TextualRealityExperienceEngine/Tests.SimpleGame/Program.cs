@@ -22,10 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
-using Tests.SimpleGame.Library;
 using TextualRealityExperienceEngine.GameEngine;
+using TextualRealityExperienceEngine.Tests.SimpleGame.Library;
 
-namespace Tests.SimpleGame
+namespace TextualRealityExperienceEngine.Tests.SimpleGame
 {
     public class Program
     {    

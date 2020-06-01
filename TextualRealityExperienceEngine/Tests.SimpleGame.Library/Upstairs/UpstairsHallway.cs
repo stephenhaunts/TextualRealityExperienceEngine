@@ -27,7 +27,7 @@ using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
 
-namespace Tests.SimpleGame.UpStairs
+namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library.UpStairs
 {
     public class UpstairsHallway : Room
     {

@@ -5,6 +5,7 @@
 
     <IsPackable>false</IsPackable>
     <ReleaseVersion>0.2</ReleaseVersion>
+    <RootNamespace>TextualRealityExperienceEngine.Tests.Integration.GameEngine</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

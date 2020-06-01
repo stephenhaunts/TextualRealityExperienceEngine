@@ -25,7 +25,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
-namespace Tests.Integration.GameEngine
+namespace TextualRealityExperienceEngine.Tests.Integration.GameEngine
 {
     [TestClass]
     public class ThreeRoomsNoObject

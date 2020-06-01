@@ -23,13 +23,13 @@ SOFTWARE.
 */
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Tests.SimpleGame.Crypt;
-using Tests.SimpleGame.Downstairs;
-using Tests.SimpleGame.UpStairs;
+using TextualRealityExperienceEngine.Tests.SimpleGame.Library.Crypt;
+using TextualRealityExperienceEngine.Tests.SimpleGame.Library.Downstairs;
+using TextualRealityExperienceEngine.Tests.SimpleGame.Library.UpStairs;
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 
-namespace Tests.SimpleGame.Library
+namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library
 {
     public class SimpleGameController
     {

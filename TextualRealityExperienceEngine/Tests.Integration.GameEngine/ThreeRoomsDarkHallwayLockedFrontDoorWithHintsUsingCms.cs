@@ -28,7 +28,7 @@ using TextualRealityExperienceEngine.GameEngine.Interfaces;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing.Synonyms;
 
-namespace Tests.Integration.GameEngine
+namespace TextualRealityExperienceEngine.Tests.Integration.GameEngine
 {
     [TestClass]
     public class ThreeRoomsDarkHallwayLockedFrontDoorWithHintsUsingCms

@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <ReleaseVersion>0.2</ReleaseVersion>
+    <RootNamespace>TextualRealityExperienceEngine.Tests.SimpleGame.Library</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
