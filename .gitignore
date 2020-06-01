@@ -110,3 +110,9 @@ TextualRealityExperienceEngine/Tests.Unit.TextProcessing/obj/Debug/netcoreapp3.1
 TextualRealityExperienceEngine/Tests.Unit.TextProcessing/obj/
 
 *.icloud
+
+TextualRealityExperienceEngine/Utilities/obj/Debug/netstandard2.1/
+
+TextualRealityExperienceEngine/Utilities/obj/
+
+TextualRealityExperienceEngine/Utilities/bin/Debug/netstandard2.1/
