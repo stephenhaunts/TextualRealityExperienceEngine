@@ -6,4 +6,7 @@
     <RootNamespace>TextualRealityExperienceEngine.GameEngine.Utilities</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
 </Project>

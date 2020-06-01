@@ -22,9 +22,9 @@ SOFTWARE.
 */
 using System;
 using System.Collections.Generic;
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.Utilities.Interfaces;
 
-namespace TextualRealityExperienceEngine.GameEngine
+namespace TextualRealityExperienceEngine.GameEngine.Utilities
 {
     /// <summary>
     /// Text substitute.
