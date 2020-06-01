@@ -24,7 +24,7 @@ SOFTWARE.
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.Utilities.Interfaces;
 
 namespace TextualRealityExperienceEngine.GameEngine
 {
