@@ -24,10 +24,10 @@ SOFTWARE.
 using System;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TextualRealityExperienceEngine.GameEngine;
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.Utilities;
+using TextualRealityExperienceEngine.GameEngine.Utilities.Interfaces;
 
-namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
+namespace TextualRealityExperienceEngine.Tests.Unit.Utilities
 {
     [TestClass]
     public class GZipCompressionTests

@@ -25,9 +25,9 @@ using System;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.Utilities.Interfaces;
 
-namespace TextualRealityExperienceEngine.GameEngine
+namespace TextualRealityExperienceEngine.GameEngine.Utilities
 {
     /// <summary>
     /// The GZipCompression class takes text stored ingame and compresses it, with the

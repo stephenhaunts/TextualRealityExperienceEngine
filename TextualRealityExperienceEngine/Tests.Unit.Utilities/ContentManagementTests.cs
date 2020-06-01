@@ -23,10 +23,9 @@ SOFTWARE.
 */
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TextualRealityExperienceEngine.GameEngine;
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.Utilities;
 
-namespace TextualRealityExperienceEngine.Tests.Unit.GameEngine
+namespace TextualRealityExperienceEngine.Tests.Unit.Utilities
 {
     [TestClass]
     public class ContentManagementTests

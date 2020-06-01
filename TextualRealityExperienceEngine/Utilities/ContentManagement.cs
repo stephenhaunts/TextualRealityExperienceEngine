@@ -24,9 +24,9 @@ SOFTWARE.
 
 using System;
 using System.Collections.Generic;
-using TextualRealityExperienceEngine.GameEngine.Interfaces;
+using TextualRealityExperienceEngine.GameEngine.Utilities.Interfaces;
 
-namespace TextualRealityExperienceEngine.GameEngine
+namespace TextualRealityExperienceEngine.GameEngine.Utilities
 {
     /// <summary>
     /// The ContentManagement class offers a way to abstract all the game text away from the game and keeps it in one
