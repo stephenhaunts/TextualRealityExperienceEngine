@@ -62,27 +62,51 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library.Downstairs
 
         public override string ProcessCommand(ICommand command)
         {
-            switch (command.Verb)
+            string response;
+
+            switch (command.Noun)
             {
-                case VerbCodes.Look:
-                    switch (command.Noun)
+                case "letter":
+                    response = HandleLetter(command);
+
+                    if (!string.IsNullOrEmpty(response))
                     {
-                        case "letter":
-                        {
-                            Game.IncreaseScore(1);
-                            Game.NumberOfMoves++;
-                            return Game.ContentManagement.RetrieveContentItem("LetterDescription");
-                        }
-                        case "mantlepiece":
-                        {
-                            Game.NumberOfMoves++;
-                            return Game.ContentManagement.RetrieveContentItem("MentlePieceDescription");
-                        }                    
+                        return response;
                     }
                     break;
 
+                case "mantlepiece":
+                    response = HandleMantlePiece(command);
+
+                    if (!string.IsNullOrEmpty(response))
+                    {
+                        return response;
+                    }                  
+                    break;
+
+            }
+      
+            if (command.ProfanityDetected)
+            {
+                return Game.ContentManagement.RetrieveContentItem("NoNeedToBeRude");
+            }
+
+            var reply = base.ProcessCommand(command);
+            return reply;
+        }
+
+        private string HandleLetter(ICommand command)
+        {
+            switch (command.Verb)
+            {
+                case VerbCodes.Look:
+                    {
+                        Game.IncreaseScore(1);
+                        Game.NumberOfMoves++;
+                        return Game.ContentManagement.RetrieveContentItem("LetterDescription");
+                    }
+
                 case VerbCodes.Take:
-                    if (command.Noun == "letter")
                     {
                         if (!Game.Player.Inventory.Exists("letter"))
                         {
@@ -101,13 +125,21 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library.Downstairs
 
             }
 
-            if (command.ProfanityDetected)
+            return string.Empty;
+        }
+
+        private string HandleMantlePiece(ICommand command)
+        {
+            switch (command.Verb)
             {
-                return Game.ContentManagement.RetrieveContentItem("NoNeedToBeRude");
+                case VerbCodes.Look:
+                    {
+                        Game.NumberOfMoves++;
+                        return Game.ContentManagement.RetrieveContentItem("MentlePieceDescription");
+                    }
             }
 
-            var reply = base.ProcessCommand(command);
-            return reply;
+            return string.Empty;
         }
     }
 }
