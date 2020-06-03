@@ -44,7 +44,9 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library.Downstairs
 
             game.ContentManagement.AddContentItem("FlipLightSwitch",
                 "You flip the light switch and the lights flicker for a few seconds until they illuminate the hallway. You hear a faint buzzing sound coming from the lights.");
-           
+
+            game.ContentManagement.AddContentItem("LookAtStairs", "What a mighty fine set of stairs this house has.");
+
             game.Parser.Nouns.Add("light", "lightswitch");
             game.Parser.Nouns.Add("lights", "lightswitch");
             game.Parser.Nouns.Add("lightswitch", "lightswitch");
@@ -70,7 +72,12 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library.Downstairs
                 if (command.Verb == VerbCodes.Use)
                 {
                     return GotoRoom("northeast");
-                }              
+                }
+
+                if (command.Verb == VerbCodes.Look)
+                {
+                    return Game.ContentManagement.RetrieveContentItem("LookAtStairs");
+                }
             }
 
             if (command.Noun == "lightswitch")
