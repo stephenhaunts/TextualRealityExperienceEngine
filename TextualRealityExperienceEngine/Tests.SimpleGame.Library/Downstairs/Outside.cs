@@ -22,8 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System.Net;
-using System.Xml.Schema;
 using TextualRealityExperienceEngine.GameEngine;
 using TextualRealityExperienceEngine.GameEngine.Interfaces;
 using TextualRealityExperienceEngine.GameEngine.TextProcessing.Interfaces;
@@ -83,89 +81,162 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library.Downstairs
         }
 
         public override string ProcessCommand(ICommand command)
-        {            
+        {
+            string response;
+
+            switch (command.Noun)
+            {
+                case "key":
+                    response = HandleKey(command);
+
+                    if (!string.IsNullOrEmpty(response))
+                    {
+                        return response;
+                    }                  
+                    break;
+
+                case "door":
+                    response = HandleDoor(command);
+
+                    if (!string.IsNullOrEmpty(response))
+                    {
+                        return response;
+                    }
+                    break;
+
+                case "plantpot":
+                    response = HandlePlantPot(command);
+
+                    if (!string.IsNullOrEmpty(response))
+                    {
+                        return response;
+                    }
+                    break;
+
+                case "doormat":
+                    response = HandleDoorMat(command);
+
+                    if (!string.IsNullOrEmpty(response))
+                    {
+                        return response;
+                    }
+                    break;
+            }
+
+            response = ProcessHints(command);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                return response;
+            }
+
+            if (command.ProfanityDetected)
+            {
+                return Game.ContentManagement.RetrieveContentItem("NoNeedToBeRude");
+            }
+            
+            var reply = base.ProcessCommand(command);
+            return reply;
+        }
+
+        private string HandleKey(ICommand command)
+        {
             switch (command.Verb)
             {
-                case VerbCodes.Attack:
-                    switch (command.Noun)
-                    {
-                        case "door":
-                            return Game.ContentManagement.RetrieveContentItem("AttackDoor");
-                        default:
-                            return Game.ContentManagement.RetrieveContentItem("SoloAttack");
-                    }
+                case VerbCodes.Use when (command.Noun2 == "door") && Game.Player.Inventory.Exists("Key"):
+                    SetDoorLock(false, Direction.North);
+                    Game.NumberOfMoves++;
+                    Game.IncreaseScore(1);
+                    _doorUnlocked = true;
+                    return Game.ContentManagement.RetrieveContentItem("TurnKey");
 
-                case VerbCodes.Use:
-                    switch (command.Noun)
-                    {
-                        case "key" when (command.Noun2 == "door") && Game.Player.Inventory.Exists("Key"):
-                            SetDoorLock(false, Direction.North);
-                            Game.NumberOfMoves++;
-                            Game.IncreaseScore(1);
-                            _doorUnlocked = true;
-                            return Game.ContentManagement.RetrieveContentItem("TurnKey");
-                        case "door" when Game.Player.Inventory.Exists("Key"):
-                            _doorUnlocked = true;
-                            Game.NumberOfMoves++;
-                            Game.IncreaseScore(1);
-                            SetDoorLock(false, Direction.North);
-                            return Game.ContentManagement.RetrieveContentItem("TurnKey");
-                        case "door" when !Game.Player.Inventory.Exists("Key"):
-                            Game.NumberOfMoves++;
-                            Game.IncreaseScore(1);
-                            return Game.ContentManagement.RetrieveContentItem("DoorLocked");
-                        default:
-                            return Game.ContentManagement.RetrieveContentItem("DoNotHaveKey");
-                    }
-
-                case VerbCodes.Look:
-                    switch (command.Noun)
-                    {
-                        case "plantpot":
-                        {
-                            _lookedAtPlantPot = true;
-                            if (Game.Player.Inventory.Exists("Key")) return Game.ContentManagement.RetrieveContentItem("ItsAPlantPot");
-                            
-                            Game.NumberOfMoves++;
-                            return Game.ContentManagement.RetrieveContentItem("MovePlantPot");
-
-                        }
-                        case "doormat":
-                            Game.NumberOfMoves++;
-                            return Game.ContentManagement.RetrieveContentItem("DoorMat");
-                        case "door":
-                            Game.NumberOfMoves++;
-                            return Game.ContentManagement.RetrieveContentItem("LookDoor");
-                    }
-
-                    break;
                 case VerbCodes.Take:
-                    if (command.Noun == "key")
+                    if (_lookedAtPlantPot)
                     {
-                        if (_lookedAtPlantPot)
+                        if (!Game.Player.Inventory.Exists("Key") && !_keyPickedUp)
                         {
-                            if (!Game.Player.Inventory.Exists("Key") && !_keyPickedUp)
-                            {
-                                Game.Player.Inventory.Add(_key.Name, _key);
-                                Game.IncreaseScore(1);
-                                Game.NumberOfMoves++;
-                                _keyPickedUp = true;
-                                return _key.PickUpMessage;
-                            }                            
+                            Game.Player.Inventory.Add(_key.Name, _key);
+                            Game.IncreaseScore(1);
+                            Game.NumberOfMoves++;
+                            _keyPickedUp = true;
+                            return _key.PickUpMessage;
+                        }
 
-                            if (Game.Player.Inventory.Exists("Key"))
-                            {
-                                return Game.ContentManagement.RetrieveContentItem("AlreadyHaveKey");
-                            }                            
-                        }                    
+                        if (Game.Player.Inventory.Exists("Key"))
+                        {
+                            return Game.ContentManagement.RetrieveContentItem("AlreadyHaveKey");
+                        }
                     }
                     break;
+            }
+
+            return string.Empty;
+        }
+
+        private string HandleDoor(ICommand command)
+        {
+            switch (command.Verb)
+            {
+                case VerbCodes.Look:
+                    Game.NumberOfMoves++;
+                    return Game.ContentManagement.RetrieveContentItem("LookDoor");
+
+                case VerbCodes.Attack:
+                    return Game.ContentManagement.RetrieveContentItem("AttackDoor");
+
+                case VerbCodes.Use when Game.Player.Inventory.Exists("Key"):
+                    _doorUnlocked = true;
+                    Game.NumberOfMoves++;
+                    Game.IncreaseScore(1);
+                    SetDoorLock(false, Direction.North);
+                    return Game.ContentManagement.RetrieveContentItem("TurnKey");
+
+                case VerbCodes.Use when !Game.Player.Inventory.Exists("Key"):
+                    Game.NumberOfMoves++;
+                    Game.IncreaseScore(1);
+                    return Game.ContentManagement.RetrieveContentItem("DoorLocked");
+            }
+
+            return string.Empty;
+        }
+
+        private string HandlePlantPot(ICommand command)
+        {
+            switch (command.Verb)
+            {
+                case VerbCodes.Look:
+                    _lookedAtPlantPot = true;
+                    if (Game.Player.Inventory.Exists("Key")) return Game.ContentManagement.RetrieveContentItem("ItsAPlantPot");
+
+                    Game.NumberOfMoves++;
+                    return Game.ContentManagement.RetrieveContentItem("MovePlantPot");
+            }
+
+            return string.Empty;
+        }
+
+        private string HandleDoorMat(ICommand command)
+        {
+            switch (command.Verb)
+            {
+                case VerbCodes.Look:
+                    Game.NumberOfMoves++;
+                    return Game.ContentManagement.RetrieveContentItem("DoorMat");
+            }
+
+            return string.Empty;
+        }
+
+        private string ProcessHints(ICommand command)
+        {
+            switch (command.Verb)
+            {
                 case VerbCodes.Hint:
                     if (Game.Score - Game.HintCost < 0)
                     {
                         return Game.ContentManagement.RetrieveContentItem("NotEnoughHintPoints");
                     }
-                    
+
                     if (!_lookedAtPlantPot)
                     {
                         Game.DecreaseScore(Game.HintCost);
@@ -181,17 +252,11 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library.Downstairs
                     if (!_doorUnlocked)
                     {
                         return Game.ContentManagement.RetrieveContentItem("IWonderIfKey");
-                    }                    
+                    }
                     break;
             }
 
-            if (command.ProfanityDetected)
-            {
-                return Game.ContentManagement.RetrieveContentItem("NoNeedToBeRude");
-            }
-            
-            var reply = base.ProcessCommand(command);
-            return reply;
+            return string.Empty;
         }
     }
 }

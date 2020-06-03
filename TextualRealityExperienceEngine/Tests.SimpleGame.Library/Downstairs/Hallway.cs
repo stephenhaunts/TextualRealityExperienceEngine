@@ -64,13 +64,18 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library.Downstairs
                 return Game.ContentManagement.RetrieveContentItem("NoNeedToBeRude");
             }
 
-            if (command.Verb == VerbCodes.Use)
+
+            if (command.Noun == "stairs")
             {
-                if (command.Noun == "stairs")
+                if (command.Verb == VerbCodes.Use)
                 {
                     return GotoRoom("northeast");
-                }
-                if (command.Noun == "lightswitch")
+                }              
+            }
+
+            if (command.Noun == "lightswitch")
+            {
+                if (command.Verb == VerbCodes.Use)
                 {
                     LightsOn = !LightsOn;
 

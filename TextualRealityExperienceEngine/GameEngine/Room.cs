@@ -391,7 +391,7 @@ namespace TextualRealityExperienceEngine.GameEngine
                     { 
                         if (Game.Player.Inventory.Exists(command.Noun))
                         {
-                        var inventoryObject = Game.Player.Inventory.Get(command.Noun);
+                            var inventoryObject = Game.Player.Inventory.Get(command.Noun);
 
                             if (!string.IsNullOrEmpty(inventoryObject.LongDescription))
                             {
@@ -422,6 +422,16 @@ namespace TextualRealityExperienceEngine.GameEngine
                         return "You can not pick up a " + command.Noun + ".";
                     }
                 case VerbCodes.Use:
+                    if (string.IsNullOrEmpty(command.Noun))
+                    {
+                        return "You can't use that.";
+                    }
+
+                    if (!Game.Player.Inventory.Exists(command.Noun))
+                    {
+                        return "You do not have a " + command.Noun + ".";
+                    }
+
                     break;
                 case VerbCodes.Drop:
                     if (string.IsNullOrEmpty(command.Noun))
