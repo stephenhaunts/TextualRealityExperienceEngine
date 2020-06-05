@@ -70,73 +70,24 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library.Downstairs
 
         public override string ProcessCommand(ICommand command)
         {
-            switch (command.Verb)
+            switch (command.Noun)
             {
-                case VerbCodes.Look:
-                    switch (command.Noun)
+                case "fridge":
+                    switch (command.Verb)
                     {
-                        case "fridge":
+                        case VerbCodes.Look:
+                            if (!_openedFridge)
                             {
-                                if (!_openedFridge)
-                                {
-                                    return Game.ContentManagement.RetrieveContentItem("ItsAFridge");
-                                }
-                                else
-                                {
-                                    string message = "The fridge is open. ";
+                                return Game.ContentManagement.RetrieveContentItem("ItsAFridge");
+                            }
+                            else
+                            {
+                                string message = "The fridge is open. ";
 
-                                    return FridgeContents(message);
-                                }
+                                return FridgeContents(message);
                             }
-                        case "chicken":
-                            {
-                                if (_openedFridge)
-                                {
-                                    Game.IncreaseScore(1);
-                                    Game.NumberOfMoves++;
-                                    return Game.ContentManagement.RetrieveContentItem("LookAtChicken");
-                                }
-                                else
-                                {
-                                    if (!Game.Player.Inventory.Exists("chicken"))
-                                    {
-                                        Game.NumberOfMoves++;
-                                        return Game.ContentManagement.RetrieveContentItem("WhatFood");
-                                    }
-                                    else
-                                    {
-                                        return Game.ContentManagement.RetrieveContentItem("LookAtChicken");
-                                    }
-                                }
-                            }
-                        case "cheese":
-                            {
-                                if (_openedFridge)
-                                {
-                                    Game.IncreaseScore(1);
-                                    Game.NumberOfMoves++;
-                                    return Game.ContentManagement.RetrieveContentItem("LookAtCheese");
-                                }
-                                else
-                                {
-                                    if (!Game.Player.Inventory.Exists("cheese"))
-                                    {
-                                        Game.NumberOfMoves++;
-                                        return Game.ContentManagement.RetrieveContentItem("WhatFood");
-                                    }
-                                    else
-                                    {
-                                        return Game.ContentManagement.RetrieveContentItem("LookAtCheese");
-                                    }
-                                }
-                            }
-                    }
-                    break;
 
-                case VerbCodes.Use:
-                    switch (command.Noun)
-                    {
-                        case "fridge":
+                        case VerbCodes.Use:
                             {
                                 Game.IncreaseScore(1);
                                 Game.NumberOfMoves++;
@@ -151,10 +102,30 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library.Downstairs
                     }
                     break;
 
-                case VerbCodes.Take:
-                    switch (command.Noun)
+                case "chicken":
+                    switch (command.Verb)
                     {
-                        case "chicken":
+                        case VerbCodes.Look:
+                            if (_openedFridge)
+                            {
+                                Game.IncreaseScore(1);
+                                Game.NumberOfMoves++;
+                                return Game.ContentManagement.RetrieveContentItem("LookAtChicken");
+                            }
+                            else
+                            {
+                                if (!Game.Player.Inventory.Exists("chicken"))
+                                {
+                                    Game.NumberOfMoves++;
+                                    return Game.ContentManagement.RetrieveContentItem("WhatFood");
+                                }
+                                else
+                                {
+                                    return Game.ContentManagement.RetrieveContentItem("LookAtChicken");
+                                }
+                            }
+
+                        case VerbCodes.Take:
                             if (_openedFridge)
                             {
                                 if (!Game.Player.Inventory.Exists("chicken"))
@@ -176,8 +147,34 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library.Downstairs
                                 return Game.ContentManagement.RetrieveContentItem("WhatFood");
                             }
                             break;
+                    }
+                    break;
 
-                        case "cheese":
+                case "cheese":
+                    switch (command.Verb)
+                    {
+                        case VerbCodes.Look:
+                            if (_openedFridge)
+                            {
+                                Game.IncreaseScore(1);
+                                Game.NumberOfMoves++;
+                                return Game.ContentManagement.RetrieveContentItem("LookAtCheese");
+                            }
+                            else
+                            {
+                                if (!Game.Player.Inventory.Exists("cheese"))
+                                {
+                                    Game.NumberOfMoves++;
+                                    return Game.ContentManagement.RetrieveContentItem("WhatFood");
+                                }
+                                else
+                                {
+                                    return Game.ContentManagement.RetrieveContentItem("LookAtCheese");
+                                }
+                            }
+
+
+                        case VerbCodes.Take:
                             if (_openedFridge)
                             {
                                 if (!Game.Player.Inventory.Exists("cheese"))
@@ -201,7 +198,8 @@ namespace TextualRealityExperienceEngine.Tests.SimpleGame.Library.Downstairs
                             break;
                     }
                     break;
-            }
+            
+            }         
 
             if (command.ProfanityDetected)
             {
